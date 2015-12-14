@@ -20,7 +20,7 @@
 						'showIcon': true,
 						'nodeConfig': {
 							'label': 'model.name',
-							'iconType': 'switch',
+							'iconType': 'router',
 							'color': '#0how00'
 						},
 						'linkConfig': {
@@ -29,11 +29,6 @@
 						nodeSetConfig: {
 							'label': 'model.label',
 							'iconType': 'groupL'
-						},
-						tooltipManagerConfig: {
-							nodeTooltipContentClass: 'TooltipNode',
-							linkTooltipContentClass: 'TooltipLink',
-							nodeSetTooltipContentClass: 'TooltipNode'
 						},
 						'identityKey': 'id',
 						'width': 800,
@@ -47,12 +42,12 @@
 		}
 	});
 
-
-
 	var topologyContainer = new TopologyContainer();
 	var topo = topologyContainer.topology();
 	topo.attach(app);
-
 	app.container(document.getElementById('bier-topology'));
+
+	topo.data(topologyData);
+	topo.fit();
 
 })(nx);
