@@ -44,7 +44,10 @@
 
 	var topologyContainer = new TopologyContainer();
 	var topo = topologyContainer.topology();
+	var controlPanel = new ControlPanel();
+
 	topo.attach(app);
+	controlPanel.attach(app);
 	app.container(document.getElementById('bier-topology'));
 
 	topo.data(topologyData);
