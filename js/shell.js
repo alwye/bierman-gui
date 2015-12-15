@@ -2,6 +2,19 @@
 
 	var app = new nx.ui.Application();
 
+
+	// custom events
+	nx.define('CustomScene', nx.graphic.Topology.DefaultScene, {
+		methods: {
+			clickNode: function(sender, node){
+
+			},
+			clickLink: function(sender, link){
+
+			}
+		}
+	});
+
 	nx.define('TopologyContainer', nx.ui.Component, {
 		properties: {
 			topology: {
@@ -48,7 +61,7 @@
 
 	topo.attach(app);
 	controlPanel.attach(app);
-	app.container(document.getElementById('bier-topology'));
+	app.container(document.getElementById('bierman-topology'));
 
 	topo.data(topologyData);
 	topo.fit();

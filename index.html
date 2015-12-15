@@ -1,14 +1,18 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="biermanApp">
 <head>
-	<title>BIER Manager Topology</title>
+	<title>BIER Manager</title>
 	<link rel="stylesheet" href="vendor/next-ui/css/next.css">
 	<script type="application/javascript" src="vendor/next-ui/js/next.js"></script>
+	<script type="application/javascript" src="vendor/angular/angular.js"></script>
+	<script type="application/javascript" src="js/data.js"></script>
 </head>
 <body>
-	<div id="bier-topology"></div>
-	<script type="application/javascript" src="js/data.js"></script>
-	<script type="application/javascript" src="js/control.js"></script>
-	<script type="application/javascript" src="js/shell.js"></script>
+	<div ng-controller="biermanCtrl">
+		<bierman-topology></bierman-topology>
+	</div>
+	<script type="application/javascript" src="app/bierman.module.js"></script>
+	<script type="application/javascript" src="app/bierman.controller.js"></script>
+	<script type="application/javascript" src="app/directives/topology.directive.js"></script>
 </body>
 </html>
