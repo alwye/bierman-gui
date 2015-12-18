@@ -3,16 +3,19 @@
 <head>
 	<title>BIER Manager</title>
 	<link rel="stylesheet" href="vendor/next-ui/css/next.css">
-	<script type="application/javascript" src="vendor/next-ui/js/next.js"></script>
+	<script type="application/javascript" src="vendor/jquery/jquery.js"></script>
 	<script type="application/javascript" src="vendor/angular/angular.js"></script>
+	<script type="application/javascript" src="vendor/next-ui/js/next.js"></script>
 	<script type="application/javascript" src="app/data.js"></script>
 </head>
 <body>
 	<div ng-controller="biermanCtrl">
 		<bierman-topology></bierman-topology>
+		<control-panel></control-panel>
 	</div>
 	<script type="application/javascript" src="app/bierman.module.js"></script>
 	<script type="application/javascript" src="app/bierman.controller.js"></script>
 	<script type="application/javascript" src="app/directives/topology.directive.js"></script>
+	<script type="application/javascript" src="app/directives/controlpanel.directive.js"></script>
 </body>
 </html>

@@ -1,9 +1,18 @@
 app.directive('biermanTopology', function() {
 	return {
-		restrict: 'E',
-		scope: {},
-		template: '<div id="bier-topology"></div>',
-		link: function($scope, iElm, iAttrs, controller) {
+		'restrict': 'E',
+		'template': '<div id="bierman-topology"></div>',
+		'scope': {},
+		'link': function($scope, iElm, iAttrs, controller){
+
+			$scope.colorTable = {
+				'nodeTypes': {
+					'ingress': '#009933',
+					'egress': '#0033cc'
+				},
+				'path': '#993300'
+			};
+
 
 			// highlights a node
 			$scope.highlightNode = function(targetId, noLinks) {
@@ -74,6 +83,15 @@ app.directive('biermanTopology', function() {
 				}, this);
 			};
 
+			$scope.getNodeTypeById = function(id){
+				if($scope.$parent.currentTree.ingress == id)
+					return 'ingress';
+				else if($scope.$parent.currentTree.egress.indexOf(id) != -1)
+					return 'egress';
+				else
+					return 'none';
+			};
+
 			$scope.fadeOutAllLayers = function(){
 				//fade out all layers
 				nx.each($scope.topo.layers(), function(layer) {
@@ -81,89 +99,96 @@ app.directive('biermanTopology', function() {
 				}, this);
 			};
 
-			// reads data from localStorage
-			$scope.readDumpDataFromLocalStorage = function(){
-				try {
-					$scope.dumpData = JSON.parse(localStorage.getItem("verizonTopologyData"));
-				} catch(e) {
-					console.info('Local Storage read parse error:', e);
-				}
-
-				$scope.readDumpData();
-			};
-
-			// saves the data to localStorage
-			$scope.writeDumpDataToLocalStorage = function(){
-				try {
-					localStorage.setItem("verizonTopologyData", JSON.stringify($scope.dumpData));
-				} catch(e) {
-					console.info('Local Storage save error:', e);
-				}
-			};
-
-			// dump the positions of nodes
-			$scope.writeDumpdata = function(){
-				//var stageScale = $scope.topo.stageScale();
-				$scope.dumpData = {'nodes': []};
-				var nodesLayer = $scope.topo.getLayer('nodes');
-				nodesLayer.eachNode(function(node){
-					$scope.dumpData.nodes.push({
-						'x': node.x(),
-						'y': node.y(),
-						'nodeName': node.model()._data['node-id']
-					});
+			$scope.applyChanges = function(){
+				var nodes = $scope.topo.getLayer('nodes');
+				var links = $scope.topo.getLayer('links');
+				// apply changes to nodes
+				nodes.eachNode(function(node){
+					node.applyChanges();
 				});
-				$scope.writeDumpDataToLocalStorage();
+				// apply changes to links
+				links.eachLink(function(link){
+					link.applyChanges();
+				});
 			};
 
-			// read dump data from $scope.dumpData
-			$scope.readDumpData = function(){
-				if($scope.dumpData && $scope.dumpData.nodes ){
-					$scope.dumpData.nodes.forEach(function(node, index, nodes){
-						nodeInst = $scope.topo.getNode($scope.topologyData.nodesDict.getItem(node.nodeName));
-						if(nodeInst != undefined)
-							nodeInst.position({'x': node.x, 'y': node.y});
-					});
-				}
-			};
-
-			// todo: custom events
 			nx.define('CustomScene', nx.graphic.Topology.DefaultScene, {
-				methods: {
+				'methods': {
 					clickNode: function(sender, node){
-
+						// select source
+						if($scope.$parent.mode == 'ingress'){
+							$scope.$parent.currentTree.ingress = node.id();
+							$scope.$parent.mode = 'egress';
+							$scope.$apply();
+						}
+						// select receivers
+						else if($scope.$parent.mode == 'egress'){
+							if($scope.$parent.currentTree.egress.indexOf(node.id()) == -1
+								&& node.id() != $scope.$parent.currentTree.ingress)
+									$scope.$parent.currentTree.egress.push(node.id());
+							$scope.$apply();
+						}
+						$scope.applyChanges();
 					},
-					clickLink: function(sender, link){
+					clickLink: function(sender, link){console.log($scope.topo.data());
+						if($scope.$parent.mode == 'path'){
 
+						}
 					}
 				}
 			});
 
-			nx.define('Topology', nx.graphic.Topology, {
-								'adaptive': true,
-								'showIcon': true,
-								'nodeConfig': {
-									'label': 'model.name',
-									'iconType': 'router',
-									'color': '#0how00'
-								},
-								'linkConfig': {
-									'linkType': 'curve'
-								},
-								nodeSetConfig: {
-									'label': 'model.label',
-									'iconType': 'groupL'
-								},
-								'identityKey': 'id',
-								'width': 800,
-								'height': 400,
-								'enableSmartLabel': true,
-								'enableGradualScaling': true,
-								'supportMultipleLink': true
-							});
+			nx.define('ExtendedNode', nx.graphic.Topology.Node, {
+				'methods': {
+					'init': function(args){
+						this.inherited(args);
+					},
+					'setModel': function(model){
+						this.inherited(model);
+					},
+					'applyChanges': function(){
+						var type = $scope.getNodeTypeById(this.id());
+						if($scope.colorTable.nodeTypes.hasOwnProperty(type))
+							this.color($scope.colorTable.nodeTypes[type]);
+					}
+				}
+			});
 
+			nx.define('ExtendedLink', nx.graphic.Topology.Link, {
+				'methods': {
+					'init': function(args){
+						this.inherited(args);
+					},
+					'setModel': function(model){
+						this.inherited(model);
+					},
+					'applyChanges': function(){
+						// todo: nothing
+					}
+				}
+			});
 
-			$scope.topo = new Topology();
+			$scope.topo = new nx.graphic.Topology({
+				'adaptive': true,
+				'showIcon': true,
+				'nodeConfig': {
+					'label': 'model.name',
+					'iconType': 'router',
+					'color': '#0how00'
+				},
+				'linkConfig': {
+					'linkType': 'curve',
+					'width': 5
+				},
+				'identityKey': 'id',
+				'width': 1000,
+				'height': 800,
+				'enableSmartLabel': true,
+				'enableGradualScaling': true,
+				'supportMultipleLink': true,
+				'nodeInstanceClass': 'ExtendedNode',
+				'linkInstanceClass': 'ExtendedLink'
+			});
 
 			$scope.topo.data(topologyData);
 
@@ -171,16 +196,9 @@ app.directive('biermanTopology', function() {
 			// fired when topology is generated
 			$scope.topo.on('topologyGenerated', function(sender, event) {
 				// use custom events for the topology
-				sender.registerScene('ce', 'CustomEvents');
+				sender.registerScene('ce', 'CustomScene');
 				sender.activateScene('ce');
 				$scope.topo.tooltipManager().showNodeTooltip(false);
-			});
-
-			// fired when the app is ready and displayed
-			$scope.topo.on('ready', function(sender, event) {
-				$scope.readDumpDataFromLocalStorage();
-				// dump the data
-				window.setInterval(function(){$scope.writeDumpdata();}, 5000);
 			});
 
 			var app = new nx.ui.Application();
@@ -190,7 +208,6 @@ app.directive('biermanTopology', function() {
 			});
 
 			$scope.topo.attach(app);
-			topoInitialized = true;
 
 		}
 	};
