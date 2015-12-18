@@ -1,15 +1,16 @@
 app.controller('biermanCtrl', function($scope) {
 
-	// settings
-	$scope.mode = 'ingress';
+	$scope.topologyInit = false;
 
-	// initialization of a current bier tree
-	$scope.currentTree = {
-		'ingress': null,
-		'egress': [],
-		'links': []
+	$scope.startOver = function(){
+		$scope.mode = 'ingress';
+		$scope.currentTree = {
+			'ingress': null,
+			'egress': [],
+			'links': []
+		};
+		if($scope.topologyInit)
+			$scope.topologyStartOver();
 	};
-
-
 
 });

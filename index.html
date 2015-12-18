@@ -10,12 +10,12 @@
 </head>
 <body>
 	<div ng-controller="biermanCtrl">
-		<bierman-topology></bierman-topology>
-		<control-panel></control-panel>
+		<div ng-include="'./app/templates/panel-messages.tpl.html'"></div>
+		<bierman-topology topology-start-over="topologyStartOver"></bierman-topology>
+		<div ng-include="'./app/templates/panel-controls.tpl.html'"></div>
 	</div>
 	<script type="application/javascript" src="app/bierman.module.js"></script>
 	<script type="application/javascript" src="app/bierman.controller.js"></script>
 	<script type="application/javascript" src="app/directives/topology.directive.js"></script>
-	<script type="application/javascript" src="app/directives/controlpanel.directive.js"></script>
 </body>
 </html>

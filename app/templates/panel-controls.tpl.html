@@ -1,0 +1,13 @@
+<div class="control-panel">
+	<div ng-hide="mode == 'ingress'">
+		<button ng-click="startOver()">Start Over</button>
+	</div>
+	<div ng-show="mode == 'egress'">
+		<div ng-show="currentTree.egress.length">
+			<button ng-click="mode = 'path'">All receivers chosen</button>
+		</div>
+	</div>
+	<div ng-show="mode == 'path'">
+		<button>Validate</button>
+	</div>
+</div>

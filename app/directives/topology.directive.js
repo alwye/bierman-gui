@@ -2,7 +2,9 @@ app.directive('biermanTopology', function() {
 	return {
 		'restrict': 'E',
 		'template': '<div id="bierman-topology"></div>',
-		'scope': {},
+		'scope': {
+			'topologyStartOver': '='
+		},
 		'link': function($scope, iElm, iAttrs, controller){
 
 			$scope.colorTable = {
@@ -35,6 +37,10 @@ app.directive('biermanTopology', function() {
 				else{
 					linksLayer.fadeOut(true);
 				}
+			};
+
+			$scope.topologyStartOver = function(){
+				$scope.applyChanges();
 			};
 
 			// highlights a link
@@ -199,6 +205,8 @@ app.directive('biermanTopology', function() {
 				sender.registerScene('ce', 'CustomScene');
 				sender.activateScene('ce');
 				$scope.topo.tooltipManager().showNodeTooltip(false);
+				$scope.$parent.topologyInit = true;
+				$scope.$parent.startOver();
 			});
 
 			var app = new nx.ui.Application();
