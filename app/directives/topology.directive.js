@@ -10,7 +10,8 @@ app.directive('biermanTopology', function() {
 			$scope.colorTable = {
 				'nodeTypes': {
 					'ingress': '#009933',
-					'egress': '#0033cc'
+					'egress': '#0033cc',
+					'none': '#0how00'
 				},
 				'path': '#993300'
 			};
@@ -82,13 +83,6 @@ app.directive('biermanTopology', function() {
 				pathLayer.addPath(path);
 			};
 
-			$scope.fadeInAllLayers = function(){
-				//fade out all layers
-				nx.each($scope.topo.layers(), function(layer) {
-					layer.fadeIn(true);
-				}, this);
-			};
-
 			$scope.getNodeTypeById = function(id){
 				if($scope.$parent.currentTree.ingress == id)
 					return 'ingress';
@@ -96,6 +90,13 @@ app.directive('biermanTopology', function() {
 					return 'egress';
 				else
 					return 'none';
+			};
+
+			$scope.fadeInAllLayers = function(){
+				//fade out all layers
+				nx.each($scope.topo.layers(), function(layer) {
+					layer.fadeIn(true);
+				}, this);
 			};
 
 			$scope.fadeOutAllLayers = function(){
@@ -136,7 +137,7 @@ app.directive('biermanTopology', function() {
 						}
 						$scope.applyChanges();
 					},
-					clickLink: function(sender, link){console.log($scope.topo.data());
+					clickLink: function(sender, link){
 						if($scope.$parent.mode == 'path'){
 
 						}
@@ -154,8 +155,10 @@ app.directive('biermanTopology', function() {
 					},
 					'applyChanges': function(){
 						var type = $scope.getNodeTypeById(this.id());
-						if($scope.colorTable.nodeTypes.hasOwnProperty(type))
+						console.log(this.id(), type, $scope.colorTable.nodeTypes[type]);
+						if($scope.colorTable.nodeTypes.hasOwnProperty(type)){
 							this.color($scope.colorTable.nodeTypes[type]);
+						}
 					}
 				}
 			});
@@ -180,7 +183,7 @@ app.directive('biermanTopology', function() {
 				'nodeConfig': {
 					'label': 'model.name',
 					'iconType': 'router',
-					'color': '#0how00'
+					'color': $scope.colorTable.nodeTypes.none
 				},
 				'linkConfig': {
 					'linkType': 'curve',
