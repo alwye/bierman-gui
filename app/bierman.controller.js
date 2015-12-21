@@ -2,8 +2,12 @@ app.controller('biermanCtrl', function($scope) {
 
 	$scope.topologyInit = false;
 
+	$scope.appConfig = {
+		mode: 'ingress'
+	};
+
 	$scope.startOver = function(){
-		$scope.mode = 'ingress';
+		$scope.appConfig.mode = 'ingress';
 		$scope.currentTree = {
 			'ingress': null,
 			'egress': [],
@@ -13,4 +17,7 @@ app.controller('biermanCtrl', function($scope) {
 			$scope.topologyStartOver();
 	};
 
+	$scope.selectPath = function(){
+		$scope.appConfig.mode = 'path';
+	}
 });
