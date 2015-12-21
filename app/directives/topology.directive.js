@@ -13,7 +13,11 @@ app.directive('biermanTopology', function() {
 					'egress': '#0033cc',
 					'none': '#0591D9'
 				},
-				'path': '#993300'
+				'linkTypes': {
+					'path': '#009933',
+					'none': '#67C9E4'
+				}
+
 			};
 
 
@@ -92,6 +96,13 @@ app.directive('biermanTopology', function() {
 					return 'none';
 			};
 
+			$scope.getLinkTypeById = function(id){
+				if($scope.$parent.currentTree.links.indexOf(id) != -1)
+					return 'path';
+				else
+					return 'none';
+			};
+
 			$scope.fadeInAllLayers = function(){
 				//fade out all layers
 				nx.each($scope.topo.layers(), function(layer) {
@@ -119,28 +130,38 @@ app.directive('biermanTopology', function() {
 				});
 			};
 
+			$scope.pickNode = function(id){
+				// select source
+				if($scope.$parent.appConfig.mode == 'ingress'){
+					$scope.$parent.currentTree.ingress = id;
+					$scope.$parent.appConfig.mode = 'egress';
+					$scope.$apply();
+				}
+				// select receivers
+				else if($scope.$parent.appConfig.mode == 'egress'){
+					if($scope.$parent.currentTree.egress.indexOf(id) == -1
+						&& id != $scope.$parent.currentTree.ingress)
+						$scope.$parent.currentTree.egress.push(id);
+					$scope.$apply();
+				}
+				$scope.applyChanges();
+			};
+
+			$scope.pickLink = function(id){
+				if($scope.$parent.appConfig.mode == 'path'){
+					$scope.$parent.currentTree.links.push(id);
+					$scope.$apply();
+					$scope.applyChanges();
+				}
+			};
+
 			nx.define('CustomScene', nx.graphic.Topology.DefaultScene, {
 				'methods': {
-					clickNode: function(sender, node){
-						// select source
-						if($scope.$parent.appConfig.mode == 'ingress'){
-							$scope.$parent.currentTree.ingress = node.id();
-							$scope.$parent.appConfig.mode = 'egress';
-							$scope.$apply();
-						}
-						// select receivers
-						else if($scope.$parent.appConfig.mode == 'egress'){
-							if($scope.$parent.currentTree.egress.indexOf(node.id()) == -1
-								&& node.id() != $scope.$parent.currentTree.ingress)
-									$scope.$parent.currentTree.egress.push(node.id());
-							$scope.$apply();
-						}
-						$scope.applyChanges();
+					clickNode: function(topology, node){
+						$scope.pickNode(node.id());
 					},
-					clickLink: function(sender, link){
-						if($scope.$parent.appConfig.mode == 'path'){
-
-						}
+					clickLink: function(topology, link){
+						$scope.pickLink(link.id());
 					}
 				}
 			});
@@ -155,9 +176,8 @@ app.directive('biermanTopology', function() {
 					},
 					'applyChanges': function(){
 						var type = $scope.getNodeTypeById(this.id());
-						console.log($scope.$parent.currentTree, this.id(), type, $scope.colorTable.nodeTypes[type]);
 						if($scope.colorTable.nodeTypes.hasOwnProperty(type)){
-							this.color($scope.colorTable.nodeTypes[type]);console.log($scope.colorTable.nodeTypes[type]);
+							this.color($scope.colorTable.nodeTypes[type]);
 						}
 					}
 				}
@@ -172,7 +192,10 @@ app.directive('biermanTopology', function() {
 						this.inherited(model);
 					},
 					'applyChanges': function(){
-						// todo: nothing
+						var type = $scope.getLinkTypeById(this.id());
+						if($scope.colorTable.linkTypes.hasOwnProperty(type)){
+							this.color($scope.colorTable.linkTypes[type]);
+						}
 					}
 				}
 			});
@@ -182,11 +205,13 @@ app.directive('biermanTopology', function() {
 				'showIcon': true,
 				'nodeConfig': {
 					'label': 'model.name',
-					'iconType': 'router'
+					'iconType': 'router',
+					'color': $scope.colorTable.nodeTypes.none
 				},
 				'linkConfig': {
 					'linkType': 'curve',
-					'width': 5
+					'width': 5,
+					'color': $scope.colorTable.linkTypes.none
 				},
 				nodeSetConfig: {
 					'iconType': 'accessPoint'
@@ -209,7 +234,10 @@ app.directive('biermanTopology', function() {
 				// use custom events for the topology
 				sender.registerScene('ce', 'CustomScene');
 				sender.activateScene('ce');
+				// disable tooltips for both nodes and links
 				$scope.topo.tooltipManager().showNodeTooltip(false);
+				$scope.topo.tooltipManager().showLinkTooltip(false);
+				// initialize BIERman
 				$scope.$parent.topologyInit = true;
 				$scope.$parent.startOver();
 			});

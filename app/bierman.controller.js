@@ -19,5 +19,9 @@ app.controller('biermanCtrl', function($scope) {
 
 	$scope.selectPath = function(){
 		$scope.appConfig.mode = 'path';
-	}
+	};
+
+	$scope.validateTree = function(){
+		alert('not ready yet');
+	};
 });
