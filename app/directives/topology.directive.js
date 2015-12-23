@@ -17,7 +17,6 @@ app.directive('biermanTopology', function() {
 					'path': '#009933',
 					'none': '#67C9E4'
 				}
-
 			};
 
 
@@ -132,13 +131,13 @@ app.directive('biermanTopology', function() {
 
 			$scope.pickNode = function(id){
 				// select source
-				if($scope.$parent.appConfig.mode == 'ingress'){
+				if($scope.$parent.appConfig.mode == 'start'){
 					$scope.$parent.currentTree.ingress = id;
-					$scope.$parent.appConfig.mode = 'egress';
+					$scope.$parent.appConfig.mode = 'draw';
 					$scope.$apply();
 				}
 				// select receivers
-				else if($scope.$parent.appConfig.mode == 'egress'){
+				else if($scope.$parent.appConfig.mode == 'draw'){
 					if($scope.$parent.currentTree.egress.indexOf(id) == -1
 						&& id != $scope.$parent.currentTree.ingress)
 						$scope.$parent.currentTree.egress.push(id);
@@ -148,16 +147,24 @@ app.directive('biermanTopology', function() {
 			};
 
 			$scope.pickLink = function(id){
-				if($scope.$parent.appConfig.mode == 'path'){
-					$scope.$parent.currentTree.links.push(id);
-					$scope.$apply();
-					$scope.applyChanges();
+				if($scope.$parent.appConfig.mode == 'draw'){
+					var indexOfLink = $scope.$parent.currentTree.links.indexOf(id);
+					if($scope.$parent.currentTree.links.indexOf(id) == -1) {
+						$scope.$parent.currentTree.links.push(id);
+						$scope.$apply();
+						$scope.applyChanges();
+					}
+					else{
+						$scope.$parent.currentTree.links.splice(indexOfLink,1);
+						$scope.$apply();
+						$scope.applyChanges();
+					}
 				}
 			};
 
 			nx.define('CustomScene', nx.graphic.Topology.DefaultScene, {
 				'methods': {
-					clickNode: function(topology, node){
+					clickNode: function(topology, node){console.log(node);
 						$scope.pickNode(node.id());
 					},
 					clickLink: function(topology, link){

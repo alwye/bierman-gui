@@ -1,9 +1,6 @@
-<div ng-show="appConfig.mode == 'ingress'">
+<div ng-show="appConfig.mode == 'start'">
 	Click on a node to pick an ingress point (source).
 </div>
-<div ng-show="appConfig.mode == 'egress'">
-	Click on nodes to select the egresses (receivers).
-</div>
-<div ng-show="appConfig.mode == 'path'">
-	Click on links to draw a BIER tree.
+<div ng-show="appConfig.mode == 'draw'">
+	Click on nodes to select the egresses (receivers), click on links to include them to BIER tree. Repeated click will clear selection from egresses and exclude links from the tree.
 </div>

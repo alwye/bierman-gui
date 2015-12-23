@@ -1,13 +1,5 @@
 <div class="control-panel">
-	<div ng-hide="appConfig.mode == 'ingress'">
-		<button ng-click="startOver()">Start Over</button>
-	</div>
-	<div ng-show="appConfig.mode == 'egress'">
-		<div ng-show="currentTree.egress.length">
-			<button ng-click="selectPath()">All receivers chosen</button>
-		</div>
-	</div>
-	<div ng-show="appConfig.mode == 'path'">
-		<button ng-click="validateTree()">Validate</button>
+	<div ng-show="appConfig.mode == 'draw'">
+		<button ng-click="startOver()">Start Over</button> <button ng-click="validateTree()">Validate</button>
 	</div>
 </div>
