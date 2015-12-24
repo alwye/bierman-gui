@@ -3,19 +3,19 @@
 <head>
 	<title>BIER Manager</title>
 	<link rel="stylesheet" href="vendor/next-ui/css/next.css">
-	<script type="application/javascript" src="vendor/jquery/jquery.js"></script>
+	<!-- Loading libraries -->
 	<script type="application/javascript" src="vendor/angular/angular.js"></script>
 	<script type="application/javascript" src="vendor/next-ui/js/next.js"></script>
-	<script type="application/javascript" src="app/data.js"></script>
 </head>
 <body>
 	<div ng-controller="biermanCtrl">
 		<div ng-include="'./app/templates/panel-messages.tpl.html'"></div>
-		<bierman-topology topology-start-over="topologyStartOver"></bierman-topology>
+		<bierman-topology reset-topology="resetTopology" init-topology="initTopology" topo="topo"></bierman-topology>
 		<div ng-include="'./app/templates/panel-controls.tpl.html'"></div>
 	</div>
 	<script type="application/javascript" src="app/bierman.module.js"></script>
 	<script type="application/javascript" src="app/bierman.controller.js"></script>
+	<script type="application/javascript" src="app/restapi.service.js"></script>
 	<script type="application/javascript" src="app/directives/topology.directive.js"></script>
 </body>
 </html>

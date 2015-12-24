@@ -1,21 +1,40 @@
 app.controller('biermanCtrl', function($scope) {
 
-	$scope.topologyInit = false;
-
+	// BIER Manager configuration
 	$scope.appConfig = {
-		mode: 'start'
+		// FOR MANUAL CONFIGURATION
+		'ctrlHost': '10.124.19.145', // IP address of controller
+		'ctrlPort': '8181', // Port of controller (8181 by default)
+		'ctrlUsername': 'admin', // Username for controller
+		'ctrlPassword': 'admin', // Password for user
+		'httpMaxTimeout': 10000, // Maximum timeout in milliseconds for HTTP requests
+		// DO NOT MODIFY CONFIGURATION BELOW
+		'mode': 'init', // Application mode (do not modify)
+		'topoInitialized': false
 	};
 
-	$scope.startOver = function(){
+	// Topology data in Common Topology Model style
+	$scope.topologyData = {
+		'nodes': [],
+		'links': []
+	};
+
+	// Shortcut for controller's host + port
+	$scope.getBaseUrl = function(){
+		return 'http://' + $scope.appConfig.ctrlHost + ':' + $scope.appConfig.ctrlPort;
+	};
+
+	$scope.initApp = function(){
 		$scope.appConfig.mode = 'start';
 		$scope.currentTree = {
 			'ingress': null,
 			'egress': [],
 			'links': []
 		};
-		if($scope.topologyInit)
-			$scope.topologyStartOver();
+		if($scope.appConfig.topoInitialized)
+			$scope.resetTopology();
 	};
+
 
 	$scope.selectPath = function(){
 		$scope.appConfig.mode = 'draw';
@@ -24,6 +43,13 @@ app.controller('biermanCtrl', function($scope) {
 	$scope.validateTree = function(){
 		alert('not ready yet');
 	};
+
+	$scope.processTopologyData = function(data){
+		console.log(data);
+		return data;
+	};
+
+
 
 
 
