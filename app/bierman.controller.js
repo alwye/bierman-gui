@@ -1,4 +1,4 @@
-app.controller('biermanCtrl', function($scope) {
+app.controller('biermanCtrl', function($scope, BiermanRest) {
 
 	// BIER Manager configuration
 	$scope.appConfig = {
@@ -13,15 +13,12 @@ app.controller('biermanCtrl', function($scope) {
 		'topoInitialized': false
 	};
 
+	var biermanRest = new BiermanRest($scope.appConfig);
+
 	// Topology data in Common Topology Model style
 	$scope.topologyData = {
 		'nodes': [],
 		'links': []
-	};
-
-	// Shortcut for controller's host + port
-	$scope.getBaseUrl = function(){
-		return 'http://' + $scope.appConfig.ctrlHost + ':' + $scope.appConfig.ctrlPort;
 	};
 
 	$scope.initApp = function(){
@@ -50,7 +47,7 @@ app.controller('biermanCtrl', function($scope) {
 	};
 
 
-
+	console.log(biermanRest.getTopology());
 
 
 });

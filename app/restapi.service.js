@@ -1,38 +1,53 @@
 /* This Angular Service implements REST Interface for BIER Manager */
-app.factory('biermanRest', function(){
+app.factory('BiermanRest', function($http){
+
+	var BiermanRest = function(appConfig){
+		this.appConfig = appConfig;
+	};
+
+	// Shortcut for controller's host + port
+	BiermanRest.prototype.getBaseUrl = function(){
+		return 'http://' + this.appConfig.ctrlHost + ':' + this.appConfig.ctrlPort;
+	};
 
 	// Read topology from the controller
-	var getTopology = function(){
-		// todo: get it in angular-ish style
-		$http({
-			'url': $scope.getBaseUrl() + '/restconf/operational/network-topology:network-topology/',
-			'dataType': 'json',
+	BiermanRest.prototype.getTopology = function(){
+		var self = this;
+
+		var httpResult = $http({
+			'url': self.getBaseUrl() + '/restconf/operational/network-topology:network-topology/',
 			'withCredentials': true,
-			'username': $scope.appConfig.ctrlUsername,
-			'password': $scope.appConfig.ctrlPassword,
-			'timeout': $scope.appConfig.httpMaxTimeout
-		}).get().then(
+			'method': 'JSONP',
+			'headers': {
+				'Authorization': 'Basic '+ self.appConfig.ctrlUsername +':' + self.appConfig.ctrlPassword,
+				'Access-Control-Allow-Methods': 'GET, JSONP',
+				'Access-Control-Allow-Origin': '*'
+			},
+			'timeout': this.appConfig.httpMaxTimeout
+		}).then(
 			// loaded
 			function (data, textStatus, jqXHR){
-				$scope.topologyData = $scope.processTopologyData(data);
-				if($scope.topologyData)
-					$scope.initTopology();
+				console.log(data);
+				return data;
 			},
 			// failed
 			function(jqXHR, textStatus, errorThrown){
-				console.error("Could not fetch topology data from server: " + textStatus)
+				//console.error("Could not fetch topology data from server: " + textStatus);
+				return false;
 			});
+
 	};
 
 	// Compute BIER TE FMASK for specified link
-	var computeFmask = function(data){
+	BiermanRest.computeFmask = function(data){
 
 	};
 
 	// Compute Top-K shortest paths
-	var computeTopKShortestPaths = function(data){
+	BiermanRest.computeTopKShortestPaths = function(data){
 
 	};
 
+	return BiermanRest;
 
 });

@@ -8,8 +8,6 @@ app.directive('biermanTopology', function() {
 			'topo': '='
 		},
 		'link': function($scope, iElm, iAttrs, controller){
-
-
 			var initTopology = function(){
 
 				$scope.colorTable = {
