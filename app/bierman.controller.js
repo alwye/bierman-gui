@@ -49,5 +49,4 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 
 	console.log(biermanRest.getTopology());
 
-
 });

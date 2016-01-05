@@ -7,7 +7,7 @@ app.factory('BiermanRest', function($http){
 
 	// Shortcut for controller's host + port
 	BiermanRest.prototype.getBaseUrl = function(){
-		return 'http://' + this.appConfig.ctrlHost + ':' + this.appConfig.ctrlPort;
+		return 'http://' + this.appConfig.ctrlUsername + ':' + this.appConfig.ctrlPassword + '@' + this.appConfig.ctrlHost + ':' + this.appConfig.ctrlPort;
 	};
 
 	// Read topology from the controller
@@ -17,25 +17,19 @@ app.factory('BiermanRest', function($http){
 		var httpResult = $http({
 			'url': self.getBaseUrl() + '/restconf/operational/network-topology:network-topology/',
 			'withCredentials': true,
-			'method': 'JSONP',
-			'headers': {
-				'Authorization': 'Basic '+ self.appConfig.ctrlUsername +':' + self.appConfig.ctrlPassword,
-				'Access-Control-Allow-Methods': 'GET, JSONP',
-				'Access-Control-Allow-Origin': '*'
-			},
+			'method': 'GET',
 			'timeout': this.appConfig.httpMaxTimeout
 		}).then(
 			// loaded
 			function (data, textStatus, jqXHR){
-				console.log(data);
+				data = data.data['network-topology'].topology;
 				return data;
 			},
 			// failed
 			function(jqXHR, textStatus, errorThrown){
-				//console.error("Could not fetch topology data from server: " + textStatus);
+				console.error("Could not fetch topology data from server: " + textStatus);
 				return false;
 			});
-
 	};
 
 	// Compute BIER TE FMASK for specified link
