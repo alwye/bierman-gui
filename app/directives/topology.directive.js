@@ -246,6 +246,7 @@ app.directive('biermanTopology', function() {
 					'methods': {
 						'init': function (args) {
 							this.inherited(args);
+							$scope.topo.fit();
 						},
 						'setModel': function (model) {
 							this.inherited(model);
