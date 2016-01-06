@@ -218,7 +218,7 @@ app.directive('biermanTopology', function() {
 					'adaptive': true,
 					'showIcon': true,
 					'nodeConfig': {
-						'label': 'model.name',
+						'label': 'model.attributes.name',
 						'iconType': 'router',
 						'color': $scope.colorTable.nodeTypes.none
 					},
@@ -236,11 +236,12 @@ app.directive('biermanTopology', function() {
 					'enableSmartLabel': true,
 					'enableGradualScaling': true,
 					'supportMultipleLink': true,
+					'dataProcessor': 'force',
 					'nodeInstanceClass': 'ExtendedNode',
 					'linkInstanceClass': 'ExtendedLink'
 				});
 
-				$scope.topo.data($scope.topologyData);
+				$scope.topo.data($scope.$parent.topologyData);
 
 
 				// fired when topology is generated
@@ -267,7 +268,7 @@ app.directive('biermanTopology', function() {
 			};
 
 			$scope.$watch('$parent.topologyData', function(){
-				if($scope.$parent.topologyData.nodes.length && $scope.$parent.topoInitialized === false) {
+				if($scope.$parent.topologyData.nodes.length && $scope.$parent.topoInitialized === true) {
 					initTopology($scope.$parent.topologyData);
 				}
 			});

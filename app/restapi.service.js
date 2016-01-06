@@ -22,6 +22,13 @@ app.factory('BiermanRest', function($http){
 			// loaded
 			function (data, textStatus, jqXHR){
 				data = data.data['network-topology'].topology;
+				// fixme: we need clarification on that
+				for(var i = 0; i < data.length; i++)
+					if(data[i].hasOwnProperty('node') && data[i].hasOwnProperty('link'))
+					{
+						data = data[i];
+						break;
+					}
 				successCbk(data);
 			},
 			// failed

@@ -3,6 +3,8 @@
 <head>
 	<title>BIER Manager</title>
 	<link rel="stylesheet" href="vendor/next-ui/css/next.css">
+	<link rel="stylesheet" href="vendor/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="assets/style.css">
 	<!-- Loading libraries -->
 	<script type="application/javascript" src="vendor/angular/angular.js"></script>
 	<script type="application/javascript" src="vendor/next-ui/js/next.js"></script>
@@ -13,6 +15,7 @@
 		<bierman-topology reset-topology="resetTopology" init-topology="initTopology" topo="topo"></bierman-topology>
 		<div ng-include="'./app/templates/panel-controls.tpl.html'"></div>
 	</div>
+	<div ng-include="'./app/templates/side-panel-index.tpl.html'"></div>
 
 	<script type="application/javascript" src="app/bierman.module.js"></script>
 	<script type="application/javascript" src="app/restapi.service.js"></script>
