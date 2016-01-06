@@ -11,10 +11,9 @@ app.factory('BiermanRest', function($http){
 	};
 
 	// Read topology from the controller
-	BiermanRest.prototype.getTopology = function(){
+	BiermanRest.prototype.loadTopology = function(successCbk, errorCbk){
 		var self = this;
-
-		var httpResult = $http({
+		$http({
 			'url': self.getBaseUrl() + '/restconf/operational/network-topology:network-topology/',
 			'withCredentials': true,
 			'method': 'GET',
@@ -23,12 +22,12 @@ app.factory('BiermanRest', function($http){
 			// loaded
 			function (data, textStatus, jqXHR){
 				data = data.data['network-topology'].topology;
-				return data;
+				successCbk(data);
 			},
 			// failed
 			function(jqXHR, textStatus, errorThrown){
-				console.error("Could not fetch topology data from server: " + textStatus);
-				return false;
+				var errMsg = "Could not fetch topology data from server: " + textStatus;
+				errorCbk(errMsg);
 			});
 	};
 

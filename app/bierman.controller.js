@@ -46,7 +46,10 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 		return data;
 	};
 
-
-	console.log(biermanRest.getTopology());
+	biermanRest.loadTopology(function(data){
+		console.log(data);
+	}, function(errMsg){
+		console.error(errMsg);
+	});
 
 });
