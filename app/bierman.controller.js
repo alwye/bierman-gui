@@ -52,6 +52,14 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 
 	$scope.processTopologyData = function(data){
 		console.log(data);
+
+		function getKey(a, b){
+			if(a < b)
+				return a + '-' + b;
+			else
+				return b + '-' + a;
+		}
+
 		var topologyData = {
 			nodes: [],
 			links: [],
@@ -80,6 +88,8 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 			// Record node data
 			topologyData.nodes.push(node);
 		});
+
+
 
 		data.link.forEach(function(currentLink,index,links){
 			// Reformat information

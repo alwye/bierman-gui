@@ -10,6 +10,8 @@ app.directive('biermanTopology', function() {
 		'link': function($scope, iElm, iAttrs, controller){
 			var initTopology = function(){
 
+				$scope.dumpData = null;
+
 				$scope.colorTable = {
 					'nodeTypes': {
 						'ingress': '#009933',
@@ -22,6 +24,49 @@ app.directive('biermanTopology', function() {
 					}
 				};
 
+				// reads data from local storage
+				$scope.readDumpDataFromLocalStorage = function(){
+					try{
+						$scope.dumpData = JSON.parse(localStorage.getItem("biermanTopologyData"));
+					}catch(e) {
+						console.info('Local Storage read parse error:', e);
+					}
+					$scope.readDumpData();
+				};
+
+				// saves the data to local storage
+				$scope.writeDumpDataToLocalStorage = function(){
+					try{
+						localStorage.setItem("biermanTopologyData", JSON.stringify($scope.dumpData));
+					}catch(e) {
+						console.info('Local Storage save error:', e);
+					}
+				};
+
+				// Dump the positions of nodes
+				$scope.writeDumpdata = function(){
+					$scope.dumpData = {'nodes': []};
+					var nodesLayer = $scope.topo.getLayer('nodes');
+					nodesLayer.eachNode(function(node){
+						$scope.dumpData.nodes.push({
+							'x': node.x(),
+							'y': node.y(),
+							'nodeName': node.model()._data['nodeId']
+						});
+					});
+					$scope.writeDumpDataToLocalStorage();
+				};
+
+				// read dump data from $scope.dumpData
+				$scope.readDumpData = function(){
+					if($scope.dumpData && $scope.dumpData.nodes ){
+						$scope.dumpData.nodes.forEach(function(node, index, nodes){
+							nodeInst = $scope.topo.getNode($scope.$parent.topologyData.nodesDict.getItem(node.nodeName));
+							if(nodeInst != undefined)
+								nodeInst.position({'x': node.x, 'y': node.y});
+						});
+					}
+				};
 
 				// highlights a node
 				$scope.highlightNode = function (targetId, noLinks) {
@@ -243,18 +288,19 @@ app.directive('biermanTopology', function() {
 
 				$scope.topo.data($scope.$parent.topologyData);
 
-
 				// fired when topology is generated
-				$scope.topo.on('topologyGenerated', function (sender, event) {
+				$scope.topo.on('topologyGenerated', function (sender, event){
 					// use custom events for the topology
 					sender.registerScene('ce', 'CustomScene');
 					sender.activateScene('ce');
 					// disable tooltips for both nodes and links
 					$scope.topo.tooltipManager().showNodeTooltip(false);
 					$scope.topo.tooltipManager().showLinkTooltip(false);
-					// initialize BIERman
-					$scope.$parent.topoInitialized = true;
-					$scope.$parent.startOver();
+				});
+
+				$scope.topo.on('ready', function(sender, event){
+					$scope.readDumpDataFromLocalStorage();
+					window.setInterval(function(){$scope.writeDumpdata();}, 5000);
 				});
 
 				var app = new nx.ui.Application();
