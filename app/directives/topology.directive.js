@@ -215,11 +215,10 @@ app.directive('biermanTopology', function() {
 
 				nx.define('CustomScene', nx.graphic.Topology.DefaultScene, {
 					'methods': {
-						clickNode: function (topology, node) {
-							console.log(node);
+						clickNode: function (topology, node){
 							$scope.pickNode(node.id());
 						},
-						clickLink: function (topology, link) {
+						clickLink: function (topology, link){
 							$scope.pickLink(link.id());
 						}
 					}
@@ -302,6 +301,8 @@ app.directive('biermanTopology', function() {
 				$scope.topo.on('ready', function(sender, event){
 					$scope.readDumpDataFromLocalStorage();
 					window.setInterval(function(){$scope.writeDumpdata();}, 5000);
+					$('#node-panel-opener').on('click', function(){$scope.openNodePanel();});
+					$('#link-panel-opener').on('click', function(){$scope.openLinkPanel();});
 				});
 
 				var app = new nx.ui.Application();

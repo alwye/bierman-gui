@@ -10,12 +10,12 @@
 	<script type="application/javascript" src="vendor/next-ui/js/next.js"></script>
 </head>
 <body>
-	<div ng-controller="biermanCtrl">
+	<div ng-controller="biermanCtrl" class="app-wrapper">
 		<div ng-include="'./app/templates/panel-messages.tpl.html'"></div>
-		<bierman-topology reset-topology="resetTopology" init-topology="initTopology" topo="topo"></bierman-topology>
+		<bierman-topology class="topology-container" reset-topology="resetTopology" init-topology="initTopology" topo="topo"></bierman-topology>
 		<div ng-include="'./app/templates/panel-controls.tpl.html'"></div>
+		<div ng-include="'./app/templates/side-panel-index.tpl.html'"></div>
 	</div>
-	<div ng-include="'./app/templates/side-panel-index.tpl.html'"></div>
 
 	<script type="application/javascript" src="app/bierman.module.js"></script>
 	<script type="application/javascript" src="app/restapi.service.js"></script>
