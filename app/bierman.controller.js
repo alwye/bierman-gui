@@ -9,6 +9,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 		'ctrlPassword': 'admin', // Password for user
 		'httpMaxTimeout': 10000, // Maximum timeout in milliseconds for HTTP requests
 		'maxPacketLoss': 10,
+		'currentPanel': null,
 		// DO NOT MODIFY CONFIGURATION BELOW
 		'mode': 'init', // Application mode (do not modify)
 		'topoInitialized': false
@@ -143,6 +144,19 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 
 		$scope.topologyData = topologyData;
 		return $scope.topologyData;
+	};
+
+	// panels
+	$scope.openNodePanel = function(){
+		$scope.openNodePanelTopo();
+	};
+
+	$scope.openLinkPanel = function(){
+		$scope.openLinkPanelTopo();
+	};
+
+	$scope.openFlowPanel = function(){
+		$scope.openFlowPanelTopo();
 	};
 
 	$scope.initApp();

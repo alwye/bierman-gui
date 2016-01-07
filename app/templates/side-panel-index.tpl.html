@@ -2,16 +2,23 @@
 	<!-- panel navigation -->
 	<div class="panel-nav">
 		<ul>
-			<li><a href="#"  id="node-panel-opener" title="Open nodes panel" class='noselect'><i class="fa fa-dot-circle-o fa-2x"></i></a></li>
-			<li><a href="#"  id="link-panel-opener" title="Open links panel" class='noselect'><i class="fa fa-link fa-2x"></i></a></li>
+			<li><a href="#"  id="node-panel-opener" ng-click="openPanel('node')" title="Open nodes panel" class='noselect'><i class="fa fa-dot-circle-o fa-2x"></i></a></li>
+			<li><a href="#"  id="link-panel-opener" ng-click="openPanel('link')" title="Open links panel" class='noselect'><i class="fa fa-link fa-2x"></i></a></li>
+			<li><a href="#"  id="config-panel-opener" ng-click="openPanel('config')" title="Open configuration panel" class='noselect'><i class="fa fa-cog fa-2x"></i></a></li>
 		</ul>
 	</div>
 	<!-- panel content -->
 	<div id="side-panel" class="full-height">
 		<div class="full-height" style="width: 405px">
 			<div class="full-size">
-				<div ng-show="true" class="full-size">
-					<div class="full-size">stuff</div>
+				<div ng-show="appConfig.currentPanel == 'node'" class="full-size">
+					node panel
+				</div>
+				<div ng-show="appConfig.currentPanel == 'link'" class="full-size">
+					link panel
+				</div>
+				<div ng-show="appConfig.currentPanel == 'config'" class="full-size">
+					Flow configuration panel
 				</div>
 			</div>
 		</div>

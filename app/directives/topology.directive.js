@@ -5,7 +5,8 @@ app.directive('biermanTopology', function() {
 		'scope': {
 			'topologyStartOver': '=',
 			'topoInitialized': '=',
-			'topo': '='
+			'topo': '=',
+			'openPanel': '='
 		},
 		'link': function($scope, iElm, iAttrs, controller){
 			var initTopology = function(){
@@ -21,6 +22,27 @@ app.directive('biermanTopology', function() {
 					'linkTypes': {
 						'path': '#009933',
 						'none': '#67C9E4'
+					}
+				};
+
+				$scope.openPanel = function(panelCode, auxParam){
+					var panel = $('#side-panel');
+					var previousPanelType = $scope.$parent.appConfig.currentPanel;
+					$scope.$parent.appConfig.currentPanel = panelCode;
+
+					$scope.fadeInAllLayers();
+
+					if (panel.hasClass('visible') && previousPanelType == panelCode) { //user attempts to close slide-out
+						$scope.topo.getLayer('nodes').highlightedElements().clear(); //clears anything left highlighted
+						$scope.topo.getLayer('links').highlightedElements().clear();
+
+						panel.removeClass('visible').animate({'margin-right':'-400px'}); //shift slidepanel
+						$('div').find('.in').removeClass('in');
+						$scope.topo.adaptToContainer(); //fix topo size
+					} else {
+						panel.addClass('visible').animate({'margin-right': '0px'}); //shifts slidepanel
+						$scope.topo.resize((window.innerWidth - 200), 0.975 * (window.innerHeight)); //resize topology
+						$scope.topo.fit(); //fits to view
 					}
 				};
 
@@ -301,8 +323,6 @@ app.directive('biermanTopology', function() {
 				$scope.topo.on('ready', function(sender, event){
 					$scope.readDumpDataFromLocalStorage();
 					window.setInterval(function(){$scope.writeDumpdata();}, 5000);
-					$('#node-panel-opener').on('click', function(){$scope.openNodePanel();});
-					$('#link-panel-opener').on('click', function(){$scope.openLinkPanel();});
 				});
 
 				var app = new nx.ui.Application();
