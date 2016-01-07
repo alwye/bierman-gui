@@ -8,6 +8,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 		'ctrlUsername': 'admin', // Username for controller
 		'ctrlPassword': 'admin', // Password for user
 		'httpMaxTimeout': 10000, // Maximum timeout in milliseconds for HTTP requests
+		'maxPacketLoss': 10,
 		// DO NOT MODIFY CONFIGURATION BELOW
 		'mode': 'init', // Application mode (do not modify)
 		'topoInitialized': false
@@ -91,35 +92,54 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 
 
 
-		data.link.forEach(function(currentLink,index,links){
-			// Reformat information
-			var link = {};
-			// Internal ID
-			link.id = index;
-			// Global ID
-			link.linkId = currentLink['link-id'];
-			// Source node ID
-			link.source = topologyData.nodesDict.getItem(currentLink['source']['source-node']);
-			// Target node ID
-			link.target = topologyData.nodesDict.getItem(currentLink['destination']['dest-node']);
-			// Source TP name
-			link.sourceTP = currentLink['source']['source-tp'];
-			// Target TP name
-			link.targetTP = currentLink['destination']['dest-tp'];
-			// BFR adjustment ID
-			link.bfrAdjId = currentLink['topology-bier:bfr-adj-id'];
-			// Delay of a link
-			link.delay = currentLink['topology-bier:delay'];
-			// Loss info
-			link.loss = currentLink['topology-bier:loss'];
-			// Attributes
-			link.attributes = currentLink['l3-unicast-igp-topology:igp-link-attributes'];
+		for(var linkIndex = 0; linkIndex < data.link.length; linkIndex++){
+			var srcId = topologyData.nodesDict.getItem(data.link[linkIndex].source['source-node']);
+			var tarId = topologyData.nodesDict.getItem(data.link[linkIndex].destination['dest-node']);
+			var currentLinkKey = getKey(srcId,tarId);
+			var currentLink = data.link[linkIndex];
+			var linkContainer = {};
+			var linkContainerIndex = null;
+			var linkInfo;
 
-			// Assign link's external id to the internal one
-			topologyData.linksDict.setItem(link.linkId, link.id);
-			// Record link data
-			topologyData.links.push(link);
-		});
+
+			if(topologyData.linksDict.contains(currentLinkKey)){
+				linkContainerIndex = topologyData.linksDict.getItem(getKey(srcId,tarId));
+			}
+			else{
+				linkContainerIndex = topologyData.links.length;
+				topologyData.linksDict.setItem(getKey(srcId,tarId), linkContainerIndex);
+				topologyData.links.push({
+					id: linkContainerIndex,
+					source: Math.min(srcId, tarId),
+					target: Math.max(srcId, tarId),
+					links: []
+				});
+				linkContainer = topologyData.links[linkContainerIndex];
+				linkInfo = {
+					// Internal ID
+					id: linkIndex,
+					// Global ID
+					linkId: currentLink['link-id'],
+					// Source node ID
+					source: topologyData.nodesDict.getItem(currentLink['source']['source-node']),
+					// Target node ID
+					target: topologyData.nodesDict.getItem(currentLink['destination']['dest-node']),
+					// Source TP name
+					sourceTP: currentLink['source']['source-tp'],
+					// Target TP name
+					targetTP: currentLink['destination']['dest-tp'],
+					// BFR adjustment ID
+					bfrAdjId: currentLink['topology-bier:bfr-adj-id'],
+					// Delay of a link
+					delay: currentLink['topology-bier:delay'],
+					// Loss info
+					loss: currentLink['topology-bier:loss'],
+					// Attributes
+					attributes: currentLink['l3-unicast-igp-topology:igp-link-attributes']
+				};
+				linkContainer.links.push(linkInfo);
+			}
+		}
 
 		$scope.topologyData = topologyData;
 		return $scope.topologyData;
