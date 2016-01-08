@@ -12,10 +12,13 @@
 </head>
 <body>
 	<div ng-controller="biermanCtrl" class="app-wrapper">
-		<div ng-include="'./app/templates/panel-messages.tpl.html'"></div>
-		<bierman-topology class="topology-container" reset-topology="resetTopology" init-topology="initTopology" topo="topo" open-panel="openPanel"></bierman-topology>
-		<div ng-include="'./app/templates/panel-controls.tpl.html'"></div>
-		<div ng-include="'./app/templates/side-panel-index.tpl.html'"></div>
+		<div class="top">
+			<div ng-include="'./app/templates/panel-messages.tpl.html'"></div>
+		</div>
+		<div class="main">
+			<bierman-topology class="topology-container" reset-topology="resetTopology" init-topology="initTopology" topo="topo" open-panel="openPanel"></bierman-topology>
+			<div ng-include="'./app/templates/side-panel-index.tpl.html'"></div>
+		</div>
 	</div>
 
 	<script type="application/javascript" src="app/bierman.module.js"></script>
