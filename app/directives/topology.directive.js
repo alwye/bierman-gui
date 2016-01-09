@@ -267,7 +267,8 @@ app.directive('biermanTopology', function() {
 					'methods': {
 						'init': function (args) {
 							this.inherited(args);
-							$scope.topo.fit();
+							// fixme: third parameter should be false
+							$scope.topo.fit(undefined, undefined, true);
 						},
 						'setModel': function (model) {
 							this.inherited(model);
@@ -301,6 +302,7 @@ app.directive('biermanTopology', function() {
 					'width': 1000,
 					'height': 800,
 					'enableSmartLabel': true,
+					'enableSmartNode': true,
 					'enableGradualScaling': true,
 					'supportMultipleLink': true,
 					'dataProcessor': 'force',
@@ -323,8 +325,15 @@ app.directive('biermanTopology', function() {
 				$scope.topo.on('ready', function(sender, event){
 					$scope.readDumpDataFromLocalStorage();
 					window.setInterval(function(){$scope.writeDumpdata();}, 5000);
-					$scope.$parent.appConfig.mode = 'start';
-					$scope.$apply();
+
+				});
+
+				$scope.topo.on('fitStage', function(sender, event){
+					setTimeout(function(){
+						$scope.$parent.appConfig.mode = 'start';
+						$scope.$apply();
+					},1000);
+
 				});
 
 				var app = new nx.ui.Application();
