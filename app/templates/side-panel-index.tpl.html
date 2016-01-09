@@ -2,7 +2,7 @@
 	<!-- panel navigation -->
 	<div class="panel-nav">
 		<ul>
-			<li><a href="#"  id="config-panel-opener" ng-click="openPanel('config')" title="Open configuration panel" class='noselect'><i class="fa fa-cog fa-2x"></i></a></li>
+			<li><a href="#"  id="config-panel-opener" ng-click="openPanel('config')" title="Open configuration panel" class='noselect'><i class="fa fa-pencil-square-o fa-2x"></i></a></li>
 			<li><a href="#"  id="node-panel-opener" ng-click="openPanel('node')" title="Open nodes panel" class='noselect'><i class="fa fa-dot-circle-o fa-2x"></i></a></li>
 			<li><a href="#"  id="link-panel-opener" ng-click="openPanel('link')" title="Open links panel" class='noselect'><i class="fa fa-link fa-2x"></i></a></li></ul>
 	</div>
@@ -11,9 +11,9 @@
 		<div class="full-height" style="width: 405px">
 			<div class="full-size">
 				<div ng-show="appConfig.currentPanel == 'config'" class="full-size">
-					<h2>Path Manager</h2>
+					<h2>BIER Path Manager</h2>
 					<b>Manual only</b><br>
-					<button>Validate and compute mask</button><br><br>
+					<button ng-click="">Validate and compute mask</button><br><br>
 					<select>
 						<option>-Assign flows -</option>
 						<option>Comedy Central</option>

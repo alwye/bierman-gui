@@ -12,6 +12,9 @@
 </head>
 <body>
 	<div ng-controller="biermanCtrl" class="app-wrapper">
+		<div ng-show="appConfig.mode == 'init'" ng-hide="appConfig.mode != 'init'">
+			<div class="loading">Loading&#8230;</div>
+		</div>
 		<div class="top">
 			<div ng-include="'./app/templates/panel-messages.tpl.html'"></div>
 		</div>

@@ -323,6 +323,8 @@ app.directive('biermanTopology', function() {
 				$scope.topo.on('ready', function(sender, event){
 					$scope.readDumpDataFromLocalStorage();
 					window.setInterval(function(){$scope.writeDumpdata();}, 5000);
+					$scope.$parent.appConfig.mode = 'start';
+					$scope.$apply();
 				});
 
 				var app = new nx.ui.Application();

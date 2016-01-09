@@ -9,10 +9,11 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 		'ctrlPassword': 'admin', // Password for user
 		'httpMaxTimeout': 10000, // Maximum timeout in milliseconds for HTTP requests
 		'maxPacketLoss': 10,
-		'currentPanel': null,
 		// DO NOT MODIFY CONFIGURATION BELOW
 		'mode': 'init', // Application mode (do not modify)
-		'topoInitialized': false
+		'topoInitialized': false,
+		'currentPanel': null,
+		'currentTopologyId': null
 	};
 
 	var biermanRest = new BiermanRest($scope.appConfig);
@@ -34,9 +35,9 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 	$scope.initApp = function(){
 		$scope.clearCurrentTree();
 		biermanRest.loadTopology(function(data){
-			$scope.appConfig.mode = 'start';
 			$scope.processTopologyData(data);
 			$scope.topoInitialized = true;
+			$scope.appConfig.currentTopologyId = data['topology-id'];
 			console.log($scope.topologyData);
 		}, function(errMsg){
 			console.error(errMsg);
