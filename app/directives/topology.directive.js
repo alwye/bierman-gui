@@ -29,9 +29,7 @@ app.directive('biermanTopology', function() {
 					var panel = $('#side-panel');
 					var previousPanelType = $scope.$parent.appConfig.currentPanel;
 					$scope.$parent.appConfig.currentPanel = panelCode;
-
 					$scope.fadeInAllLayers();
-
 					if (panel.hasClass('visible') && previousPanelType == panelCode) { //user attempts to close slide-out
 						$scope.topo.getLayer('nodes').highlightedElements().clear(); //clears anything left highlighted
 						$scope.topo.getLayer('links').highlightedElements().clear();

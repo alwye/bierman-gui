@@ -20,7 +20,7 @@ app.factory('BiermanRest', function($http){
 			'timeout': this.appConfig.httpMaxTimeout
 		}).then(
 			// loaded
-			function (data, textStatus, jqXHR){
+			function (data){
 				data = data.data['network-topology'].topology;
 				// fixme: we need clarification on that
 				for(var i = 0; i < data.length; i++)
@@ -39,8 +39,31 @@ app.factory('BiermanRest', function($http){
 	};
 
 	// Compute BIER TE FMASK for specified link
-	BiermanRest.computeFmask = function(data){
-
+	BiermanRest.prototype.computeMask = function(data, successCbk, errorCbk){
+		var self = this;
+		$http({
+			'url': self.getBaseUrl() + '/restconf/operations/bier:compute-fmask/',
+			'withCredentials': true,
+			'method': 'POST',
+			'timeout': this.appConfig.httpMaxTimeout,
+			'data': JSON.stringify(data)
+		}).then(
+			// loaded
+			function (data){console.log(data);
+				try{
+					data = data.output;
+					successCbk(data);
+				}
+				catch(e){
+					var errMsg = "Invalid JSON response to computeMask";
+					errorCbk(errMsg);
+				}
+			},
+			// failed
+			function(err){console.log(err);
+				var errMsg = "Could not fetch path data from server: " + err.statusText;
+				errorCbk(errMsg);
+			});
 	};
 
 	// Compute Top-K shortest paths

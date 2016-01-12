@@ -4,7 +4,8 @@
 		<ul>
 			<li><a href="#"  id="config-panel-opener" ng-click="openPanel('config')" title="Open configuration panel" class='noselect'><i class="fa fa-pencil-square-o fa-2x"></i></a></li>
 			<li><a href="#"  id="node-panel-opener" ng-click="openPanel('node')" title="Open nodes panel" class='noselect'><i class="fa fa-dot-circle-o fa-2x"></i></a></li>
-			<li><a href="#"  id="link-panel-opener" ng-click="openPanel('link')" title="Open links panel" class='noselect'><i class="fa fa-link fa-2x"></i></a></li></ul>
+			<li><a href="#"  id="link-panel-opener" ng-click="openPanel('link')" title="Open links panel" class='noselect'><i class="fa fa-link fa-2x"></i></a></li>
+			<li><a href="#"  id="path-panel-opener" ng-click="openPanel('path')" title="Open paths panel" class='noselect'><i class="fa fa-arrows fa-2x"></i></a></li></ul>
 	</div>
 	<!-- panel content -->
 	<div id="side-panel" class="panel full-height">
@@ -13,8 +14,8 @@
 				<div ng-show="appConfig.currentPanel == 'config'" class="full-size">
 					<h2>BIER Path Manager</h2>
 					<b>Manual only</b><br>
-					<button ng-click="">Validate and compute mask</button><br><br>
-					<select>
+					<button ng-click="computeMask()">Validate and compute mask</button><br><br>
+					<select id="">
 						<option>-Assign flows -</option>
 						<option>Comedy Central</option>
 						<option>Spike</option>
@@ -28,6 +29,10 @@
 				</div>
 				<div ng-show="appConfig.currentPanel == 'link'" class="full-size">
 					<h2>Link Panel</h2>
+					Under construction
+				</div>
+				<div ng-show="appConfig.currentPanel == 'path'" class="full-size">
+					<h2>Path Panel</h2>
 					Under construction
 				</div>
 			</div>
