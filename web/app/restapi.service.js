@@ -14,13 +14,12 @@ app.factory('BiermanRest', function($http){
 	BiermanRest.prototype.loadTopology = function(successCbk, errorCbk){
 		var self = this;
 		$http({
-			'url': self.getProxyURL() + '/restconf/operational/network-topology:network-topology/',
-			'withCredentials': true,
+			'url': self.getProxyURL() + '/restconf/operational/network-topology:network-topology',
 			'method': 'GET',
 			'timeout': this.appConfig.httpMaxTimeout
 		}).then(
 			// loaded
-			function (res){
+			function (res){console.log(res);
 				res = res.data;
 				if(res.status == 'ok'){
 					res = res.data['network-topology'].topology;
@@ -48,22 +47,28 @@ app.factory('BiermanRest', function($http){
 	BiermanRest.prototype.computeMask = function(data, successCbk, errorCbk){
 		var self = this;
 		$http({
-			'url': self.getProxyURL() + '/restconf/operations/bier:compute-fmask/',
-			'withCredentials': true,
+			'url': self.getProxyURL() + '/restconf/operations/bier:compute-fmask',
 			'method': 'POST',
 			'timeout': this.appConfig.httpMaxTimeout,
 			'data': JSON.stringify(data)
 		}).then(
 			// loaded
-			function (data){console.log(data);
-				try{
-					data = data.output;
-					successCbk(data);
+			function (data){
+				if(data.data.status == 'ok')
+				{
+					try{
+						data = data.data.data.output;
+						successCbk(data);
+					}
+					catch(e){
+						var errMsg = "Invalid JSON response to computeMask";
+						errorCbk(errMsg);
+					}
 				}
-				catch(e){
-					var errMsg = "Invalid JSON response to computeMask";
-					errorCbk(errMsg);
+				else{
+					errorCbk(data.data.data);
 				}
+
 			},
 			// failed
 			function(err){

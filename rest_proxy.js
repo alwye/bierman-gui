@@ -11,6 +11,7 @@ Check out http://github.com/zverevalexei/odl-rest-proxy
 v0.1 - 01/12/2016 - Basic functionality
  */
 
+const fs = require('fs');
 const http = require('http');
 
 // app configuration
@@ -29,9 +30,9 @@ var reqCounter = 0;
 // create a server
 var proxy = http.createServer();
 if(proxy)
-	console.log('REST Proxy started');
+	console.log('ODL REST Proxy started');
 else
-	console.error('REST Proxy has not started');
+	console.error('ODL REST Proxy has not started');
 
 // Server API
 proxy.on('request',function(userReq,userRes){
@@ -40,57 +41,75 @@ proxy.on('request',function(userReq,userRes){
 		return '[#' + reqId + '] ';
 	}
 	var resBody = '';
-	console.log(fReqId() + 'Received ' + userReq.method + ' request from client.');
+	var reqBody = '';
 
+	console.log(fReqId() + 'Received ' + userReq.method + ' request from client.');
 	userRes.writeHead(200,
 		{	'Access-Control-Allow-Origin': userReq.headers.origin,
-			'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+			'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
 			'Access-Control-Allow-Credentials': 'true',
 			'Access-Control-Allow-Headers': 'Authorization, Content-Type',
 			'Access-Control-Max-Age': '86400'
 		});
 
+	userReq.on('data', function(chunk){
+		reqBody += chunk;
+	});
 
-	// request to controller
-	var proxyReq =  http.request({
-		'host': appConfig.ctrlHost,
-		'port': appConfig.ctrlPort,
-		'auth': appConfig.ctrlUsername + ':' + appConfig.ctrlPassword,
-		'method': userReq.method,
-		'path': userReq.url,
-		'headers': {
-			'accept': 'application/json',
-			'user-agent': 'ODL REST Proxy v0.1'
-		}
-	});
-	proxyReq.setTimeout(1);
-	// response
-	proxyReq.on('response', function(proxyRes){
-		proxyRes.setEncoding('utf8');
-		proxyRes.on('data', function(data){
-			resBody += data;
+	userReq.on('end', function(){
+		// request to controller
+		var proxyReq =  http.request({
+			'host': appConfig.ctrlHost,
+			'port': appConfig.ctrlPort,
+			'auth': appConfig.ctrlUsername + ':' + appConfig.ctrlPassword,
+			'method': userReq.method,
+			'path': userReq.url,
+			'headers': {
+				'content-type': 'application/json',
+				'authorization': 'Basic YWRtaW46YWRtaW4=',
+				'cache-control': 'no-cache'
+			}
 		});
+
+		proxyReq.write(reqBody);
+
+		// response
+		proxyReq.on('response', function(proxyRes){
+			proxyRes.setEncoding('utf8');
+			proxyRes.on('data', function(chunk){
+				resBody += chunk;
+			});
+		});
+		// error
+		proxyReq.on('error', function(e){
+			var errMsg = 'Problem with request: ' + e.message;
+			console.error(fReqId() + errMsg);
+			// response for a user
+			userRes.write(JSON.stringify({
+				'status': 'error',
+				'data': errMsg
+			}));
+			userRes.end();
+		});
+		proxyReq.on('close', function(){console.log(resBody);
+			console.log(fReqId() + 'Read data from server.');
+			try {
+				userRes.write(JSON.stringify({
+					'status': 'ok',
+					'data': JSON.parse(resBody)
+				}));
+			}
+			catch(e){
+				userRes.write(JSON.stringify({
+					'status': 'ok',
+					'data': '{}'
+				}));
+			}
+			userRes.end();
+			console.log(fReqId() + 'Connection closed');
+		});
+		proxyReq.end();
 	});
-	// error
-	proxyReq.on('error', function(e){
-		var errMsg = 'Problem with request: ' + e.message;
-		console.error(fReqId() + errMsg);
-		// response for a user
-		userRes.write(JSON.stringify({
-			'status': 'error',
-			'data': JSON.parse(errMsg)
-		}));
-		userRes.end();
-	});
-	proxyReq.on('close', function(){
-		userRes.write(JSON.stringify({
-			'status': 'ok',
-			'data': JSON.parse(resBody)
-		}));
-		userRes.end();
-		console.log(fReqId() + 'Connection closed');
-	});
-	proxyReq.end();
 
 	reqCounter++;
 });

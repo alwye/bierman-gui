@@ -49,15 +49,17 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 
 		if($scope.appConfig.currentTopologyId && ingress != undefined && ingress != null){
 			input = {
-				'topo-id': $scope.appConfig.currentTopologyId,
-				'node-id': ingress.model()._data.nodeId,
-				'link': []
+				'input': {
+					'topo-id': $scope.appConfig.currentTopologyId,
+					'node-id': ingress.model()._data.nodeId,
+					'link': []
+				}
 			};
 
 			for(var i = 0; i < $scope.currentTree.links.length; i++){
 				var currentLink = $scope.topo.getLink($scope.currentTree.links[i]);
 				if(currentLink){
-					input.link.push({'link': currentLink.model()._data.links[0].linkId});
+					input.input.link.push({'link': currentLink.model()._data.links[0].linkId});
 				}
 				else{
 					console.warn("Hey, I didn't find a link you were trying to submit...");
