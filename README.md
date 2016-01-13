@@ -13,7 +13,7 @@ Modify its properties 'proxyHost' and 'proxyPort' so that they are your actual d
 
 
 ## Controller Settings
-Open a file rest_proxy.js and find an object 'appConfig'.
+Open the file rest_proxy.js and find the object 'appConfig'.
 
 Modify its properties 'ctrlHost', 'ctrlPort', 'ctrlUsername' and 'ctrlPassword' so that they are your actual data.
 - **ctrlHost** points to controller's IP address (or a host name)
@@ -21,13 +21,13 @@ Modify its properties 'ctrlHost', 'ctrlPort', 'ctrlUsername' and 'ctrlPassword' 
 - **ctrlUsername** and **ctrlPassword** are credentials to authorize on the server
 
 ## Running GUI (easy as pie)
-0. Have NodeJS installed on your computer
-1.  Go to the folder run the command in terminal:
+1. Have [NodeJS](https://nodejs.org) installed on your computer
+2.  Go to the application's root folder and run the command in terminal:
 
   ```
   node rest_proxy.js
   ```
-2. Point your browser to /web/app/index.html and enjoy
+3. Point your browser to (PATH-TO-BIERMAN)/web/app/index.html and enjoy
 
 # Credits
 * Alexei Zverev (alzverev@cisco.com) - frontend developer
