@@ -22,10 +22,11 @@ Modify its properties 'ctrlHost', 'ctrlPort', 'ctrlUsername' and 'ctrlPassword' 
 
 ## Running GUI (easy as pie)
 0. Have NodeJS installed on your computer
-1. Go to the folder run the command in terminal:
-```
-node rest_proxy.js
-```
+1.  Go to the folder run the command in terminal:
+
+  ```
+  node rest_proxy.js
+  ```
 2. Point your browser to /web/app/index.html and enjoy
 
 # Credits
