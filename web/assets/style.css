@@ -18,11 +18,22 @@
 /* Panel's settings */
 
 .panel {
-    font: normal 18px/20px "Helvetica Neue", Helvetica;
+    font: normal 18px/20px "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
 
 .panel h2 {
-    font: normal 30px/35px "Helvetica Neue", Helvetica;
+    font: normal 30px/35px "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.panel label {
+    font: normal 18px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #040404;
+}
+
+.panel select {
+    background: white; /* for Chrome support */
+    font-size: 18px;
+    color: #000000;
 }
 
 .panel-wrapper {
@@ -192,8 +203,6 @@ table.niceTable th {
     margin-right: 10px;
     line-height: 100%;
 }
-
-
 
 i {
     cursor: pointer;
@@ -368,3 +377,55 @@ div.full-size {
         transform: rotate(360deg);
     }
 }
+
+/* Button */
+.awesome-button {
+    color: #ffffff;
+    background-color: #5883CD;
+    border: solid #2f42a6 1px;
+    border-radius: 4px;
+    cursor: pointer;
+    font: normal 16px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    padding: 5px;
+}
+
+.awesome-button:hover,
+.awesome-button:focus,
+.awesome-button:active,
+.awesome-button.active,
+.open .dropdown-toggle.awesome-button {
+    color: #ffffff;
+    background-color: #3068C9;
+    border-color: #0C004A;
+}
+
+.awesome-button:active,
+.awesome-button.active,
+.open .dropdown-toggle.awesome-button {
+    background-image: none;
+}
+
+.awesome-button.disabled,
+.awesome-button[disabled],
+fieldset[disabled] .awesome-button,
+.awesome-button.disabled:hover,
+.awesome-button[disabled]:hover,
+fieldset[disabled] .awesome-button:hover,
+.awesome-button.disabled:focus,
+.awesome-button[disabled]:focus,
+fieldset[disabled] .awesome-button:focus,
+.awesome-button.disabled:active,
+.awesome-button[disabled]:active,
+fieldset[disabled] .awesome-button:active,
+.awesome-button.disabled.active,
+.awesome-button[disabled].active,
+fieldset[disabled] .awesome-button.active {
+    background-color: #5883CD;
+    border-color: #0C004A;
+}
+
+.awesome-button .badge {
+    color: #5883CD;
+    background-color: #ffffff;
+}
+

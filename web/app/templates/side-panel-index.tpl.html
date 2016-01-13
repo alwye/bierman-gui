@@ -14,14 +14,16 @@
 				<div ng-show="appConfig.currentPanel == 'config'" class="full-size">
 					<h2>BIER Path Manager</h2>
 					<b>Manual only</b><br>
-					<button ng-click="computeMask()">Validate and compute mask</button><br><br>
-					<label for="flows">Assign flows:</label>
+					<button ng-click="computeMask()" class="awesome-button"><i class="fa fa-check"></i> Validate and compute mask</button><br><br>
+					<label for="flows">Assign flows:</label><br>
 					<select id="flows">
-						<option>Comedy Central</option>
-						<option>Spike</option>
-						<option>FOX</option>
+						<optgroup label="Assign Flows">
+							<option>Comedy Central</option>
+							<option>Spike</option>
+							<option>FOX</option>
+						</optgroup>
 					</select><br><br>
-					<button>Deploy</button><br><br>
+					<button class="awesome-button"><i class="fa fa-rocket"></i> Deploy</button><br><br>
 				</div>
 				<div ng-show="appConfig.currentPanel == 'node'" class="full-size">
 					<h2>Node Panel</h2>
