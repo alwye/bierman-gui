@@ -6,34 +6,40 @@ app.factory('BiermanRest', function($http){
 	};
 
 	// Shortcut for controller's host + port
-	BiermanRest.prototype.getBaseUrl = function(){
-		return 'http://' + this.appConfig.ctrlUsername + ':' + this.appConfig.ctrlPassword + '@' + this.appConfig.ctrlHost + ':' + this.appConfig.ctrlPort;
+	BiermanRest.prototype.getProxyURL = function(){
+		return 'http://' + this.appConfig.proxyHost + ':' + this.appConfig.proxyPort;
 	};
 
 	// Read topology from the controller
 	BiermanRest.prototype.loadTopology = function(successCbk, errorCbk){
 		var self = this;
 		$http({
-			'url': self.getBaseUrl() + '/restconf/operational/network-topology:network-topology/',
+			'url': self.getProxyURL() + '/restconf/operational/network-topology:network-topology/',
 			'withCredentials': true,
 			'method': 'GET',
 			'timeout': this.appConfig.httpMaxTimeout
 		}).then(
 			// loaded
-			function (data){
-				data = data.data['network-topology'].topology;
-				// fixme: we need clarification on that
-				for(var i = 0; i < data.length; i++)
-					if(data[i].hasOwnProperty('node') && data[i].hasOwnProperty('link'))
-					{
-						data = data[i];
-						break;
-					}
-				successCbk(data);
+			function (res){
+				res = res.data;
+				if(res.status == 'ok'){
+					res = res.data['network-topology'].topology;
+					// fixme: we need clarification on that
+					for(var i = 0; i < res.length; i++)
+						if(res[i].hasOwnProperty('node') && res[i].hasOwnProperty('link'))
+						{
+							res = res[i];
+							break;
+						}
+					successCbk(res);
+				}
+				else{
+					errorCbk("Proxy returned error status: " + JSON.stringify(res.data));
+				}
 			},
 			// failed
-			function(jqXHR, textStatus, errorThrown){
-				var errMsg = "Could not fetch topology data from server: " + textStatus;
+			function(err){
+				var errMsg = "Could not fetch topology data from server: " + err.statusText;
 				errorCbk(errMsg);
 			});
 	};
@@ -42,7 +48,7 @@ app.factory('BiermanRest', function($http){
 	BiermanRest.prototype.computeMask = function(data, successCbk, errorCbk){
 		var self = this;
 		$http({
-			'url': self.getBaseUrl() + '/restconf/operations/bier:compute-fmask/',
+			'url': self.getProxyURL() + '/restconf/operations/bier:compute-fmask/',
 			'withCredentials': true,
 			'method': 'POST',
 			'timeout': this.appConfig.httpMaxTimeout,
@@ -60,7 +66,7 @@ app.factory('BiermanRest', function($http){
 				}
 			},
 			// failed
-			function(err){console.log(err);
+			function(err){
 				var errMsg = "Could not fetch path data from server: " + err.statusText;
 				errorCbk(errMsg);
 			});

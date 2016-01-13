@@ -3,10 +3,8 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 	// BIER Manager configuration
 	$scope.appConfig = {
 		// FOR MANUAL CONFIGURATION
-		'ctrlHost': '10.124.19.145', // IP address of controller
-		'ctrlPort': '8181', // Port of controller (8181 by default)
-		'ctrlUsername': 'admin', // Username for controller
-		'ctrlPassword': 'admin', // Password for user
+		'proxyHost': 'localhost', // IP address of controller
+		'proxyPort': '5555', // Port of controller (8181 by default)
 		'httpMaxTimeout': 10000, // Maximum timeout in milliseconds for HTTP requests
 		'maxPacketLoss': 10,
 		// DO NOT MODIFY CONFIGURATION BELOW
