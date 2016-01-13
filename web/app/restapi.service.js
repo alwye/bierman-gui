@@ -53,27 +53,33 @@ app.factory('BiermanRest', function($http){
 			'data': JSON.stringify(data)
 		}).then(
 			// loaded
-			function (data){
+			function (data){console.info(data);
 				if(data.data.status == 'ok')
 				{
-					try{
-						data = data.data.data.output;
-						successCbk(data);
+					// if controller returned errors
+					if(data.data.data.hasOwnProperty('errors')){
+						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
 					}
-					catch(e){
-						var errMsg = "Invalid JSON response to computeMask";
-						errorCbk(errMsg);
+					else{
+						try{
+							data = data.data.data.output;
+							successCbk(data);
+						}
+						catch(e){
+							var errMsg = "Invalid JSON response returned to computeMask";
+							errorCbk({'errObj': e, 'errId': 3, 'errMsg': errMsg});
+						}
 					}
 				}
 				else{
-					errorCbk(data.data.data);
+					errorCbk({'errObj': data.data.data, 'errId': 1, 'errMsg': 'Proxy status other than ok'});
 				}
 
 			},
 			// failed
-			function(err){
-				var errMsg = "Could not fetch path data from server: " + err.statusText;
-				errorCbk(errMsg);
+			function(e){
+				var errMsg = "Could not fetch path data from server: " + e.statusText;
+				errorCbk({'errObj': e, 'errId': 0, 'errMsg': errMsg});
 			});
 	};
 

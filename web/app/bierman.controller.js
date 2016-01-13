@@ -26,7 +26,9 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 		$scope.currentTree = {
 			'ingress': null,
 			'egress': [],
-			'links': []
+			'links': [],
+			'validated': -1,
+			'fmask': ''
 		};
 	};
 
@@ -71,10 +73,21 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 			biermanRest.computeMask(input,
 				// success callback
 				function(response){
+					if(response.hasOwnProperty('fmask'))
+					{
+						$scope.currentTree.fmask = response.fmask;
+						$scope.currentTree.validated = 1;
+					}
+					else{
+						$scope.currentTree.fmask = '';
+						$scope.currentTree.validated = 0;
+					}
 					console.log(response);
 				},
 				// error callback
 				function(errMsg){
+					$scope.currentTree.fmask = '';
+					$scope.currentTree.validated = -1;
 					console.error(errMsg);
 				}
 			);

@@ -205,15 +205,15 @@ app.directive('biermanTopology', function() {
 					if ($scope.$parent.appConfig.mode == 'start') {
 						$scope.$parent.currentTree.ingress = id;
 						$scope.$parent.appConfig.mode = 'draw';
-						$scope.$apply();
 					}
 					// select receivers
 					else if ($scope.$parent.appConfig.mode == 'draw') {
 						if ($scope.$parent.currentTree.egress.indexOf(id) == -1
 							&& id != $scope.$parent.currentTree.ingress)
 							$scope.$parent.currentTree.egress.push(id);
-						$scope.$apply();
 					}
+					$scope.$parent.currentTree.validated = -1;
+					$scope.$apply();
 					$scope.applyChanges();
 				};
 
@@ -222,14 +222,13 @@ app.directive('biermanTopology', function() {
 						var indexOfLink = $scope.$parent.currentTree.links.indexOf(id);
 						if ($scope.$parent.currentTree.links.indexOf(id) == -1) {
 							$scope.$parent.currentTree.links.push(id);
-							$scope.$apply();
-							$scope.applyChanges();
 						}
 						else {
 							$scope.$parent.currentTree.links.splice(indexOfLink, 1);
-							$scope.$apply();
-							$scope.applyChanges();
 						}
+						$scope.$parent.currentTree.validated = -1;
+						$scope.$apply();
+						$scope.applyChanges();
 					}
 				};
 

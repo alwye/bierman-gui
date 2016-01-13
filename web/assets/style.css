@@ -394,7 +394,6 @@ div.full-size {
 .awesome-button:active,
 .awesome-button.active,
 .open .dropdown-toggle.awesome-button {
-    color: #ffffff;
     background-color: #3068C9;
     border: solid #2f42a6 1px;
 }
@@ -420,12 +419,31 @@ fieldset[disabled] .awesome-button:active,
 .awesome-button.disabled.active,
 .awesome-button[disabled].active,
 fieldset[disabled] .awesome-button.active {
-    background-color: rgba(88, 131, 205, 0.4);
-    border: solid rgba(47, 66, 166, 0.4) 1px;
+    opacity: 0.4;
+    filter: alpha(opacity=40);
 }
 
-.awesome-button .badge {
-    color: #5883CD;
-    background-color: #ffffff;
+.awesome-button-red {
+    background-color: #b72218;
+    border: solid #771711 1px;
+}
+
+.awesome-button-red:hover,
+.awesome-button-red:focus,
+.awesome-button-red:active,
+.awesome-button-red.active {
+    background-color: #c61e0e;
+    border: solid #7a140c 1px;
+}
+
+/* Text */
+
+.text-success, .text-error {
+    font: normal 15px "Helvetica Neue", Helvetica, Arial, sans-serif;
+    color: #009b00;
+}
+
+.text-error {
+    color: #9b0000;
 }
 

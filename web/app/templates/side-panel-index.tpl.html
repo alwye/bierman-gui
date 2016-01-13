@@ -13,8 +13,15 @@
 			<div class="full-size">
 				<div ng-show="appConfig.currentPanel == 'config'" class="full-size">
 					<h2>BIER Path Manager</h2>
-					<b>Manual only</b><br>
-					<button ng-click="computeMask()" class="awesome-button"><i class="fa fa-check"></i> Validate and compute mask</button><br><br>
+					<b>Manual only</b><br><br>
+					<button ng-click="computeMask()" class="awesome-button"><i class="fa fa-check"></i> Validate and compute mask</button><br>
+					<div ng-show="currentTree.validated == 1">
+						<div class="text-success">FMASK: {{currentTree.fmask}}</div>
+					</div>
+					<div ng-show="currentTree.validated == 0">
+						<div class="text-success">BIER tree is not valid</div>
+					</div>
+					<br>
 					<label for="flows">Assign flows:</label><br>
 					<select id="flows">
 						<optgroup label="Assign Flows">
@@ -23,7 +30,8 @@
 							<option>FOX</option>
 						</optgroup>
 					</select><br><br>
-					<button class="awesome-button" disabled><i class="fa fa-rocket"></i> Deploy</button><br><br>
+					<button class="awesome-button" disabled><i class="fa fa-rocket"></i> Deploy</button> &nbsp;
+					<button class="awesome-button awesome-button-red"><i class="fa fa-times"></i> Clear tree</button><br><br>
 				</div>
 				<div ng-show="appConfig.currentPanel == 'node'" class="full-size">
 					<h2>Node Panel</h2>
