@@ -396,7 +396,7 @@ div.full-size {
 .open .dropdown-toggle.awesome-button {
     color: #ffffff;
     background-color: #3068C9;
-    border-color: #0C004A;
+    border: solid #2f42a6 1px;
 }
 
 .awesome-button:active,
@@ -420,8 +420,8 @@ fieldset[disabled] .awesome-button:active,
 .awesome-button.disabled.active,
 .awesome-button[disabled].active,
 fieldset[disabled] .awesome-button.active {
-    background-color: #5883CD;
-    border-color: #0C004A;
+    background-color: rgba(88, 131, 205, 0.4);
+    border: solid rgba(47, 66, 166, 0.4) 1px;
 }
 
 .awesome-button .badge {
