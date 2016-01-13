@@ -3,7 +3,7 @@ This is a web application built on top of [Angular](http://github.com/angular/an
 
 # Configuration
 ## REST Proxy Server
-We use proxy to avoid CORS restrictions. Proxy enhances possibilities of REST API, since we can make even 'unsafe' requests.
+We use [ODL REST Proxy](https://github.com/zverevalexei/odl-rest-proxy) to avoid CORS restrictions. Proxy enhances possibilities of REST API, since we can make even 'unsafe' requests.
 
 Open the file /web/app/bierman.controller.js and find the object '$scope.appConfig'.
 
