@@ -14,17 +14,20 @@
 				<div ng-show="appConfig.currentPanel == 'config'" class="full-size">
 					<h2>BIER Path Manager</h2>
 					<b>Manual only</b><br><br>
-					<button ng-click="computeMask()" class="awesome-button"><i class="fa fa-check"></i> Validate and compute mask</button><br>
+					<button ng-click="computeMask()" class="awesome-button"><i class="fa fa-check"></i> Validate and compute mask</button><br><br>
 					<div ng-show="currentTree.validated == 1">
-						<div class="text-success">FMASK: {{currentTree.fmask}}</div>
+						<div class="text-success">
+							FMASK: {{currentTree.fmask}}<br><br>
+						</div>
 					</div>
 					<div ng-show="currentTree.validated == 0">
-						<div class="text-success">BIER tree is not valid</div>
+						<div class="text-success">
+							BIER tree is not valid<br><br>
+						</div>
 					</div>
-					<br>
-					<label for="flows">Assign flows:</label><br>
+					<label for="flows">Assign Channels:</label><br>
 					<select id="flows">
-						<optgroup label="Assign Flows">
+						<optgroup label="Channels">
 							<option>Comedy Central</option>
 							<option>Spike</option>
 							<option>FOX</option>
