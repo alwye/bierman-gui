@@ -19,7 +19,7 @@ app.factory('BiermanRest', function($http){
 			'timeout': this.appConfig.httpMaxTimeout
 		}).then(
 			// loaded
-			function (res){console.log(res);
+			function (res){
 				res = res.data;
 				if(res.status == 'ok'){
 					res = res.data['network-topology'].topology;
