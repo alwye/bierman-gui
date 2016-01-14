@@ -292,9 +292,20 @@ app.directive('biermanTopology', function() {
 					}
 					// select receivers
 					else if ($scope.$parent.appConfig.mode == 'draw') {
-						if ($scope.$parent.currentTree.egress.indexOf(id) == -1
-							&& id != $scope.$parent.currentTree.ingress)
+						var nodeIndex = $scope.$parent.currentTree.egress.indexOf(id);
+						// if node is not used
+						if (nodeIndex == -1 && id != $scope.$parent.currentTree.ingress)
 							$scope.$parent.currentTree.egress.push(id);
+						// if node is ingress
+						else if(id == $scope.$parent.currentTree.ingress){
+							$scope.$parent.currentTree.ingress = null;
+							$scope.$parent.appConfig.mode = 'start';
+						}
+						// if the node is egress
+						else if(nodeIndex > -1){
+							$scope.$parent.currentTree.egress.splice(nodeIndex, 1);
+							console.log()
+						}
 					}
 					$scope.$parent.currentTree.validStatus = 'none';
 					$scope.$apply();
@@ -416,7 +427,6 @@ app.directive('biermanTopology', function() {
 							$scope.$apply();
 						}
 					},1000);
-
 				});
 
 				var app = new nx.ui.Application();

@@ -47,7 +47,6 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 				confirmButtonText: "Close"
 			});
 		});
-
 	};
 
 	$scope.computeMask = function(){
