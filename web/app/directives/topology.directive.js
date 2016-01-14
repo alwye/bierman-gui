@@ -27,18 +27,15 @@ app.directive('biermanTopology', function() {
 					}
 				};
 
+				// todo: catch loops
 				$scope.processBierTreeData = function(successCbk, errorCbk){
 					var tree = $scope.$parent.currentTree;
 					var ingress = $scope.topo.getNode(tree.ingress);
-					var input = {
-						'input': {
-							'topo-id': $scope.$parent.appConfig.currentTopologyId,
-							'node-id': ingress.model()._data.nodeId,
-							'link': []
-						}
-					};
+					var input;
+					var nodeHistory = [];
 
 					var getConnectedLinks = function(nodeId, parentId){
+						nodeHistory.push(parentId);
 						var node = $scope.topo.getNode(nodeId);
 						node.eachLink(function(link, linkId){
 							if(tree.links.indexOf(link.id()) != -1){
@@ -52,28 +49,45 @@ app.directive('biermanTopology', function() {
 								}
 								// if not a parent
 								if(connectedNode != parentId){
-									// find a correct link id
-									for(var i = 0; i < link.model()._data.links.length; i++){
-										if(link.model()._data.links[i].target == connectedNode){
-											input.input.link.push({
-												'link': link.model()._data.links[i].linkId
-											});
-											break;
+									if(nodeHistory.indexOf(connectedNode) == -1)
+									{
+										// find a correct link id
+										for(var i = 0; i < link.model()._data.links.length; i++){
+											if(link.model()._data.links[i].target == connectedNode){
+												input.input.link.push({
+													'link': link.model()._data.links[i].linkId
+												});
+												break;
+											}
 										}
+										if(!getConnectedLinks(connectedNode, nodeId))
+											return false;
 									}
-									getConnectedLinks(connectedNode, nodeId);
+									else{
+										var errMsg = 'Loop caught: abort';
+										errorCbk(errMsg);
+										return false;
+									}
 								}
 							}
 						});
+						return true;
 					};
 
 					// if a tree's ready
 					if($scope.$parent.appConfig.currentTopologyId && ingress != undefined && ingress != null){
-						getConnectedLinks(ingress.id(), -1);
-						successCbk(input);
+						input = {
+							'input': {
+								'topo-id': $scope.$parent.appConfig.currentTopologyId,
+								'node-id': ingress.model()._data.nodeId,
+								'link': []
+							}
+						};
+						if(getConnectedLinks(ingress.id(), -1))
+							successCbk(input);
 					}
 					else{
-						var errMsg = 'No ingress set at the moment'
+						var errMsg = 'No ingress set at the moment';
 						errorCbk(errMsg);
 					}
 				};
@@ -102,7 +116,14 @@ app.directive('biermanTopology', function() {
 					try{
 						$scope.dumpData = JSON.parse(localStorage.getItem("biermanTopologyData"));
 					}catch(e) {
-						console.info('Local Storage read parse error:', e);
+						var errMsg = 'Could not read saved layout from local storage';
+						console.info(errMsg, e);
+						swal({
+							title: "FMASK Computation Failed",
+							text: errMsg,
+							type: "warning",
+							confirmButtonText: "Close"
+						});
 					}
 					$scope.readDumpData();
 				};
@@ -112,7 +133,14 @@ app.directive('biermanTopology', function() {
 					try{
 						localStorage.setItem("biermanTopologyData", JSON.stringify($scope.dumpData));
 					}catch(e) {
-						console.info('Local Storage save error:', e);
+						var errMsg = 'Could not save layout to local storage';
+						console.info(errMsg, e);
+						swal({
+							title: "FMASK Computation Failed",
+							text: errMsg,
+							type: "warning",
+							confirmButtonText: "Close"
+						});
 					}
 				};
 

@@ -15,14 +15,19 @@
 					<h2>BIER Path Manager</h2>
 					<b>Manual only</b><br><br>
 					<button ng-click="computeMask()" class="awesome-button"><i class="fa fa-check"></i> Validate and compute mask</button><br><br>
-					<div ng-show="currentTree.validated == 1">
+					<div ng-show="currentTree.validStatus == 'valid'">
 						<div class="text-success">
 							FMASK: {{currentTree.fmask}}<br><br>
 						</div>
 					</div>
-					<div ng-show="currentTree.validated == 0">
+					<div ng-show="currentTree.validStatus == 'invalid'">
+						<div class="text-error">
+							FMASK has not been computed<br><br>
+						</div>
+					</div>
+					<div ng-show="currentTree.validStatus == 'inprogress'">
 						<div class="text-success">
-							BIER tree is not valid<br><br>
+							<i class="fa fa-refresh fa-spin"></i> Calculating FMASK...<br><br>
 						</div>
 					</div>
 					<label for="flows">Assign Channels:</label><br>

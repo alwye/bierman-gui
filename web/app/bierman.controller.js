@@ -27,7 +27,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 			'ingress': null,
 			'egress': [],
 			'links': [],
-			'validated': -1,
+			'validStatus': -1,
 			'fmask': ''
 		};
 	};
@@ -40,11 +40,18 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 			$scope.appConfig.currentTopologyId = data['topology-id'];
 		}, function(errMsg){
 			console.error(errMsg);
+			swal({
+				title: "App Initialization Failed",
+				text: errMsg,
+				type: "error",
+				confirmButtonText: "Close"
+			});
 		});
 
 	};
 
 	$scope.computeMask = function(){
+		$scope.currentTree.validStatus = 'inprogress'; // in progress
 		$scope.processBierTreeData(
 			// success callback
 			function(input){
@@ -54,25 +61,48 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 						if(response.hasOwnProperty('fmask'))
 						{
 							$scope.currentTree.fmask = response.fmask;
-							$scope.currentTree.validated = 1;
+							$scope.currentTree.validStatus = 'valid';
 						}
 						else{
 							$scope.currentTree.fmask = '';
-							$scope.currentTree.validated = 0;
+							$scope.currentTree.validStatus = 'invalid';
+							var errMsg = 'Response from controller is invalid';
+							console.error(errMsg);
+							swal({
+								title: "FMASK Computation Failed",
+								text: errMsg,
+								type: "error",
+								confirmButtonText: "Close"
+							});
 						}
 						console.log(response);
 					},
 					// error callback
 					function(errMsg){
 						$scope.currentTree.fmask = '';
-						$scope.currentTree.validated = -1;
+						$scope.currentTree.validStatus = 'invalid';
 						console.error(errMsg);
+						swal({
+							title: "FMASK Computation Failed",
+							text: errMsg,
+							type: "error",
+							confirmButtonText: "Close"
+						});
+
 					}
 				);
 			},
 			// error callback
 			function(errMsg){
+				$scope.currentTree.fmask = '';
+				$scope.currentTree.validStatus = 'invalid';
 				console.error(errMsg);
+				swal({
+					title: "FMASK Computation Failed",
+					text: errMsg,
+					type: "error",
+					confirmButtonText: "Close"
+				});
 			}
 		);
 	};
