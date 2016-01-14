@@ -411,8 +411,10 @@ app.directive('biermanTopology', function() {
 
 				$scope.topo.on('fitStage', function(sender, event){
 					setTimeout(function(){
-						$scope.$parent.appConfig.mode = 'start';
-						$scope.$apply();
+						if($scope.$parent.appConfig.mode == 'init'){
+							$scope.$parent.appConfig.mode = 'start';
+							$scope.$apply();
+						}
 					},1000);
 
 				});
