@@ -6,7 +6,8 @@ app.directive('biermanTopology', function() {
 			'topologyStartOver': '=',
 			'topoInitialized': '=',
 			'topo': '=',
-			'openPanel': '='
+			'openPanel': '=',
+			'processBierTreeData': '='
 		},
 		'link': function($scope, iElm, iAttrs, controller){
 			var initTopology = function(){
@@ -22,6 +23,74 @@ app.directive('biermanTopology', function() {
 					'linkTypes': {
 						'path': '#009933',
 						'none': '#67C9E4'
+					}
+				};
+
+				$scope.processBierTreeData = function(successCbk, errorCbk){
+					var tree = $scope.$parent.currentTree;
+					var ingress = $scope.topo.getNode(tree.ingress);
+					var input = {
+						'input': {
+							'topo-id': $scope.$parent.appConfig.currentTopologyId,
+							'node-id': ingress.model()._data.nodeId,
+							'link': []
+						}
+					};
+
+					var getConnectedLinks = function(nodeId, parentId){
+						var node = $scope.topo.getNode(nodeId);
+						node.eachLink(function(link, linkId){
+							if(tree.links.indexOf(link.id()) != -1){
+								var connectedNode = -1;
+								// find a connected node's ID
+								if(link.model().sourceID() == node.id()){
+									connectedNode = link.model().targetID();
+								}
+								else if(link.model().targetID() == node.id()){
+									connectedNode = link.model().sourceID();
+								}
+								// if not a parent
+								if(connectedNode != parentId){
+									// find a correct link id
+									for(var i = 0; i < link.model()._data.links.length; i++){
+										if(link.model()._data.links[i].target == connectedNode){
+											input.input.link.push({
+												'link': link.model()._data.links[i].linkId
+											});
+											break;
+										}
+									}
+									getConnectedLinks(connectedNode, nodeId);
+								}
+							}
+						});
+					};
+
+					// if a tree's ready
+					if($scope.$parent.appConfig.currentTopologyId && ingress != undefined && ingress != null){
+						// get hops
+						//for(var i = 0; i < tree.links.length; i++){
+						//	var currentLink = $scope.topo.getLink(tree.links[i]);
+						//	if(currentLink){
+						//		var source = currentLink.model().sourceID();
+						//		var target = currentLink.model().targetID();
+						//		// check whether source is already in 'hops'
+						//		if(hops.indexOf(source) == -1)
+						//			hops.push(source);
+						//		// check whether target is already in 'hops'
+						//		if(hops.indexOf(target) == -1)
+						//			hops.push(target);
+						//	}
+						//	else{
+						//		console.warn("Hey, I didn't find a link you were trying to submit...");
+						//	}
+						//}
+						getConnectedLinks(ingress.id(), -1);
+						successCbk(input);
+					}
+					else{
+						var errMsg = 'No ingress set at the moment'
+						errorCbk(errMsg);
 					}
 				};
 

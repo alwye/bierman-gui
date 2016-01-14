@@ -45,58 +45,36 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 	};
 
 	$scope.computeMask = function(){
-		var input = {};
-		var ingress = $scope.topo.getNode($scope.currentTree.ingress);
-		var hops = [ingress];
-
-		if($scope.appConfig.currentTopologyId && ingress != undefined && ingress != null){
-			input = {
-				'input': {
-					'topo-id': $scope.appConfig.currentTopologyId,
-					'node-id': ingress.model()._data.nodeId,
-					'link': []
-				}
-			};
-
-			// fixme: modify logic for controller
-
-			for(var i = 0; i < $scope.currentTree.links.length; i++){
-				var currentLink = $scope.topo.getLink($scope.currentTree.links[i]);
-				if(currentLink){
-					input.input.link.push({'link': currentLink.model()._data.links[0].linkId});
-				}
-				else{
-					console.warn("Hey, I didn't find a link you were trying to submit...");
-				}
-			}
-
-			console.log(input);
-
-			biermanRest.computeMask(input,
-				// success callback
-				function(response){
-					if(response.hasOwnProperty('fmask'))
-					{
-						$scope.currentTree.fmask = response.fmask;
-						$scope.currentTree.validated = 1;
-					}
-					else{
+		$scope.processBierTreeData(
+			// success callback
+			function(input){
+				biermanRest.computeMask(input,
+					// success callback
+					function(response){
+						if(response.hasOwnProperty('fmask'))
+						{
+							$scope.currentTree.fmask = response.fmask;
+							$scope.currentTree.validated = 1;
+						}
+						else{
+							$scope.currentTree.fmask = '';
+							$scope.currentTree.validated = 0;
+						}
+						console.log(response);
+					},
+					// error callback
+					function(errMsg){
 						$scope.currentTree.fmask = '';
-						$scope.currentTree.validated = 0;
+						$scope.currentTree.validated = -1;
+						console.error(errMsg);
 					}
-					console.log(response);
-				},
-				// error callback
-				function(errMsg){
-					$scope.currentTree.fmask = '';
-					$scope.currentTree.validated = -1;
-					console.error(errMsg);
-				}
-			);
-		}
-		else{
-			console.warn('No ingress set at the moment');
-		}
+				);
+			},
+			// error callback
+			function(errMsg){
+				console.error(errMsg);
+			}
+		);
 	};
 
 	$scope.processTopologyData = function(data){
