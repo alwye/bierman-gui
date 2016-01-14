@@ -27,7 +27,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 			'ingress': null,
 			'egress': [],
 			'links': [],
-			'validStatus': -1,
+			'validStatus': 'none',
 			'fmask': ''
 		};
 	};
@@ -203,19 +203,6 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 		$scope.topologyData = topologyData;
 		console.log('TOPOLOGY DATA', $scope.topologyData);
 		return $scope.topologyData;
-	};
-
-	// panels
-	$scope.openNodePanel = function(){
-		$scope.openNodePanelTopo();
-	};
-
-	$scope.openLinkPanel = function(){
-		$scope.openLinkPanelTopo();
-	};
-
-	$scope.openFlowPanel = function(){
-		$scope.openFlowPanelTopo();
 	};
 
 	$scope.clearTopology = function(){

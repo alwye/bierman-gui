@@ -33,12 +33,14 @@ app.directive('biermanTopology', function() {
 					var ingress = $scope.topo.getNode(tree.ingress);
 					var input;
 					var nodeHistory = [];
+					var loop = false;
 
 					var getConnectedLinks = function(nodeId, parentId){
+						if(loop) return false;
 						nodeHistory.push(parentId);
 						var node = $scope.topo.getNode(nodeId);
 						node.eachLink(function(link, linkId){
-							if(tree.links.indexOf(link.id()) != -1){
+							if(tree.links.indexOf(link.id()) != -1 && !loop){
 								var connectedNode = -1;
 								// find a connected node's ID
 								if(link.model().sourceID() == node.id()){
@@ -64,14 +66,15 @@ app.directive('biermanTopology', function() {
 											return false;
 									}
 									else{
-										var errMsg = 'Loop caught: abort';
+										loop = true;
+										var errMsg = 'Loop at node ' + $scope.topo.getNode(connectedNode).model()._data.attributes.name + ' has been detected';
 										errorCbk(errMsg);
 										return false;
 									}
 								}
 							}
 						});
-						return true;
+						return !loop;
 					};
 
 					// if a tree's ready
