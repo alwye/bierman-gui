@@ -78,7 +78,7 @@ app.directive('biermanTopology', function() {
 					};
 
 					// if a tree's ready
-					if($scope.$parent.appConfig.currentTopologyId && ingress != undefined && ingress != null){
+					if($scope.$parent.appConfig.currentTopologyId && ingress != undefined && ingress != null && tree.links.length > 0){
 						input = {
 							'input': {
 								'topo-id': $scope.$parent.appConfig.currentTopologyId,
@@ -90,7 +90,7 @@ app.directive('biermanTopology', function() {
 							successCbk(input);
 					}
 					else{
-						var errMsg = 'No ingress set at the moment';
+						var errMsg = 'BIER tree was not set properly. Try again.';
 						errorCbk(errMsg);
 					}
 				};
@@ -296,7 +296,7 @@ app.directive('biermanTopology', function() {
 							&& id != $scope.$parent.currentTree.ingress)
 							$scope.$parent.currentTree.egress.push(id);
 					}
-					$scope.$parent.currentTree.validated = -1;
+					$scope.$parent.currentTree.validStatus = 'none';
 					$scope.$apply();
 					$scope.applyChanges();
 				};
@@ -310,7 +310,7 @@ app.directive('biermanTopology', function() {
 						else {
 							$scope.$parent.currentTree.links.splice(indexOfLink, 1);
 						}
-						$scope.$parent.currentTree.validated = -1;
+						$scope.$parent.currentTree.validStatus = 'none';
 						$scope.$apply();
 						$scope.applyChanges();
 					}

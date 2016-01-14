@@ -212,4 +212,17 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 	};
 
 	$scope.initApp();
+
+	$scope.$watch('currentTree.validStatus', function(){
+		var deployButton = $('#deploy-button');
+		switch($scope.currentTree.validStatus){
+			case 'valid':
+				deployButton.prop('disabled', false);
+				break;
+			default:
+				deployButton.prop('disabled', true);
+				break;
+		}
+	});
+
 });

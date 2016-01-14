@@ -53,7 +53,7 @@ app.factory('BiermanRest', function($http){
 			'data': JSON.stringify(data)
 		}).then(
 			// loaded
-			function (data){console.info(data);
+			function (data){
 				if(data.data.status == 'ok')
 				{
 					// if controller returned errors
