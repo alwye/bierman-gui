@@ -7,7 +7,8 @@ app.directive('biermanTopology', function() {
 			'topoInitialized': '=',
 			'topo': '=',
 			'openPanel': '=',
-			'processBierTreeData': '='
+			'processBierTreeData': '=',
+			'resetTopology': '='
 		},
 		'link': function($scope, iElm, iAttrs, controller){
 			var initTopology = function(){
@@ -68,23 +69,6 @@ app.directive('biermanTopology', function() {
 
 					// if a tree's ready
 					if($scope.$parent.appConfig.currentTopologyId && ingress != undefined && ingress != null){
-						// get hops
-						//for(var i = 0; i < tree.links.length; i++){
-						//	var currentLink = $scope.topo.getLink(tree.links[i]);
-						//	if(currentLink){
-						//		var source = currentLink.model().sourceID();
-						//		var target = currentLink.model().targetID();
-						//		// check whether source is already in 'hops'
-						//		if(hops.indexOf(source) == -1)
-						//			hops.push(source);
-						//		// check whether target is already in 'hops'
-						//		if(hops.indexOf(target) == -1)
-						//			hops.push(target);
-						//	}
-						//	else{
-						//		console.warn("Hey, I didn't find a link you were trying to submit...");
-						//	}
-						//}
 						getConnectedLinks(ingress.id(), -1);
 						successCbk(input);
 					}

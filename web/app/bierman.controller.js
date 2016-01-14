@@ -188,5 +188,11 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 		$scope.openFlowPanelTopo();
 	};
 
+	$scope.clearTopology = function(){
+		$scope.clearCurrentTree();
+		$scope.resetTopology();
+		$scope.appConfig.mode = 'start';
+	};
+
 	$scope.initApp();
 });
