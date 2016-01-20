@@ -91,7 +91,7 @@ proxy.on('request',function(userReq,userRes){
 			}));
 			userRes.end();
 		});
-		proxyReq.on('close', function(){console.log(resBody);
+		proxyReq.on('close', function(){
 			console.log(fReqId() + 'Read data from server.');
 			try {
 				userRes.write(JSON.stringify({

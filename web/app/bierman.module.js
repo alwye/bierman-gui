@@ -1,1 +1,1 @@
-var app = angular.module('biermanApp', []);
+var app = angular.module('biermanApp', ['ngMaterial']);
