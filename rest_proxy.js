@@ -17,7 +17,8 @@ const http = require('http');
 // app configuration
 var appConfig = {
 	// Controller settings
-	'ctrlHost': '10.124.19.145',
+	//'ctrlHost': '10.124.19.145',
+	'ctrlHost': '10.195.70.194', // Sergey
 	'ctrlPort': '8181', // 8181 by default
 	'ctrlUsername': 'admin',
 	'ctrlPassword': 'admin',
@@ -92,21 +93,26 @@ proxy.on('request',function(userReq,userRes){
 			userRes.end();
 		});
 		proxyReq.on('close', function(){
-			console.log(fReqId() + 'Read data from server.');
-			try {
-				userRes.write(JSON.stringify({
-					'status': 'ok',
-					'data': JSON.parse(resBody)
-				}));
+			if(!userRes.finished){
+				console.log(fReqId() + 'Read data from server.');
+				try {
+					userRes.write(JSON.stringify({
+						'status': 'ok',
+						'data': JSON.parse(resBody)
+					}));
+				}
+				catch(e){
+					try{
+						userRes.write(JSON.stringify({
+							'status': 'ok',
+							'data': '{}'
+						}));
+					}
+					catch(e){}
+				}
+				userRes.end();
+				console.log(fReqId() + 'Connection closed');
 			}
-			catch(e){
-				userRes.write(JSON.stringify({
-					'status': 'ok',
-					'data': '{}'
-				}));
-			}
-			userRes.end();
-			console.log(fReqId() + 'Connection closed');
 		});
 		proxyReq.end();
 	});

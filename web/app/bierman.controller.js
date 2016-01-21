@@ -1,4 +1,4 @@
-app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialog) {
+app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialog, $mdMedia) {
 
 	// BIER Manager configuration
 	$scope.appConfig = {
@@ -22,6 +22,9 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		'links': []
 	};
 
+	// Available info about channels
+	$scope.channelData = null;
+
 	$scope.clearCurrentTree = function(){
 		$scope.currentTree = {
 			'ingress': null,
@@ -34,11 +37,30 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 
 	$scope.initApp = function(){
 		$scope.clearCurrentTree();
-		biermanRest.loadTopology(function(data){
-			$scope.processTopologyData(data);
-			$scope.topoInitialized = true;
-			$scope.appConfig.currentTopologyId = data['topology-id'];
-		}, function(errMsg){
+		biermanRest.loadTopology(
+			// topology loaded successfully
+			function(data){
+				$scope.processTopologyData(data);
+				$scope.topoInitialized = true;
+				$scope.appConfig.currentTopologyId = data['topology-id'];
+				biermanRest.getChannels(
+					$scope.appConfig.currentTopologyId,
+					function(data){
+						$scope.channelData = data;
+					},
+					function(errMsg){
+						console.error(errMsg);
+						swal({
+							title: "Channels not loaded",
+							text: errMsg,
+							type: "error",
+							confirmButtonText: "Close"
+						});
+					}
+				);
+			},
+			// topology load failed
+			function(errMsg){
 			console.error(errMsg);
 			swal({
 				title: "App Initialization Failed",
@@ -229,16 +251,35 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		$mdSidenav('right').open();
 	};
 
-	$scope.openChannelManager = function(){
+	$scope.openChannelManager = function() {
+		$scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+		var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
 		$mdDialog.show({
-			controller: function() {
-
-			},
-			controllerAs: 'DmoDialogCtrl',
-			templateUrl: './app/templates/channel-manager.tpl.html',
-			parent: angular.element(document.body),
-			clickOutsideToClose: true
-		})
+				controller: function($scope, $mdDialog){
+					$scope.hide = function() {
+						$mdDialog.hide();
+					};
+					$scope.cancel = function() {
+						$mdDialog.cancel();
+					};
+					$scope.answer = function(answer) {
+						$mdDialog.hide(answer);
+					};
+				},
+				templateUrl: './app/templates/channel-manager.tpl.html',
+				parent: angular.element(document.body),
+				clickOutsideToClose:true,
+				fullscreen: useFullScreen
+			})
+			.then(function(answer) {
+				$scope.status = 'You said the information was "' + answer + '".';
+			}, function() {
+				$scope.status = 'You cancelled the dialog.';
+			});
+		$scope.$watch(function() {
+			return $mdMedia('xs') || $mdMedia('sm');
+		}, function(wantsFullScreen) {
+			$scope.customFullscreen = (wantsFullScreen === true);
+		});
 	};
-
 });

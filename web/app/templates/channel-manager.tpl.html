@@ -1,0 +1,58 @@
+<md-dialog aria-label="Channel Manager"  ng-cloak>
+	<form>
+		<md-toolbar>
+			<div class="md-toolbar-tools">
+				<h2>Channel Manager</h2>
+				<span flex></span>
+				<md-button class="md-icon-button" ng-click="cancel()">
+					<i class="fa fa-close fa-2x" aria-label="Close dialog"></i>
+				</md-button>
+			</div>
+		</md-toolbar>
+		<md-dialog-content>
+			<div class="md-dialog-content">
+				<section>
+					<md-subheader class="md-primary">Add Channel</md-subheader>
+					<div>
+						<md-input-container>
+							<label for="cm-channel-name">Channel name</label>
+							<input ng-model="channel.name" id="cm-channel-name">
+						</md-input-container>
+						<md-input-container>
+							<label for="cm-src-ip">Source IP</label>
+							<input ng-model="channel.name" id="cm-src-ip">
+						</md-input-container>
+						<md-input-container>
+							<label for="cm-dest-group">Destination Group</label>
+							<input ng-model="channel.name" id="cm-dest-group">
+						</md-input-container>
+					</div>
+					<div>
+						<md-button ng-click="answer('not useful')" class="md-raised md-primary">
+							Save
+						</md-button>
+					</div>
+				</section>
+				<section>
+					<md-subheader class="md-primary">Manage Channels</md-subheader>
+					<div ng-show="channelData == null">
+						<md-progress-linear md-mode="query"></md-progress-linear>
+						<div class="bottom-block">
+							<span>Loading available channels...</span>
+						</div>
+					</div>
+					<div ng-show="angular.isObject(channelData)">
+						channels loaded
+					</div>
+				</section>
+
+			</div>
+		</md-dialog-content>
+		<md-dialog-actions layout="row">
+			<span flex></span>
+			<md-button ng-click="answer('useful')" class="md-raised">
+				Close
+			</md-button>
+		</md-dialog-actions>
+	</form>
+</md-dialog>

@@ -11,7 +11,7 @@
 				Automatic computation
 			</md-switch>
 
-			<md-button ng-click="computeMask()" class="md-raised"><i class="fa fa-check"></i> Validate and compute mask</md-button><br><br>
+			<md-button ng-click="computeMask()" class="md-raised md-primary"><i class="fa fa-check"></i> Validate and compute mask</md-button><br><br>
 			<div ng-show="currentTree.validStatus == 'valid'">
 				<div class="text-success">
 					FMASK: {{currentTree.fmask}}<br><br>
@@ -27,26 +27,20 @@
 					<i class="fa fa-refresh fa-spin"></i> Calculating FMASK...<br><br>
 				</div>
 			</div>
-			<label for="flows">Assign Channels:</label><br>
-			<select id="flows">
-				<option>Comedy Central</option>
-				<option>Spike</option>
-				<option>FOX</option>
-			</select><br><br>
-
 
 			<md-input-container>
-				<label>State</label>
+				<label>Assign channels</label>
 				<md-select ng-model="ctrl.userState">
-					<md-option ng-repeat="state in ctrl.states" value="{{state.abbrev}}">
-						{{state.abbrev}}
+					<md-option ng-repeat="channel in ctrl.channels" value="{{channel.name}}">
+						{{channel.name}}
 					</md-option>
 				</md-select>
 			</md-input-container>
+			<br>
 
 
-			<md-button class="awesome-button" id="deploy-button" disabled="disabled"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
-			<md-button class="awesome-button awesome-button-red" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
+			<md-button class="md-raised" id="deploy-button" disabled="disabled"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
+			<md-button class="md-raised md-warn" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
 		</md-content>
 	</div>
 </md-sidenav>

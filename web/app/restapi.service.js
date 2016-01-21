@@ -24,13 +24,21 @@ app.factory('BiermanRest', function($http){
 				if(res.status == 'ok'){
 					res = res.data['network-topology'].topology;
 					// fixme: we need clarification on that
-					for(var i = 0; i < res.length; i++)
+					var validRes = null;
+					for(var i = 0; i < res.length; i++){
 						if(res[i].hasOwnProperty('node') && res[i].hasOwnProperty('link'))
 						{
-							res = res[i];
+							validRes = res[i];
 							break;
 						}
-					successCbk(res);
+					}
+					if(validRes != null){
+						successCbk(validRes);
+					}
+					else{
+						console.log(res);
+						errorCbk("Node/link data is missing.");
+					}
 				}
 				else{
 					errorCbk("Proxy returned error status: " + JSON.stringify(res.data));
@@ -79,6 +87,50 @@ app.factory('BiermanRest', function($http){
 			// failed
 			function(e){
 				var errMsg = "Could not fetch path data from server: " + e.statusText;
+				errorCbk({'errObj': e, 'errId': 0, 'errMsg': errMsg});
+			});
+	};
+
+	// get paths for specified topology
+	BiermanRest.prototype.getChannels = function(topologyId, successCbk, errorCbk){
+		var self = this;
+		$http({
+			'url': self.getProxyURL() + '/restconf/operations/bier:get-channel',
+			'method': 'POST',
+			'timeout': this.appConfig.httpMaxTimeout,
+			'data': JSON.stringify({
+				"input": {
+					"topo-id": topologyId
+				}
+			})
+		}).then(
+			// loaded
+			function (data){
+				if(data.data.status == 'ok')
+				{
+					// if controller returned errors
+					if(data.data.data.hasOwnProperty('errors')){
+						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+					}
+					else{
+						try{
+							data = data.data.data.output.channel;
+							successCbk(data);
+						}
+						catch(e){
+							var errMsg = "Invalid JSON response returned to computeMask";
+							errorCbk({'errObj': e, 'errId': 3, 'errMsg': errMsg});
+						}
+					}
+				}
+				else{
+					errorCbk({'errObj': data.data.data, 'errId': 1, 'errMsg': 'Proxy status other than ok'});
+				}
+
+			},
+			// failed
+			function(e){
+				var errMsg = "Could not fetch channel data from server: " + e.statusText;
 				errorCbk({'errObj': e, 'errId': 0, 'errMsg': errMsg});
 			});
 	};
