@@ -1,7 +1,7 @@
 app.directive('biermanTopology', function() {
 	return {
 		'restrict': 'E',
-		'template': '<div id="bierman-topology"></div>',
+		'template': '',
 		'scope': {
 			'topologyStartOver': '=',
 			'topoInitialized': '=',
@@ -376,6 +376,7 @@ app.directive('biermanTopology', function() {
 
 				$scope.topo = new nx.graphic.Topology({
 					'adaptive': true,
+					'scalable': true,
 					'showIcon': true,
 					'nodeConfig': {
 						'label': 'model.attributes.name',
@@ -391,13 +392,12 @@ app.directive('biermanTopology', function() {
 						'iconType': 'accessPoint'
 					},
 					'identityKey': 'id',
-					'width': 1000,
-					'height': 800,
 					'enableSmartLabel': true,
 					'enableSmartNode': true,
 					'enableGradualScaling': true,
 					'supportMultipleLink': true,
 					'dataProcessor': 'force',
+					'autoLayout': true,
 					'nodeInstanceClass': 'ExtendedNode',
 					'linkInstanceClass': 'ExtendedLink'
 				});
@@ -412,6 +412,7 @@ app.directive('biermanTopology', function() {
 					// disable tooltips for both nodes and links
 					$scope.topo.tooltipManager().showNodeTooltip(false);
 					$scope.topo.tooltipManager().showLinkTooltip(false);
+					$scope.topo.adaptToContainer();
 				});
 
 				$scope.topo.on('ready', function(sender, event){

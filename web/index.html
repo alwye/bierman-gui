@@ -4,10 +4,11 @@
 	<title>BIER Manager</title>
 	<link rel="stylesheet" href="lib/next-ui/css/next.css">
 	<link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
-	<link rel="stylesheet" href="assets/style.css">
-	<link rel="stylesheet" type="text/css" href="bower_components/sweetalert/dist/sweetalert.css">
+	<link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css">
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
+	<link rel="stylesheet" href="assets/style.css">
+	<link rel="stylesheet" href="assets/loading.css">
 	<!-- Loading libraries -->
 	<script type="application/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script type="application/javascript" src="lib/next-ui/js/next.js"></script>
@@ -18,24 +19,24 @@
 	<script src="bower_components/angular-aria/angular-aria.min.js"></script>
 </head>
 <body>
-	<div ng-controller="biermanCtrl" class="app-wrapper">
+	<div ng-controller="biermanCtrl" class="app-wrapper h100">
 		<div ng-show="appConfig.mode == 'init'" ng-hide="appConfig.mode != 'init'">
 			<div class="loading">Loading&#8230;</div>
 		</div>
-		<div class="top">
-			<md-toolbar class="md-theme-light">
-				<h2 class="md-toolbar-tools white float-left">
-					<span style="width:10px"></span>
-					<span style="margin-right: 5px">BIERMAN</span>
-					<span flex></span>
-					<div layout="column" layout-align="center center"></div>
-					<span style="width:10px"></span>
-				</h2>
-			</md-toolbar>
-		</div>
-		<div class="main">
-			<bierman-topology class="topology-container" topo="topo" open-panel="openPanel" process-bier-tree-data="processBierTreeData" reset-topology="resetTopology"></bierman-topology>
-			<div ng-include="'./app/templates/side-panel-index.tpl.html'"></div>
+		<md-toolbar class="md-theme-light">
+			<div class="md-toolbar-tools white float-left">
+				<span style="width:10px"></span>
+				<span style="margin-right: 5px; font-weight: bold;">BIERMAN</span>
+				<md-button class="md-primary" ng-click="openChannelManager()"><i class="fa fa-tv"></i> Channel Manager</md-button>
+				<md-button class="md-primary" ng-click="openRightPanel('path-manager')"><i class="fa fa-arrows"></i> Path Manager</md-button>
+				<span flex></span>
+			</div>
+		</md-toolbar>
+		<div class="h100">
+			<section layout="row" flex class="h100">
+				<bierman-topology id="bierman-topology" topo="topo" open-panel="openPanel" process-bier-tree-data="processBierTreeData" reset-topology="resetTopology"></bierman-topology>
+				<slideout-right></slideout-right>
+			</section>
 		</div>
 	</div>
 

@@ -1,59 +1,52 @@
-<div class="panel-wrapper full-height">
-	<!-- panel navigation -->
-	<div class="panel-nav">
-		<ul>
-			<li><a href="#"  id="config-panel-opener" ng-click="openPanel('config')" title="Open configuration panel" class='noselect'><i class="fa fa-pencil-square-o fa-2x"></i></a></li>
-			<li><a href="#"  id="node-panel-opener" ng-click="openPanel('node')" title="Open nodes panel" class='noselect'><i class="fa fa-dot-circle-o fa-2x"></i></a></li>
-			<li><a href="#"  id="link-panel-opener" ng-click="openPanel('link')" title="Open links panel" class='noselect'><i class="fa fa-link fa-2x"></i></a></li>
-			<li><a href="#"  id="path-panel-opener" ng-click="openPanel('path')" title="Open paths panel" class='noselect'><i class="fa fa-arrows fa-2x"></i></a></li></ul>
-	</div>
-	<!-- panel content -->
-	<div id="side-panel" class="panel full-height">
-		<div class="full-height" style="width: 405px">
-			<div class="full-size">
-				<div ng-show="appConfig.currentPanel == 'config'" class="full-size">
-					<h2>Path Manager</h2>
-					<b>Manual only</b><br><br>
-					<button ng-click="computeMask()" class="awesome-button"><i class="fa fa-check"></i> Validate and compute mask</button><br><br>
-					<div ng-show="currentTree.validStatus == 'valid'">
-						<div class="text-success">
-							FMASK: {{currentTree.fmask}}<br><br>
-						</div>
-					</div>
-					<div ng-show="currentTree.validStatus == 'invalid'">
-						<div class="text-error">
-							FMASK has not been computed<br><br>
-						</div>
-					</div>
-					<div ng-show="currentTree.validStatus == 'inprogress'">
-						<div class="text-success">
-							<i class="fa fa-refresh fa-spin"></i> Calculating FMASK...<br><br>
-						</div>
-					</div>
-					<label for="flows">Assign Channels:</label><br>
-					<select id="flows">
-						<optgroup label="Channels">
-							<option>Comedy Central</option>
-							<option>Spike</option>
-							<option>FOX</option>
-						</optgroup>
-					</select><br><br>
-					<button class="awesome-button" id="deploy-button" disabled="disabled"><i class="fa fa-rocket"></i> Deploy</button> &nbsp;
-					<button class="awesome-button awesome-button-red" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</button><br><br>
-				</div>
-				<div ng-show="appConfig.currentPanel == 'node'" class="full-size">
-					<h2>Node Panel</h2>
-					Under construction
-				</div>
-				<div ng-show="appConfig.currentPanel == 'link'" class="full-size">
-					<h2>Link Panel</h2>
-					Under construction
-				</div>
-				<div ng-show="appConfig.currentPanel == 'path'" class="full-size">
-					<h2>Path Panel</h2>
-					Under construction
+<md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
+	<div ng-show="appConfig.currentPanel == 'path-manager'">
+
+		<md-toolbar class="md-theme-indigo" md-scroll-shrink>
+			<div class="md-toolbar-tools white">
+				Path Manager<span flex></span>
+			</div>
+		</md-toolbar>
+		<md-content layout-padding class="offWhite">
+			<md-switch class="md-accent md-block" aria-label="Switch No Ink" ng-model="biermanCtrl.spf">
+				Automatic computation
+			</md-switch>
+
+			<md-button ng-click="computeMask()" class="md-raised"><i class="fa fa-check"></i> Validate and compute mask</md-button><br><br>
+			<div ng-show="currentTree.validStatus == 'valid'">
+				<div class="text-success">
+					FMASK: {{currentTree.fmask}}<br><br>
 				</div>
 			</div>
-		</div>
+			<div ng-show="currentTree.validStatus == 'invalid'">
+				<div class="text-error">
+					FMASK has not been computed<br><br>
+				</div>
+			</div>
+			<div ng-show="currentTree.validStatus == 'inprogress'">
+				<div class="text-success">
+					<i class="fa fa-refresh fa-spin"></i> Calculating FMASK...<br><br>
+				</div>
+			</div>
+			<label for="flows">Assign Channels:</label><br>
+			<select id="flows">
+				<option>Comedy Central</option>
+				<option>Spike</option>
+				<option>FOX</option>
+			</select><br><br>
+
+
+			<md-input-container>
+				<label>State</label>
+				<md-select ng-model="ctrl.userState">
+					<md-option ng-repeat="state in ctrl.states" value="{{state.abbrev}}">
+						{{state.abbrev}}
+					</md-option>
+				</md-select>
+			</md-input-container>
+
+
+			<md-button class="awesome-button" id="deploy-button" disabled="disabled"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
+			<md-button class="awesome-button awesome-button-red" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
+		</md-content>
 	</div>
-</div>
+</md-sidenav>

@@ -1,4 +1,4 @@
-app.controller('biermanCtrl', function($scope, BiermanRest) {
+app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialog) {
 
 	// BIER Manager configuration
 	$scope.appConfig = {
@@ -223,5 +223,22 @@ app.controller('biermanCtrl', function($scope, BiermanRest) {
 				break;
 		}
 	});
+
+	$scope.openRightPanel = function(panelCode){
+		$scope.appConfig.currentPanel = panelCode;
+		$mdSidenav('right').open();
+	};
+
+	$scope.openChannelManager = function(){
+		$mdDialog.show({
+			controller: function() {
+
+			},
+			controllerAs: 'DmoDialogCtrl',
+			templateUrl: './app/templates/channel-manager.tpl.html',
+			parent: angular.element(document.body),
+			clickOutsideToClose: true
+		})
+	};
 
 });
