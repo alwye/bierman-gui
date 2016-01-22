@@ -50,6 +50,10 @@ span.center {
     padding-left: 0 !important;
 }
 
+md-toolbar.white {
+    color: #fff !important;
+}
+
 /*!* Panel's settings *!*/
 
 /*.panel {*/

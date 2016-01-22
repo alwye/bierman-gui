@@ -265,11 +265,15 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 					$scope.answer = function(answer) {
 						$mdDialog.hide(answer);
 					};
+					$scope.typeOf = function(val){
+						return typeof val;
+					}
 				},
 				templateUrl: './app/templates/channel-manager.tpl.html',
 				parent: angular.element(document.body),
 				clickOutsideToClose:true,
-				fullscreen: useFullScreen
+				fullscreen: useFullScreen,
+				scope: $scope
 			})
 			.then(function(answer) {
 				$scope.status = 'You said the information was "' + answer + '".';

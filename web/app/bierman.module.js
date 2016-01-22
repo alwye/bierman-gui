@@ -3,7 +3,7 @@ var app = angular.module('biermanApp', ['ngMaterial']);
 	app.config(function($mdThemingProvider) {
 		$mdThemingProvider.theme('default')
 			.primaryPalette('blue')
-			.accentPalette('cyan');
+			.accentPalette('light-blue');
 	});
 	app.directive('slideoutRight', function() {
 		return {

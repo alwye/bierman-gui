@@ -1,5 +1,5 @@
-<md-dialog aria-label="Channel Manager"  ng-cloak>
-	<form>
+<md-dialog aria-label="Channel Manager" flex="50" ng-cloak>
+	<md-dialog-content>
 		<md-toolbar>
 			<div class="md-toolbar-tools">
 				<h2>Channel Manager</h2>
@@ -9,46 +9,63 @@
 				</md-button>
 			</div>
 		</md-toolbar>
-		<md-dialog-content>
-			<div class="md-dialog-content">
-				<section>
-					<md-subheader class="md-primary">Add Channel</md-subheader>
-					<div>
-						<md-input-container>
-							<label for="cm-channel-name">Channel name</label>
-							<input ng-model="channel.name" id="cm-channel-name">
-						</md-input-container>
-						<md-input-container>
-							<label for="cm-src-ip">Source IP</label>
-							<input ng-model="channel.name" id="cm-src-ip">
-						</md-input-container>
-						<md-input-container>
-							<label for="cm-dest-group">Destination Group</label>
-							<input ng-model="channel.name" id="cm-dest-group">
-						</md-input-container>
-					</div>
-					<div>
-						<md-button ng-click="answer('not useful')" class="md-raised md-primary">
-							Save
-						</md-button>
-					</div>
-				</section>
-				<section>
-					<md-subheader class="md-primary">Manage Channels</md-subheader>
-					<div ng-show="channelData == null">
-						<md-progress-linear md-mode="query"></md-progress-linear>
-						<div class="bottom-block">
-							<span>Loading available channels...</span>
-						</div>
-					</div>
-					<div ng-show="angular.isObject(channelData)">
-						channels loaded
-					</div>
-				</section>
-
+		<!-- Add Channel Block -->
+		<md-toolbar class="md-accent white">
+			<div class="md-toolbar-tools">
+				<h3>Add Channel</h3>
 			</div>
-		</md-dialog-content>
-		<md-dialog-actions layout="row">
+		</md-toolbar>
+		<md-content class="md-dialog-content">
+			<form>
+				<div layout="row">
+					<md-input-container>
+						<label for="cm-channel-name">Channel name</label>
+						<input ng-model="channel.name" id="cm-channel-name">
+					</md-input-container>
+					<md-input-container>
+						<label for="cm-src-ip">Source IP</label>
+						<input ng-model="channel.name" id="cm-src-ip">
+					</md-input-container>
+					<md-input-container>
+						<label for="cm-dest-group">Destination Group</label>
+						<input ng-model="channel.name" id="cm-dest-group">
+					</md-input-container>
+					<md-button ng-click="answer('save')" class="md-raised md-primary">
+						Save
+					</md-button>
+				</div>
+			</form>
+		</md-content>
+
+		<!-- Manage Channels -->
+		<md-toolbar class="md-accent white">
+			<div class="md-toolbar-tools">
+				<h3>Manage Channels</h3>
+			</div>
+		</md-toolbar>
+		<div ng-show="channelData == null">
+			<md-progress-linear md-mode="query"></md-progress-linear>
+			<div class="bottom-block">
+				<span>Loading available channels...</span>{{channelData}}
+			</div>
+		</div>
+		<div ng-show="typeOf(channelData) == 'object'">
+			<md-content>
+				<md-list>
+					<md-list-item class="md-3-line" ng-repeat="channel in channelData">
+						<div class="md-list-item-text">
+							<h3>{{channel.name}}</h3>
+							<p><i class="fa fa-arrow-right"></i> {{channel['src-ip']}}</p>
+							<p><i class="fa fa-users"></i> {{channel['dst-group']}}</p>
+							<p><i class="fa fa-cloud" ></i> {{channel['sub-domain']}}</p>
+						</div>
+						<md-divider ng-if="!$last"></md-divider>
+					</md-list-item>
+				</md-list>
+			</md-content>
+		</div>
+	</md-dialog-content>
+	<md-dialog-actions layout="row">
 			<span flex></span>
 			<md-button ng-click="answer('useful')" class="md-raised">
 				Close
