@@ -253,6 +253,10 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 
 	$scope.openChannelManager = function() {
 		$scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
+		$scope.edit = {
+			name: '',
+			editing: false
+		};
 		var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
 		$mdDialog.show({
 				controller: function($scope, $mdDialog, dScope){
@@ -267,7 +271,20 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 					$scope.typeOf = function(val){
 						return typeof val;
 					};
+					$scope.editChannel = function(val){
+
+					};
+					$scope.removeChannelWarning = function(val){
+
+					};
+					$scope.removeChannel = function(chName){
+
+					};
+					$scope.addChannel = function(){
+
+					};
 					$scope.dScope = dScope;
+					console.log(dScope.channelData);
 				},
 				templateUrl: './app/templates/channel-manager.tpl.html',
 				parent: angular.element(document.body),

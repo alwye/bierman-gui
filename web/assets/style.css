@@ -54,6 +54,28 @@ md-toolbar.white {
     color: #fff !important;
 }
 
+.add-channel md-input-container {
+    margin: 0 !important;
+}
+
+.channel-info {
+    padding: 24px;
+}
+
+.channel-actions {
+    padding: 10px;
+}
+
+.product-label {
+    margin: 0 16px 0 10px;
+    font-weight: bold;
+}
+
+.menu-button {
+    padding-left: 8px !important;
+    padding-right: 8px !important;
+}
+
 /*!* Panel's settings *!*/
 
 /*.panel {*/

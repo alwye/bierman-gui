@@ -17,27 +17,27 @@
 		</md-toolbar>
 		<md-content class="md-dialog-content">
 			<form>
-				<div layout="row">
+				<div layout="row" class="md-inline-form layout-column add-channel">
 					<md-input-container>
 						<label for="cm-channel-name">Channel name</label>
-						<input ng-model="dScope.channel.name" id="cm-channel-name">
+						<input ng-model="dScope.channel.name" id="cm-channel-name" required>
 					</md-input-container>
 					<md-input-container>
 						<label for="cm-src-ip">Source IP</label>
-						<input ng-model="dScope.channel.name" id="cm-src-ip">
+						<input ng-model="dScope.channel.srcIP" id="cm-src-ip" required>
 					</md-input-container>
 					<md-input-container>
 						<label for="cm-dest-group">Destination Group</label>
-						<input ng-model="dScope.channel.name" id="cm-dest-group">
+						<input ng-model="dScope.channel.destGroup" id="cm-dest-group" required>
 					</md-input-container>
 					<md-input-container>
 						<label for="cm-subdomain">Subdomain</label>
-						<input ng-model="dScope.channel.subdomain" id="cm-subdomain">
+						<input ng-model="dScope.channel.subdomain" id="cm-subdomain" required>
 					</md-input-container>
-					<md-button ng-click="addChannel()" class="md-raised md-primary">
-						Save
-					</md-button>
 				</div>
+				<md-button ng-click="addChannel()" class="md-raised md-primary">
+					Save
+				</md-button>
 			</form>
 		</md-content>
 
@@ -49,23 +49,76 @@
 		</md-toolbar>
 		<div ng-show="dScope.channelData == null">
 			<md-progress-linear md-mode="query"></md-progress-linear>
-			<div class="bottom-block">
+			<div class="bottom-block channel-info">
 				<span>Loading available channels...</span>{{dScope.channelData}}
 			</div>
 		</div>
 		<div ng-show="typeOf(dScope.channelData) == 'object'">
 			<md-content>
-				<md-list>
-					<md-list-item class="md-3-line" ng-repeat="channel in dScope.channelData">
-						<div class="md-list-item-text">
-							<h3>{{channel.name}}</h3>
-							<p><i class="fa fa-arrow-right"></i> {{channel['src-ip']}}</p>
-							<p><i class="fa fa-users"></i> {{channel['dst-group']}}</p>
-							<p><i class="fa fa-cloud" ></i> {{channel['sub-domain']}}</p>
-						</div>
-						<md-divider ng-if="!$last"></md-divider>
-					</md-list-item>
-				</md-list>
+				<div ng-show="dScope.channelData.length > 0">
+					<md-list>
+						<md-list-item class="md-3-line" ng-repeat="channel in dScope.channelData">
+							<div class="md-list-item-text" layout="row">
+								<!-- edit mode -->
+								<div ng-show="edit.editing && edit.name == channel.name">
+									<div class="channel-info">
+										<md-input-container>
+											<label for="cm-channel-name">Channel name</label>
+											<input ng-model="dScope.channel.name" id="cm-channel-name" required>
+										</md-input-container>
+										<md-input-container>
+											<label for="cm-src-ip">Source IP</label>
+											<input ng-model="dScope.channel.srcIP" id="cm-src-ip" required>
+										</md-input-container>
+										<md-input-container>
+											<label for="cm-dest-group">Destination Group</label>
+											<input ng-model="dScope.channel.destGroup" id="cm-dest-group" required>
+										</md-input-container>
+										<md-input-container>
+											<label for="cm-subdomain">Subdomain</label>
+											<input ng-model="dScope.channel.subdomain" id="cm-subdomain" required>
+										</md-input-container>
+									</div>
+									<div flex></div>
+									<div class="channel-actions">
+										<md-button ng-click="saveChannel(channel.name)" class="md-primary">
+											Save
+										</md-button>
+										<md-button ng-click="closeEditor(channel.name)" class="md-primary">
+											Cancel
+										</md-button><br>
+										<md-button ng-click="removeChannelWarning(channel.name)" class="md-warn">
+											Remove
+										</md-button>
+									</div>
+								</div>
+								<div ng-show="!edit.editing || edit.name != channel.name">
+									<div class="channel-info">
+										<h3>{{channel.name}}</h3>
+										<p><i class="fa fa-arrow-right"></i> {{channel['src-ip']}}</p>
+										<p><i class="fa fa-users"></i> {{channel['dst-group']}}</p>
+										<p><i class="fa fa-cloud" ></i> {{channel['sub-domain']}}</p>
+									</div>
+									<div flex></div>
+									<div class="channel-actions">
+										<md-button ng-click="editChannel(channel.name)" class="md-primary">
+											Edit
+										</md-button>
+										<md-button ng-click="removeChannelWarning(channel.name)" class="md-warn">
+											Remove
+										</md-button>
+									</div>
+								</div>
+							</div>
+							<md-divider ng-if="!$last"></md-divider>
+						</md-list-item>
+					</md-list>
+				</div>
+				<div ng-show="dScope.channelData.length == 0">
+					<div class="channel-info">
+						No channels defined so far.
+					</div>
+				</div>
 			</md-content>
 		</div>
 	</md-dialog-content>

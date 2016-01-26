@@ -124,15 +124,19 @@ app.factory('BiermanRest', function($http){
 					if(data.data.data.hasOwnProperty('errors')){
 						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
 					}
+					// if output is set
+					else if(data.data.data.hasOwnProperty('output')){
+						if(data.data.data.output.hasOwnProperty('channel')){
+							successCbk(data.data.data.output.channel);
+						}
+						else{
+							successCbk([]);
+						}
+					}
+					// if neither output nor errors
 					else{
-						try{
-							data = data.data.data.output.channel;
-							successCbk(data);
-						}
-						catch(e){
-							var errMsg = "Invalid JSON response returned to getChannel";
-							errorCbk({'errObj': e, 'errId': 3, 'errMsg': errMsg});
-						}
+						var errMsg = "Invalid JSON response returned to getChannel";
+						errorCbk({'errObj': e, 'errId': 3, 'errMsg': errMsg});
 					}
 				}
 				else{
