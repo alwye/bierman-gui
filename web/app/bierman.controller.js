@@ -7,6 +7,8 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		'proxyPort': '5555', // Port of controller (8181 by default)
 		'httpMaxTimeout': 10000, // Maximum timeout in milliseconds for HTTP requests
 		'maxPacketLoss': 10,
+		'spfMode': false, // SPF switch is set to this
+
 		// DO NOT MODIFY CONFIGURATION BELOW
 		'mode': 'init', // Application mode (do not modify)
 		'topoInitialized': false,

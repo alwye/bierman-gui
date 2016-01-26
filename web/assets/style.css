@@ -76,6 +76,22 @@ md-toolbar.white {
     padding-right: 8px !important;
 }
 
+.center-button-outer {
+    text-align: center;
+}
+
+.center-button-inner {
+    display: inline-block;
+}
+
+.fmask-result {
+    padding-top: 15px;
+}
+
+.info-icon {
+    color: #2196f3;
+}
+
 /*!* Panel's settings *!*/
 
 /*.panel {*/

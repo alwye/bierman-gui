@@ -7,41 +7,63 @@
 			</div>
 		</md-toolbar>
 		<md-content layout-padding class="offWhite">
-			<md-switch class="md-accent md-block" aria-label="Switch No Ink" ng-model="biermanCtrl.spf">
+			<md-switch class="md-accent md-block" aria-label="Automatic computation" ng-model="appConfig.spfMode">
 				Automatic computation
 			</md-switch>
 
-			<md-button ng-click="computeMask()" class="md-raised md-primary"><i class="fa fa-check"></i> Validate and compute mask</md-button><br><br>
-			<div ng-show="currentTree.validStatus == 'valid'">
-				<div class="text-success">
-					FMASK: {{currentTree.fmask}}<br><br>
+			<!-- SPF (automatic) path configuration -->
+			<div ng-show="appConfig.spfMode">
+				<p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress) and multiple destinations (egresses), then:</p>
+				<div class="center-button-outer">
+					<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner">
+						<i class="fa fa-check"></i> Compute paths
+					</md-button>
 				</div>
 			</div>
-			<div ng-show="currentTree.validStatus == 'invalid'">
-				<div class="text-error">
-					FMASK has not been computed<br><br>
+			<!-- / SPF (automatic) path configuration -->
+
+			<!-- Manual path configuration -->
+			<div ng-show="!appConfig.spfMode">
+				<p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress), multiple destinations (egresses). Design your own path, click link by link from the ingress to the destination points. Then:</p>
+				<div class="center-button-outer">
+					<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner">
+						<i class="fa fa-check"></i> Validate and compute mask
+					</md-button>
 				</div>
-			</div>
-			<div ng-show="currentTree.validStatus == 'inprogress'">
-				<md-progress-linear md-mode="query"></md-progress-linear>
-				<div class="bottom-block">
-					<span>Calculating FMASK...</span>
+				<div ng-show="currentTree.validStatus == 'valid'">
+					<div class="fmask-result text-success">
+						FMASK: {{currentTree.fmask}}
+					</div>
 				</div>
+				<div ng-show="currentTree.validStatus == 'invalid'">
+					<div class="fmask-result text-error">
+						FMASK has not been computed
+					</div>
+				</div>
+				<div ng-show="currentTree.validStatus == 'inprogress'">
+					<md-progress-linear md-mode="query"></md-progress-linear>
+					<div class="bottom-block">
+						<span>Calculating FMASK...</span>
+					</div>
+				</div>
+
+				<md-input-container>
+					<label>Assign channels</label>
+					<md-select ng-model="ctrl.userState">
+						<md-option ng-repeat="channel in channelData" value="{{channel.name}}">
+							{{channel.name}}
+						</md-option>
+					</md-select>
+				</md-input-container>
+				<br>
+
+
+				<md-button class="md-raised" id="deploy-button" disabled="disabled"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
+				<md-button class="md-raised md-warn" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
 			</div>
-
-			<md-input-container>
-				<label>Assign channels</label>
-				<md-select ng-model="ctrl.userState">
-					<md-option ng-repeat="channel in channelData" value="{{channel.name}}">
-						{{channel.name}}
-					</md-option>
-				</md-select>
-			</md-input-container>
-			<br>
+			<!-- / Manual path configuration -->
 
 
-			<md-button class="md-raised" id="deploy-button" disabled="disabled"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
-			<md-button class="md-raised md-warn" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
 		</md-content>
 	</div>
 </md-sidenav>
