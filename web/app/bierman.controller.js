@@ -255,25 +255,27 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		$scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
 		var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
 		$mdDialog.show({
-				controller: function($scope, $mdDialog){
+				controller: function($scope, $mdDialog, dScope){
+					// Hide dialog (close without discarding changes)
 					$scope.hide = function() {
 						$mdDialog.hide();
 					};
+					// Cancel (discard changes)
 					$scope.cancel = function() {
 						$mdDialog.cancel();
 					};
-					$scope.answer = function(answer) {
-						$mdDialog.hide(answer);
-					};
 					$scope.typeOf = function(val){
 						return typeof val;
-					}
+					};
+					$scope.dScope = dScope;
 				},
 				templateUrl: './app/templates/channel-manager.tpl.html',
 				parent: angular.element(document.body),
 				clickOutsideToClose:true,
 				fullscreen: useFullScreen,
-				scope: $scope
+				locals: {
+					dScope: $scope
+				}
 			})
 			.then(function(answer) {
 				$scope.status = 'You said the information was "' + answer + '".';

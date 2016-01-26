@@ -20,17 +20,21 @@
 				<div layout="row">
 					<md-input-container>
 						<label for="cm-channel-name">Channel name</label>
-						<input ng-model="channel.name" id="cm-channel-name">
+						<input ng-model="dScope.channel.name" id="cm-channel-name">
 					</md-input-container>
 					<md-input-container>
 						<label for="cm-src-ip">Source IP</label>
-						<input ng-model="channel.name" id="cm-src-ip">
+						<input ng-model="dScope.channel.name" id="cm-src-ip">
 					</md-input-container>
 					<md-input-container>
 						<label for="cm-dest-group">Destination Group</label>
-						<input ng-model="channel.name" id="cm-dest-group">
+						<input ng-model="dScope.channel.name" id="cm-dest-group">
 					</md-input-container>
-					<md-button ng-click="answer('save')" class="md-raised md-primary">
+					<md-input-container>
+						<label for="cm-subdomain">Subdomain</label>
+						<input ng-model="dScope.channel.subdomain" id="cm-subdomain">
+					</md-input-container>
+					<md-button ng-click="addChannel()" class="md-raised md-primary">
 						Save
 					</md-button>
 				</div>
@@ -43,16 +47,16 @@
 				<h3>Manage Channels</h3>
 			</div>
 		</md-toolbar>
-		<div ng-show="channelData == null">
+		<div ng-show="dScope.channelData == null">
 			<md-progress-linear md-mode="query"></md-progress-linear>
 			<div class="bottom-block">
-				<span>Loading available channels...</span>{{channelData}}
+				<span>Loading available channels...</span>{{dScope.channelData}}
 			</div>
 		</div>
-		<div ng-show="typeOf(channelData) == 'object'">
+		<div ng-show="typeOf(dScope.channelData) == 'object'">
 			<md-content>
 				<md-list>
-					<md-list-item class="md-3-line" ng-repeat="channel in channelData">
+					<md-list-item class="md-3-line" ng-repeat="channel in dScope.channelData">
 						<div class="md-list-item-text">
 							<h3>{{channel.name}}</h3>
 							<p><i class="fa fa-arrow-right"></i> {{channel['src-ip']}}</p>
@@ -67,7 +71,7 @@
 	</md-dialog-content>
 	<md-dialog-actions layout="row">
 			<span flex></span>
-			<md-button ng-click="answer('useful')" class="md-raised">
+			<md-button ng-click="cancel()" class="md-primary">
 				Close
 			</md-button>
 		</md-dialog-actions>

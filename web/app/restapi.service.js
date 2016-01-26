@@ -10,6 +10,18 @@ app.factory('BiermanRest', function($http){
 		return 'http://' + this.appConfig.proxyHost + ':' + this.appConfig.proxyPort;
 	};
 
+	// check multiple properties if exist
+	BiermanRest.prototype.hasOwnProperties = function(obj, props){
+		if(Array.isArray(props)) {
+			for (var i = 0; i < props.length; i++)
+				if (!obj.hasOwnProperty(props[i]))
+					return false;
+			return true;
+		}
+		else
+			return false;
+	};
+
 	// Read topology from the controller
 	BiermanRest.prototype.loadTopology = function(successCbk, errorCbk){
 		var self = this;
@@ -46,7 +58,7 @@ app.factory('BiermanRest', function($http){
 			},
 			// failed
 			function(err){
-				var errMsg = "Could not fetch topology data from server: " + err.statusText;
+				var errMsg = "Could not fetch topology data from server";
 				errorCbk(errMsg);
 			});
 	};
@@ -99,8 +111,8 @@ app.factory('BiermanRest', function($http){
 			'method': 'POST',
 			'timeout': this.appConfig.httpMaxTimeout,
 			'data': JSON.stringify({
-				"input": {
-					"topo-id": topologyId
+				'input': {
+					'topo-id': topologyId
 				}
 			})
 		}).then(
@@ -118,7 +130,7 @@ app.factory('BiermanRest', function($http){
 							successCbk(data);
 						}
 						catch(e){
-							var errMsg = "Invalid JSON response returned to computeMask";
+							var errMsg = "Invalid JSON response returned to getChannel";
 							errorCbk({'errObj': e, 'errId': 3, 'errMsg': errMsg});
 						}
 					}
@@ -133,6 +145,64 @@ app.factory('BiermanRest', function($http){
 				var errMsg = "Could not fetch channel data from server: " + e.statusText;
 				errorCbk({'errObj': e, 'errId': 0, 'errMsg': errMsg});
 			});
+	};
+
+	// Add channel
+	BiermanRest.prototype.addChannel = function(input, successCbk, errorCbk){
+		if(this.hasOwnProperties(input, ['topo-id', 'channel-name', 'src-ip', 'dst-group'])){
+			var self = this;
+			$http({
+				'url': self.getProxyURL() + '/restconf/operations/bier:add-channel',
+				'method': 'POST',
+				'timeout': this.appConfig.httpMaxTimeout,
+				'data': JSON.stringify({
+					'input': {
+						'topo-id': input['topo-id'],
+						'channel-name': input['channel-name'],
+						'src-ip': input['src-ip'],
+						'dst-group': input['dst-group']
+					}
+				})
+			}).then(
+				// loaded
+				function (data){
+					if(data.data.status == 'ok')
+					{
+						// if controller returned errors
+						if(data.data.data.hasOwnProperty('errors')){
+							errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+						}
+						else{
+							try{
+								// todo:
+								//data = data.data.data.output.channel;
+								successCbk(data);
+							}
+							catch(e){
+								var errMsg = "Invalid JSON response returned to addChannel";
+								errorCbk({'errObj': e, 'errId': 3, 'errMsg': errMsg});
+							}
+						}
+					}
+					else{
+						errorCbk({'errObj': data.data.data, 'errId': 1, 'errMsg': 'Proxy status other than ok'});
+					}
+
+				},
+				// failed
+				function(e){
+					var errMsg = "Could not fetch channel data from server: " + e.statusText;
+					errorCbk({'errObj': e, 'errId': 0, 'errMsg': errMsg});
+				});
+
+		}
+		else{
+			errorCbk({'errObj': input, 'errId': 0, 'errMsg': 'Input in not valid'});
+		}
+	};
+
+	BiermanRest.removeChannel = function(input, successCbk, errorCbk){
+
 	};
 
 	// Compute Top-K shortest paths
