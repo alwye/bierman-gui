@@ -178,8 +178,6 @@ app.factory('BiermanRest', function($http){
 						}
 						else{
 							try{
-								// todo:
-								//data = data.data.data.output.channel;
 								successCbk(data);
 							}
 							catch(e){

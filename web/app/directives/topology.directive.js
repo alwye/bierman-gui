@@ -34,6 +34,7 @@ app.directive('biermanTopology', function() {
 					var input;
 					var nodeHistory = [];
 					var loop = false;
+					var errMsg;
 
 					var getConnectedLinks = function(nodeId, parentId){
 						if(loop) return false;
@@ -78,21 +79,61 @@ app.directive('biermanTopology', function() {
 					};
 
 					// if a tree's ready
-					if($scope.$parent.appConfig.currentTopologyId && ingress != undefined && ingress != null && tree.links.length > 0){
-						input = {
-							'input': {
-								'topo-id': $scope.$parent.appConfig.currentTopologyId,
-								'node-id': ingress.model()._data.nodeId,
-								'link': []
+					if($scope.$parent.appConfig.currentTopologyId && ingress != undefined && ingress != null){
+						// SPF
+						if($scope.$parent.appConfig.spfMode)
+						{
+							if(tree.egress.length != 0){
+								input = {
+									'input': {
+										'topo-id': $scope.$parent.appConfig.currentTopologyId,
+										'node-id': ingress.model()._data.nodeId,
+										'egress-node': []
+									}
+								};
+
+								input.input['egress-node'] = tree.egress.map(function(egressId){
+									var egress = $scope.topo.getNode(egressId);
+									return {
+										'node': egress.model()._data.nodeId
+									};
+								});
+								successCbk(input);
 							}
-						};
-						if(getConnectedLinks(ingress.id(), -1))
-							successCbk(input);
+							else{
+								errMsg = 'You must specify the egress nodes for SPF configuration of BIER tree..';
+								errorCbk(errMsg);
+							}
+
+						}
+						// manual
+						else {
+							if(tree.links.length != 0){
+								input = {
+									'input': {
+										'topo-id': $scope.$parent.appConfig.currentTopologyId,
+										'node-id': ingress.model()._data.nodeId,
+										'link': []
+									}
+								};
+								if(getConnectedLinks(ingress.id(), -1))
+									successCbk(input);
+							}
+							else{
+								errMsg = 'You must specify the links for manual configuration of BIER tree..';
+								errorCbk(errMsg);
+							}
+						}
+
 					}
 					else{
-						var errMsg = 'BIER tree was not set properly. Try again.';
+						errMsg = 'BIER tree was not set properly. Try again.';
 						errorCbk(errMsg);
 					}
+
+
+
+
 				};
 
 				$scope.openPanel = function(panelCode, auxParam){
