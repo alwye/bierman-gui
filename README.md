@@ -2,6 +2,7 @@
 This is a web application built on top of [Angular](http://github.com/angular/angular.js) + [NeXt UI](http://github.com/CiscoDevNet/next-ui).
 
 # Application Overview
+## What is BIER?
 Bit Indexed Explicit Replication (BIER) is a revolutionary new multipoint forwarding architecture. BIER allows for network replication without a tree building protocol or per-flow state by providing a mechanism to define endpoints within the packet header. BIER routers replicate and forward multicast packets along the unicast shortest paths to each of the defined endpoints for any given packet. This is a radical simplification over all previous multi-point solutions, reducing the cost of operation and providing deterministic network convergence performance for multicast services.
 
 # Configuration
