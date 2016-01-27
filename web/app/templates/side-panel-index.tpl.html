@@ -13,7 +13,7 @@
 
 			<!-- SPF (automatic) path configuration -->
 			<div ng-show="appConfig.spfMode">
-				<p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress) and multiple destinations (egresses), then:</p>
+				<!-- <p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress) and multiple destinations (egresses), then:</p> -->
 				<div class="center-button-outer">
 					<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner">
 						<i class="fa fa-check"></i> Compute FMASK and fetch paths
@@ -41,7 +41,7 @@
 
 			<!-- Manual path configuration -->
 			<div ng-show="!appConfig.spfMode">
-				<p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress), multiple destinations (egresses). Design your own path, click link by link from the ingress to the destination points. Then:</p>
+				<!-- <p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress), multiple destinations (egresses). Design your own path, click link by link from the ingress to the destination points. Then:</p> -->
 				<div class="center-button-outer">
 					<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner">
 						<i class="fa fa-check"></i> Validate and compute mask

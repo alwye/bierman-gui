@@ -19,20 +19,20 @@
 			<form>
 				<div layout="row" class="md-inline-form layout-column add-channel">
 					<md-input-container>
-						<label for="cm-channel-name">Channel name</label>
-						<input ng-model="dScope.channel.name" id="cm-channel-name" required>
+						<label for="cm-add-channel-name">Channel name</label>
+						<input ng-model="input.addChannel.name" id="cm-add-channel-name" required>
 					</md-input-container>
 					<md-input-container>
-						<label for="cm-src-ip">Source IP</label>
-						<input ng-model="dScope.channel.srcIP" id="cm-src-ip" required>
+						<label for="cm-add-src-ip">Source IP</label>
+						<input ng-model="input.addChannel.srcIP" id="cm-add-src-ip" required>
 					</md-input-container>
 					<md-input-container>
-						<label for="cm-dest-group">Destination Group</label>
-						<input ng-model="dScope.channel.destGroup" id="cm-dest-group" required>
+						<label for="cm-add-dest-group">Destination Group</label>
+						<input ng-model="input.addChannel.destGroup" id="cm-add-dest-group" required>
 					</md-input-container>
 					<md-input-container>
-						<label for="cm-subdomain">Subdomain</label>
-						<input ng-model="dScope.channel.subdomain" id="cm-subdomain" required>
+						<label for="cm-add-subdomain">Subdomain</label>
+						<input ng-model="input.addChannel.subdomain" id="cm-add-subdomain" required>
 					</md-input-container>
 				</div>
 				<md-button ng-click="addChannel()" class="md-raised md-primary">
@@ -63,20 +63,20 @@
 								<div ng-show="edit.editing && edit.name == channel.name">
 									<div class="channel-info">
 										<md-input-container>
-											<label for="cm-channel-name">Channel name</label>
-											<input ng-model="dScope.channel.name" id="cm-channel-name" required>
+											<label for="cm-edit-channel-name">Channel name</label>
+											<input ng-model="dScope.channel.name" id="cm-edit-channel-name" required>
 										</md-input-container>
 										<md-input-container>
-											<label for="cm-src-ip">Source IP</label>
-											<input ng-model="dScope.channel.srcIP" id="cm-src-ip" required>
+											<label for="cm-edit-src-ip">Source IP</label>
+											<input ng-model="dScope.channel.srcIP" id="cm-edit-src-ip" required>
 										</md-input-container>
 										<md-input-container>
-											<label for="cm-dest-group">Destination Group</label>
-											<input ng-model="dScope.channel.destGroup" id="cm-dest-group" required>
+											<label for="cm-edit-dest-group">Destination Group</label>
+											<input ng-model="dScope.channel.destGroup" id="cm-edit-dest-group" required>
 										</md-input-container>
 										<md-input-container>
-											<label for="cm-subdomain">Subdomain</label>
-											<input ng-model="dScope.channel.subdomain" id="cm-subdomain" required>
+											<label for="cm-edit-subdomain">Subdomain</label>
+											<input ng-model="dScope.channel.subdomain" id="cm-edit-subdomain" required>
 										</md-input-container>
 									</div>
 									<div flex></div>

@@ -10,18 +10,6 @@ app.factory('BiermanRest', function($http){
 		return 'http://' + this.appConfig.proxyHost + ':' + this.appConfig.proxyPort;
 	};
 
-	// check multiple properties if exist
-	BiermanRest.prototype.hasOwnProperties = function(obj, props){
-		if(Array.isArray(props)) {
-			for (var i = 0; i < props.length; i++)
-				if (!obj.hasOwnProperty(props[i]))
-					return false;
-			return true;
-		}
-		else
-			return false;
-	};
-
 	// Read topology from the controller
 	BiermanRest.prototype.loadTopology = function(successCbk, errorCbk){
 		var self = this;
@@ -153,7 +141,7 @@ app.factory('BiermanRest', function($http){
 
 	// Add channel
 	BiermanRest.prototype.addChannel = function(input, successCbk, errorCbk){
-		if(this.hasOwnProperties(input, ['topo-id', 'channel-name', 'src-ip', 'dst-group'])){
+		if(biermanTools.hasOwnProperties(input, ['topo-id', 'channel-name', 'src-ip', 'dst-group', 'sub-domain'])){
 			var self = this;
 			$http({
 				'url': self.getProxyURL() + '/restconf/operations/bier:add-channel',
@@ -164,7 +152,8 @@ app.factory('BiermanRest', function($http){
 						'topo-id': input['topo-id'],
 						'channel-name': input['channel-name'],
 						'src-ip': input['src-ip'],
-						'dst-group': input['dst-group']
+						'dst-group': input['dst-group'],
+						'sub-domain': input['sub-domain']
 					}
 				})
 			}).then(

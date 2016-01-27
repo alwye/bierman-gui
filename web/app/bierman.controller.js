@@ -24,6 +24,10 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		'links': []
 	};
 
+	$scope.displayError = function(options){
+		swal(options);
+	};
+
 	// Available info about channels
 	$scope.channelData = null;
 
@@ -52,7 +56,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 					},
 					function(errMsg){
 						console.error(errMsg);
-						swal({
+						$scope.displayError({
 							title: "Channels not loaded",
 							text: errMsg,
 							type: "error",
@@ -63,8 +67,8 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 			},
 			// topology load failed
 			function(errMsg){
-			console.error(errMsg);
-			swal({
+				console.error(errMsg);
+				$scope.displayError({
 				title: "App Initialization Failed",
 				text: errMsg,
 				type: "error",
@@ -91,7 +95,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 							$scope.currentTree.validStatus = 'invalid';
 							var errMsg = 'Response from controller is invalid';
 							console.error(errMsg);
-							swal({
+							$scope.displayError({
 								title: "FMASK Computation Failed",
 								text: errMsg,
 								type: "error",
@@ -105,7 +109,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 						$scope.currentTree.fmask = '';
 						$scope.currentTree.validStatus = 'invalid';
 						console.error(errMsg);
-						swal({
+						$scope.displayError({
 							title: "FMASK Computation Failed",
 							text: errMsg,
 							type: "error",
@@ -120,7 +124,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 				$scope.currentTree.fmask = '';
 				$scope.currentTree.validStatus = 'invalid';
 				console.error(errMsg);
-				swal({
+				$scope.displayError({
 					title: "FMASK Computation Failed",
 					text: errMsg,
 					type: "error",
@@ -263,6 +267,9 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 			name: '',
 			editing: false
 		};
+		$scope.input = {
+			'addChannel': {}
+		};
 		var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
 		$mdDialog.show({
 				controller: function($scope, $mdDialog, dScope){
@@ -287,10 +294,14 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 
 					};
 					$scope.addChannel = function(){
+						if(biermanTools.hasOwnProperties($scope.input.addChannel, ['name', 'srcIP', 'destGroup', 'subdomain'])){
 
+						}
+						else{
+
+						}
 					};
 					$scope.dScope = dScope;
-					console.log(dScope.channelData);
 				},
 				templateUrl: './app/templates/channel-manager.tpl.html',
 				parent: angular.element(document.body),

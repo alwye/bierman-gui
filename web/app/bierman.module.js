@@ -11,6 +11,3 @@ var app = angular.module('biermanApp', ['ngMaterial']);
 			templateUrl: './app/templates/side-panel-index.tpl.html'
 		};
 	});
-
-
-console.log(JSON.parse(localStorage.getItem("biermanTopologyData")));
