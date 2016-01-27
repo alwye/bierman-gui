@@ -1,6 +1,9 @@
 # BIER Topology Manager
 This is a web application built on top of [Angular](http://github.com/angular/angular.js) + [NeXt UI](http://github.com/CiscoDevNet/next-ui).
 
+# Application Overview
+Bit Indexed Explicit Replication (BIER) is a revolutionary new multipoint forwarding architecture. BIER allows for network replication without a tree building protocol or per-flow state by providing a mechanism to define endpoints within the packet header. BIER routers replicate and forward multicast packets along the unicast shortest paths to each of the defined endpoints for any given packet. This is a radical simplification over all previous multi-point solutions, reducing the cost of operation and providing deterministic network convergence performance for multicast services.
+
 # Configuration
 ## REST Proxy Server
 We use [ODL REST Proxy](https://github.com/zverevalexei/odl-rest-proxy) to avoid CORS restrictions. Proxy enhances possibilities of REST API, since we can make even 'unsafe' requests.
