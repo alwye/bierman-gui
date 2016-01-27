@@ -66,11 +66,6 @@ md-toolbar.white {
     padding: 10px;
 }
 
-.product-label {
-    margin: 0 16px 0 10px;
-    font-weight: bold;
-}
-
 .menu-button {
     padding-left: 8px !important;
     padding-right: 8px !important;
@@ -90,6 +85,14 @@ md-toolbar.white {
 
 .info-icon {
     color: #2196f3;
+}
+
+.toolbar {
+    background: #000 !important;
+}
+
+.product-label {
+    margin: auto 16px auto 10px;
 }
 
 /*!* Panel's settings *!*/

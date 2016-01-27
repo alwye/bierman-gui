@@ -7,8 +7,8 @@
 	<link rel="stylesheet" href="bower_components/sweetalert/dist/sweetalert.css">
 	<link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css">
-	<link rel="stylesheet" href="assets/style.css">
-	<link rel="stylesheet" href="assets/loading.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="assets/css/loading.css">
 	<!-- Loading libraries -->
 	<script type="application/javascript" src="bower_components/jquery/dist/jquery.min.js"></script>
 	<script type="application/javascript" src="lib/next-ui/js/next.js"></script>
@@ -23,9 +23,9 @@
 		<div ng-show="appConfig.mode == 'init'" ng-hide="appConfig.mode != 'init'">
 			<div class="loading">Loading&#8230;</div>
 		</div>
-		<md-toolbar class="md-theme-light">
+		<md-toolbar class="toolbar">
 			<div class="md-toolbar-tools white float-left">
-				<span class="product-label">BIERMAN</span>
+				<span class="product-label"><img src="assets/images/directv.png" alt="DIRECTV logo"></span>
 				<md-button class="md-primary menu-button" ng-click="openChannelManager()"><i class="fa fa-tv"></i> Channel Manager</md-button>
 				<md-button class="md-primary menu-button" ng-click="openRightPanel('path-manager')"><i class="fa fa-arrows"></i> Path Manager</md-button>
 			</div>
