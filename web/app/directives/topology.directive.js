@@ -193,11 +193,25 @@ app.directive('biermanTopology', function() {
 					$scope.dumpData = {'nodes': []};
 					var nodesLayer = $scope.topo.getLayer('nodes');
 					nodesLayer.eachNode(function(node){
-						$scope.dumpData.nodes.push({
-							'x': node.x(),
-							'y': node.y(),
-							'nodeName': node.model()._data['nodeId']
-						});
+						// geo layput
+						if($scope.topo.layoutType() == 'USMap'){
+							$scope.dumpData.nodes.push({
+								'x': node.x(),
+								'y': node.y(),
+								'longitude': node.model()._data.longitude,
+								'latitude': node.model()._data.latitude,
+								'nodeName': node.model()._data['nodeId']
+							});
+						}
+						// no geo layout
+						else{
+							$scope.dumpData.nodes.push({
+								'x': node.x(),
+								'y': node.y(),
+								'nodeName': node.model()._data['nodeId']
+							});
+						}
+
 					});
 					$scope.writeDumpDataToLocalStorage();
 				};
@@ -207,8 +221,16 @@ app.directive('biermanTopology', function() {
 					if($scope.dumpData && $scope.dumpData.nodes ){
 						$scope.dumpData.nodes.forEach(function(node, index, nodes){
 							nodeInst = $scope.topo.getNode($scope.$parent.topologyData.nodesDict.getItem(node.nodeName));
-							if(nodeInst != undefined)
-								nodeInst.position({'x': node.x, 'y': node.y});
+							if(nodeInst != undefined){
+								if($scope.topo.layoutType() == 'USMap'){
+									nodeInst.model()._data.longitude = node.longitude;
+									nodeInst.model()._data.latitude = node.latitude;
+								}
+								else{
+									nodeInst.position({'x': node.x, 'y': node.y});
+								}
+							}
+
 						});
 					}
 				};
@@ -429,9 +451,6 @@ app.directive('biermanTopology', function() {
 						'width': 5,
 						'color': $scope.colorTable.linkTypes.none
 					},
-					nodeSetConfig: {
-						'iconType': 'accessPoint'
-					},
 					'identityKey': 'id',
 					'enableSmartLabel': true,
 					'enableSmartNode': true,
@@ -440,7 +459,12 @@ app.directive('biermanTopology', function() {
 					'dataProcessor': 'force',
 					'autoLayout': true,
 					'nodeInstanceClass': 'ExtendedNode',
-					'linkInstanceClass': 'ExtendedLink'
+					'linkInstanceClass': 'ExtendedLink',
+					'layoutType': 'USMap',
+					'layoutConfig': {
+						'longitude': 'model._data.longitude',
+						'latitude': 'model._data.latitude'
+					}
 				});
 
 				$scope.topo.data($scope.$parent.topologyData);

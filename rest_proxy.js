@@ -17,7 +17,7 @@ const http = require('http');
 // app configuration
 var appConfig = {
 	// Controller settings
-	'ctrlHost': '10.124.19.145',
+	'ctrlHost': '10.124.19.145', // Gaofeng
 	//'ctrlHost': '10.195.70.194', // Sergey
 	'ctrlPort': '8181', // 8181 by default
 	'ctrlUsername': 'admin',
@@ -31,9 +31,9 @@ var reqCounter = 0;
 // create a server
 var proxy = http.createServer();
 if(proxy)
-	console.log('ODL REST Proxy started');
+	console.log('ODL REST Proxy started: ' + appConfig.ctrlHost);
 else
-	console.error('ODL REST Proxy has not started');
+	console.error('ODL REST Proxy has not started: ' + appConfig.ctrlHost);
 
 // Server API
 proxy.on('request',function(userReq,userRes){
