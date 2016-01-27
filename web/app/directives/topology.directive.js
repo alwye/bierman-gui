@@ -405,6 +405,8 @@ app.directive('biermanTopology', function() {
 					'methods': {
 						'init': function (args) {
 							this.inherited(args);
+							var stageScale = this.topology().stageScale();
+							this.view('label').setStyle('font-size', 14 * stageScale);
 						},
 						'setModel': function (model) {
 							this.inherited(model);
