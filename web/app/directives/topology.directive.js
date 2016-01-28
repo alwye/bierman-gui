@@ -258,6 +258,15 @@ app.directive('biermanTopology', function() {
 					}
 				};
 
+				// todo
+				$scope.convertUniToBiLinks = function(uniLinks){
+
+				};
+
+				$scope.highlightPath = function(links){
+
+				};
+
 				$scope.resetTopology = function () {
 					$scope.applyChanges();
 				};

@@ -24,17 +24,26 @@
 						Path ID: {{currentTree.fmask}}
 					</div>
 
-					<div ng-show="computedPaths.length > 0">
+					<div ng-show="computedPaths.length > 0" ng-init="input.selectedPath = ''">
 						<h3>Available paths</h3>
-						<md-list>
-							<md-list-item class="md-3-line path-item" ng-repeat="path in computedPaths">
-								<div class="md-list-item-text">
-									<div>{{path['path-id']}}</div>
-									<div><i class="fa fa-share"></i> {{path.hops}} / <i class="fa fa-clock-o"></i> {{path.delay}} / <i class="fa fa-times"></i> {{path.loss}}</div>
-								</div>
-								<md-divider ng-if="!$last"></md-divider>
-							</md-list-item>
-						</md-list>
+						<md-radio-group ng-model="input.selectedPath">
+							<md-list>
+								<md-list-item class="md-3-line path-item" ng-repeat="path in computedPaths">
+									<div class="md-list-item-text" layout="row" ng-click="">
+										<div>
+											<md-radio-button value="{{path['path-id']}}" aria-label="Path ID {{path['path-id']}}">
+												<div layout="column">
+													<div>{{path['path-id']}}</div>
+													<div><i class="fa fa-share"></i> {{path.hops}} / <i class="fa fa-clock-o"></i> {{path.delay}} / <i class="fa fa-times"></i> {{path.loss}}</div>
+												</div>
+											</md-radio-button>
+										</div>
+
+										</div>
+									<md-divider ng-if="!$last"></md-divider>
+								</md-list-item>
+							</md-list>
+						</md-radio-group>
 					</div>
 
 					<br>
@@ -47,9 +56,6 @@
 						</md-select>
 					</md-input-container>
 					<br>
-
-
-
 				</div>
 				<div ng-show="currentTree.validStatus == 'invalid'">
 					<div class="fmask-result text-error">

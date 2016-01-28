@@ -24,10 +24,14 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		'links': []
 	};
 
-	$scope.computedPaths = [];
-
 	// Available info about channels
 	$scope.channelData = null;
+
+	$scope.computedPaths = [];
+
+	$scope.input = {
+		'selectedPath': ''
+	};
 
 	$scope.displayAlert = function(options){
 		swal(options);
