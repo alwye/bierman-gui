@@ -24,7 +24,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		'links': []
 	};
 
-	$scope.displayError = function(options){
+	$scope.displayAlert = function(options){
 		swal(options);
 	};
 
@@ -41,6 +41,24 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		};
 	};
 
+	$scope.getChannels = function(){
+		biermanRest.getChannels(
+			$scope.appConfig.currentTopologyId,
+			function(data){
+				$scope.channelData = data;
+			},
+			function(errMsg){
+				console.error(errMsg);
+				$scope.displayAlert({
+					title: "Channels not loaded",
+					text: errMsg,
+					type: "error",
+					confirmButtonText: "Close"
+				});
+			}
+		);
+	};
+
 	$scope.initApp = function(){
 		$scope.clearCurrentTree();
 		biermanRest.loadTopology(
@@ -49,26 +67,12 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 				$scope.processTopologyData(data);
 				$scope.topoInitialized = true;
 				$scope.appConfig.currentTopologyId = data['topology-id'];
-				biermanRest.getChannels(
-					$scope.appConfig.currentTopologyId,
-					function(data){
-						$scope.channelData = data;
-					},
-					function(errMsg){
-						console.error(errMsg);
-						$scope.displayError({
-							title: "Channels not loaded",
-							text: errMsg,
-							type: "error",
-							confirmButtonText: "Close"
-						});
-					}
-				);
+				$scope.getChannels();
 			},
 			// topology load failed
 			function(errMsg){
 				console.error(errMsg);
-				$scope.displayError({
+				$scope.displayAlert({
 				title: "App Initialization Failed",
 				text: errMsg,
 				type: "error",
@@ -95,8 +99,8 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 							$scope.currentTree.validStatus = 'invalid';
 							var errMsg = 'Response from controller is invalid';
 							console.error(errMsg);
-							$scope.displayError({
-								title: "FMASK Computation Failed",
+							$scope.displayAlert({
+								title: "Path Computation Failed",
 								text: errMsg,
 								type: "error",
 								confirmButtonText: "Close"
@@ -109,8 +113,8 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 						$scope.currentTree.fmask = '';
 						$scope.currentTree.validStatus = 'invalid';
 						console.error(errMsg);
-						$scope.displayError({
-							title: "FMASK Computation Failed",
+						$scope.displayAlert({
+							title: "Path Computation Failed",
 							text: errMsg,
 							type: "error",
 							confirmButtonText: "Close"
@@ -124,8 +128,8 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 				$scope.currentTree.fmask = '';
 				$scope.currentTree.validStatus = 'invalid';
 				console.error(errMsg);
-				$scope.displayError({
-					title: "FMASK Computation Failed",
+				$scope.displayAlert({
+					title: "Path Computation Failed",
 					text: errMsg,
 					type: "error",
 					confirmButtonText: "Close"
@@ -263,16 +267,20 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 
 	$scope.openChannelManager = function() {
 		$scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
-		$scope.edit = {
-			name: '',
-			editing: false
-		};
-		$scope.input = {
-			'addChannel': {}
-		};
 		var useFullScreen = ($mdMedia('sm') || $mdMedia('xs'))  && $scope.customFullscreen;
 		$mdDialog.show({
 				controller: function($scope, $mdDialog, dScope){
+
+					$scope.edit = {
+						name: '',
+						editing: false
+					};
+					$scope.input = {
+						'addChannel': {},
+						'addChannelStatus': 'none'
+					};
+
+
 					// Hide dialog (close without discarding changes)
 					$scope.hide = function() {
 						$mdDialog.hide();
@@ -294,11 +302,43 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 
 					};
 					$scope.addChannel = function(){
+						$scope.input.addChannelStatus = 'inprogress';
 						if(biermanTools.hasOwnProperties($scope.input.addChannel, ['name', 'srcIP', 'destGroup', 'subdomain'])){
+							biermanRest.addChannel(
+								{
+									'topo-id': dScope.appConfig.currentTopologyId,
+									'channel-name': $scope.input.addChannel.name,
+									'src-ip': $scope.input.addChannel.srcIP,
+									'dst-group': $scope.input.addChannel.destGroup,
+									'sub-domain': $scope.input.addChannel.subdomain
+								},
+								// success
+								function(data){
+									$scope.input.addChannel = {};
+									$scope.input.addChannelStatus = 'success';
+									dScope.getChannels();
 
+								},
+								// error
+								function(errMsg){
+									console.error(errMsg);
+									dScope.displayAlert({
+										title: "Channel Not Added",
+										text: errMsg,
+										type: "error",
+										confirmButtonText: "Close"
+									});
+								}
+							);
 						}
 						else{
-
+							var errMsg = "Failed to create a channel. You must specify each parameter.";
+							dScope.displayAlert({
+								title: "Channel Not Added",
+								text: errMsg,
+								type: "error",
+								confirmButtonText: "Close"
+							});
 						}
 					};
 					$scope.dScope = dScope;

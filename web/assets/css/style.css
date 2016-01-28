@@ -95,6 +95,15 @@ md-toolbar.white {
     margin: auto 16px auto 10px;
 }
 
+/* Fix for conflicts with Angular Material */
+.sweet-alert {
+    z-index: 10000005 !important;
+}
+
+.sweet-overlay {
+    z-index: 10000004 !important;
+}
+
 /*!* Panel's settings *!*/
 
 /*.panel {*/

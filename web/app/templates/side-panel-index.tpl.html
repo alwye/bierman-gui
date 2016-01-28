@@ -16,24 +16,24 @@
 				<!-- <p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress) and multiple destinations (egresses), then:</p> -->
 				<div class="center-button-outer">
 					<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner">
-						<i class="fa fa-check"></i> Compute FMASK and fetch paths
+						<i class="fa fa-check"></i> Compute Path ID and fetch paths
 					</md-button>
 				</div>
 				<div ng-show="currentTree.validStatus == 'valid'">
 					<div class="fmask-result text-success">
-						FMASK: {{currentTree.fmask}}
+						Path ID: {{currentTree.fmask}}
 					</div>
 
 				</div>
 				<div ng-show="currentTree.validStatus == 'invalid'">
 					<div class="fmask-result text-error">
-						FMASK has not been computed
+						Path ID has not been computed
 					</div>
 				</div>
 				<div ng-show="currentTree.validStatus == 'inprogress'">
 					<md-progress-linear md-mode="query"></md-progress-linear>
 					<div class="bottom-block">
-						<span>Calculating FMASK...</span>
+						<span>Calculating Path ID...</span>
 					</div>
 				</div>
 			</div>
@@ -49,18 +49,18 @@
 				</div>
 				<div ng-show="currentTree.validStatus == 'valid'">
 					<div class="fmask-result text-success">
-						FMASK: {{currentTree.fmask}}
+						Path ID: {{currentTree.fmask}}
 					</div>
 				</div>
 				<div ng-show="currentTree.validStatus == 'invalid'">
 					<div class="fmask-result text-error">
-						FMASK has not been computed
+						Path ID has not been computed
 					</div>
 				</div>
 				<div ng-show="currentTree.validStatus == 'inprogress'">
 					<md-progress-linear md-mode="query"></md-progress-linear>
 					<div class="bottom-block">
-						<span>Calculating FMASK...</span>
+						<span>Calculating Path ID...</span>
 					</div>
 				</div>
 

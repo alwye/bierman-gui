@@ -163,7 +163,7 @@ app.factory('BiermanRest', function($http){
 					{
 						// if controller returned errors
 						if(data.data.data.hasOwnProperty('errors')){
-							errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+							errorCbk({'errObj': data.data.data.errors, 'errId': 3,'errMsg': 'Controller found out errors'});
 						}
 						else{
 							try{
@@ -171,24 +171,24 @@ app.factory('BiermanRest', function($http){
 							}
 							catch(e){
 								var errMsg = "Invalid JSON response returned to addChannel";
-								errorCbk({'errObj': e, 'errId': 3, 'errMsg': errMsg});
+								errorCbk({'errObj': e, 'errId': 4, 'errMsg': errMsg});
 							}
 						}
 					}
 					else{
-						errorCbk({'errObj': data.data.data, 'errId': 1, 'errMsg': 'Proxy status other than ok'});
+						errorCbk({'errObj': data.data.data, 'errId': 2, 'errMsg': 'Proxy status other than ok'});
 					}
 
 				},
 				// failed
 				function(e){
 					var errMsg = "Could not fetch channel data from server: " + e.statusText;
-					errorCbk({'errObj': e, 'errId': 0, 'errMsg': errMsg});
+					errorCbk({'errObj': e, 'errId': 1, 'errMsg': errMsg});
 				});
 
 		}
 		else{
-			errorCbk({'errObj': input, 'errId': 0, 'errMsg': 'Input in not valid'});
+			errorCbk({'errObj': input, 'errId': 0, 'errMsg': 'Input is not valid'});
 		}
 	};
 
