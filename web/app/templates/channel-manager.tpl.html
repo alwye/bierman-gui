@@ -60,7 +60,7 @@
 						<md-list-item class="md-3-line" ng-repeat="channel in dScope.channelData">
 							<div class="md-list-item-text" layout="row">
 								<!-- edit mode -->
-								<div ng-show="edit.editing && edit.name == channel.name">
+								<div ng-show="edit.editing && edit.name == channel.name" layout="row">
 									<div class="channel-info">
 										<md-input-container>
 											<label for="cm-edit-channel-name">Channel name</label>
@@ -79,7 +79,6 @@
 											<input ng-model="dScope.channel.subdomain" id="cm-edit-subdomain" required>
 										</md-input-container>
 									</div>
-									<div flex></div>
 									<div class="channel-actions">
 										<md-button ng-click="saveChannel(channel.name)" class="md-primary">
 											Save
@@ -92,14 +91,13 @@
 										</md-button>
 									</div>
 								</div>
-								<div ng-show="!edit.editing || edit.name != channel.name">
+								<div ng-show="!edit.editing || edit.name != channel.name" >
 									<div class="channel-info">
 										<h3>{{channel.name}}</h3>
 										<p><i class="fa fa-arrow-right"></i> {{channel['src-ip']}}</p>
 										<p><i class="fa fa-users"></i> {{channel['dst-group']}}</p>
 										<p><i class="fa fa-cloud" ></i> {{channel['sub-domain']}}</p>
 									</div>
-									<div flex></div>
 									<div class="channel-actions">
 										<md-button ng-click="editChannel(channel.name)" class="md-primary">
 											Edit

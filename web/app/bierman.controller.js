@@ -257,19 +257,22 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 	$scope.initApp();
 
 	$scope.$watch('currentTree.validStatus', function(){
-		var deployButton = $('#deploy-button');
+		var deployButtonTE = $('#deploy-button-te');
+		var deployButtonSPF = $('#deploy-button-spf');
 		switch($scope.currentTree.validStatus){
 			case 'valid':
-				deployButton.prop('disabled', false);
+				console.log('valid');
+				deployButtonTE.prop('disabled', false);
+				deployButtonSPF.prop('disabled', false);
 				break;
 			case 'none':
-			{
 				$scope.computedPaths = [];
-				deployButton.prop('disabled', true);
+				deployButtonTE.prop('disabled', true);
+				deployButtonSPF.prop('disabled', true);
 				break;
-			}
 			default:
-				deployButton.prop('disabled', true);
+				deployButtonTE.prop('disabled', true);
+				deployButtonSPF.prop('disabled', true);
 				break;
 		}
 	});

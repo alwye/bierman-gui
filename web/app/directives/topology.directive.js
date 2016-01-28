@@ -8,7 +8,9 @@ app.directive('biermanTopology', function() {
 			'topo': '=',
 			'openPanel': '=',
 			'processBierTreeData': '=',
-			'resetTopology': '='
+			'resetTopology': '=',
+			'highlightPath': '=',
+			'convertUniToBiLinks': '='
 		},
 		'link': function($scope, iElm, iAttrs, controller){
 			var initTopology = function(){
