@@ -16,7 +16,7 @@
 				<!-- <p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress) and multiple destinations (egresses), then:</p> -->
 				<div class="center-button-outer">
 					<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner">
-						<i class="fa fa-check"></i> Compute Path ID and fetch paths
+						<i class="fa fa-check"></i> Compute paths
 					</md-button>
 				</div>
 				<div ng-show="currentTree.validStatus == 'valid'">
@@ -44,7 +44,7 @@
 				<!-- <p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress), multiple destinations (egresses). Design your own path, click link by link from the ingress to the destination points. Then:</p> -->
 				<div class="center-button-outer">
 					<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner">
-						<i class="fa fa-check"></i> Validate and compute mask
+						<i class="fa fa-check"></i> Validate and compute Path ID
 					</md-button>
 				</div>
 				<div ng-show="currentTree.validStatus == 'valid'">
@@ -63,7 +63,7 @@
 						<span>Calculating Path ID...</span>
 					</div>
 				</div>
-
+				<br>
 				<md-input-container>
 					<label>Assign channels</label>
 					<md-select ng-model="ctrl.userState">
