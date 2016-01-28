@@ -192,14 +192,50 @@ app.factory('BiermanRest', function($http){
 		}
 	};
 
-	BiermanRest.removeChannel = function(input, successCbk, errorCbk){
+	BiermanRest.prototype.removeChannel = function(input, successCbk, errorCbk){
+		var self = this;
+		$http({
+			'url': self.getProxyURL() + '/restconf/operations/bier:remove-channel',
+			'method': 'POST',
+			'timeout': this.appConfig.httpMaxTimeout,
+			'data': JSON.stringify({
+				'input': {
+					'topo-id': input.topologyId,
+					'channel-name': input.channelName
+				}
+			})
+		}).then(
+			// loaded
+			function (data){
+				if(data.data.status == 'ok')
+				{
+					// if controller returned errors
+					if(data.data.data.hasOwnProperty('errors')){
+						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+					}
+					// if output is set
+					else if(data.data.data.hasOwnProperty('output')){
+						successCbk("done");
+					}
+					// if neither output nor errors
+					else{
+						var errMsg = "Invalid JSON response returned to removeChannel";
+						errorCbk({'errObj': e, 'errId': 3, 'errMsg': errMsg});
+					}
+				}
+				else{
+					errorCbk({'errObj': data.data.data, 'errId': 1, 'errMsg': 'Proxy status other than ok'});
+				}
 
+			},
+			// failed
+			function(e){
+				var errMsg = "Could not remove channel from server: " + e.statusText;
+				errorCbk({'errObj': e, 'errId': 0, 'errMsg': errMsg});
+			});
 	};
 
-	// Compute Top-K shortest paths
-	BiermanRest.computeTopKShortestPaths = function(data){
 
-	};
 
 	return BiermanRest;
 

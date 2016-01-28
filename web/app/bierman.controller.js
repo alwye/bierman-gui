@@ -295,11 +295,32 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 					$scope.editChannel = function(val){
 
 					};
-					$scope.removeChannelWarning = function(val){
-
-					};
 					$scope.removeChannel = function(chName){
-
+						biermanRest.removeChannel(
+							{
+								topologyId: dScope.appConfig.currentTopologyId,
+								channelName: chName
+							},
+							function(){
+								dScope.getChannels();
+								dScope.displayAlert({
+									title: "Channel Removed",
+									text: "The channel " + chName + " has been removed",
+									type: "success",
+									timer: 1500,
+									confirmButtonText: "Okay"
+								});
+							},
+								//
+							function(err){
+								console.error(err);
+								dScope.displayAlert({
+									title: "Channel Not Removed",
+									text: err.errMsg,
+									type: "error",
+									confirmButtonText: "Close"
+								});
+							});
 					};
 					$scope.addChannel = function(){
 						$scope.input.addChannelStatus = 'inprogress';
@@ -317,14 +338,20 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 									$scope.input.addChannel = {};
 									$scope.input.addChannelStatus = 'success';
 									dScope.getChannels();
-
+									dScope.displayAlert({
+										title: "Channel Added",
+										text: "The channel " + $scope.input.addChannel.name + " has been added to the system",
+										type: "success",
+										timer: 1500,
+										confirmButtonText: "Okay"
+									});
 								},
 								// error
-								function(errMsg){
-									console.error(errMsg);
+								function(err){
+									console.error(err);
 									dScope.displayAlert({
 										title: "Channel Not Added",
-										text: errMsg,
+										text: err.errMsg,
 										type: "error",
 										confirmButtonText: "Close"
 									});
