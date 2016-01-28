@@ -7,7 +7,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		'proxyPort': '5555', // Port of controller (8181 by default)
 		'httpMaxTimeout': 10000, // Maximum timeout in milliseconds for HTTP requests
 		'maxPacketLoss': 10,
-		'spfMode': false, // SPF switch is set to this
+		'spfMode': true, // SPF switch is set to this
 
 		// DO NOT MODIFY CONFIGURATION BELOW
 		'mode': 'init', // Application mode (do not modify)
@@ -101,6 +101,8 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 							$scope.currentTree.validStatus = 'valid';
 							if(spfMode){
 								$scope.computedPaths = response['source-path'];
+								var biLinks = $scope.convertUniToBiLinks(response['source-link'], true);
+								$scope.highlightPath(biLinks);
 							}
 						}
 						else{
@@ -144,6 +146,32 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 				});
 			}
 		);
+	};
+
+	$scope.deployPath = function(){
+		if($scope.currentTree.validStatus == 'valid'){
+			// if automatic
+			if($scope.appConfig.spfMode){
+				// todo
+			}
+			else{
+
+			}
+		}
+		else{
+			var errMsg = "Input data is invalid. Deployment of the path refused.";
+			console.error(errMsg);
+			$scope.displayAlert({
+				title: "Could Not Deploy The Path",
+				text: errMsg,
+				type: "error",
+				confirmButtonText: "Close"
+			});
+		}
+	};
+
+	$scope.highlightPathById = function(pathId){
+
 	};
 
 	$scope.processTopologyData = function(data){
@@ -261,7 +289,6 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		var deployButtonSPF = $('#deploy-button-spf');
 		switch($scope.currentTree.validStatus){
 			case 'valid':
-				console.log('valid');
 				deployButtonTE.prop('disabled', false);
 				deployButtonSPF.prop('disabled', false);
 				break;

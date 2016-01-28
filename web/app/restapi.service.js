@@ -235,7 +235,44 @@ app.factory('BiermanRest', function($http){
 			});
 	};
 
+	BiermanRest.prototype.connectSource = function(input, successCbk, errorCbk){
+		var self = this;
+		$http({
+			'url': self.getProxyURL() + '/restconf/operations/bier:connect-source',
+			'method': 'POST',
+			'timeout': this.appConfig.httpMaxTimeout,
+			'data': JSON.stringify(data)
+		}).then(
+			// loaded
+			function (data){
+				if(data.data.status == 'ok')
+				{
+					// if controller returned errors
+					if(data.data.data.hasOwnProperty('errors')){
+						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+					}
+					else{
+						try{
+							data = data.data.data.output;
+							successCbk(data);
+						}
+						catch(e){
+							var errMsg = "Invalid JSON response returned to computeMask";
+							errorCbk({'errObj': e, 'errId': 3, 'errMsg': errMsg});
+						}
+					}
+				}
+				else{
+					errorCbk({'errObj': data.data.data, 'errId': 1, 'errMsg': 'Proxy status other than ok'});
+				}
 
+			},
+			// failed
+			function(e){
+				var errMsg = "Could not fetch path data from server: " + e.statusText;
+				errorCbk({'errObj': e, 'errId': 0, 'errMsg': errMsg});
+			});
+	};
 
 	return BiermanRest;
 

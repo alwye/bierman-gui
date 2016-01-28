@@ -261,12 +261,29 @@ app.directive('biermanTopology', function() {
 				};
 
 				// todo
-				$scope.convertUniToBiLinks = function(uniLinks){
-
+				$scope.convertUniToBiLinks = function(uniLinks, clearLinks){
+					clearLinks = clearLinks || false;
+					var biLinks = [];
+					var linksLayer = $scope.topo.getLayer('links');
+					linksLayer.eachLink(function(link){
+						var linkContainer = link.model()._data.links;
+						for(var i = 0; i < uniLinks.length; i++){
+							for(var j = 0; j < linkContainer.length; j++){
+								if(uniLinks[i].link == linkContainer[j].linkId){
+									biLinks.push(link.id());
+								}
+							}
+						}
+						link.color($scope.colorTable.linkTypes.none);
+					});
+					return biLinks;
 				};
 
 				$scope.highlightPath = function(links){
-
+					links.forEach(function(linkId){
+						var link = $scope.topo.getLink(linkId);
+						link.color($scope.colorTable.linkTypes.path);
+					});
 				};
 
 				$scope.resetTopology = function () {
@@ -299,20 +316,6 @@ app.directive('biermanTopology', function() {
 					var pathLayer = $scope.topo.getLayer("paths");
 					pathLayer.clear();
 					return pathLayer;
-				};
-
-				// draws a path over topology for the defined array of links
-				$scope.highlightPath = function (links, color) {
-					// clear the path layer and get its instance
-					var pathLayer = $scope.clearPathLayer();
-					// define a path
-					var path = new nx.graphic.Topology.Path({
-						'pathWidth': 5,
-						'links': links,
-						'arrow': 'cap'
-					});
-					// add the path
-					pathLayer.addPath(path);
 				};
 
 				$scope.getNodeTypeById = function (id) {
