@@ -104,6 +104,11 @@ md-toolbar.white {
     z-index: 10000004 !important;
 }
 
+.path-item:hover {
+    background: #d8e6f3;
+    cursor: pointer;
+}
+
 /*!* Panel's settings *!*/
 
 /*.panel {*/

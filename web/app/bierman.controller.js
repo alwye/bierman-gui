@@ -24,12 +24,14 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		'links': []
 	};
 
-	$scope.displayAlert = function(options){
-		swal(options);
-	};
+	$scope.computedPaths = [];
 
 	// Available info about channels
 	$scope.channelData = null;
+
+	$scope.displayAlert = function(options){
+		swal(options);
+	};
 
 	$scope.clearCurrentTree = function(){
 		$scope.currentTree = {
@@ -85,14 +87,17 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		$scope.currentTree.validStatus = 'inprogress'; // in progress
 		$scope.processBierTreeData(
 			// success callback
-			function(input){
+			function(input, spfMode){
 				biermanRest.computeMask(input,
 					// success callback
-					function(response){
+					function(response){console.log(response);
 						if(response.hasOwnProperty('fmask'))
 						{
 							$scope.currentTree.fmask = response.fmask;
 							$scope.currentTree.validStatus = 'valid';
+							if(spfMode){
+								$scope.computedPaths = response['source-path'];
+							}
 						}
 						else{
 							$scope.currentTree.fmask = '';
@@ -106,7 +111,6 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 								confirmButtonText: "Close"
 							});
 						}
-						console.log(response);
 					},
 					// error callback
 					function(errMsg){
@@ -254,6 +258,12 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 			case 'valid':
 				deployButton.prop('disabled', false);
 				break;
+			case 'none':
+			{
+				$scope.computedPaths = [];
+				deployButton.prop('disabled', true);
+				break;
+			}
 			default:
 				deployButton.prop('disabled', true);
 				break;

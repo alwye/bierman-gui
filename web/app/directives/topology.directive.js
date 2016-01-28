@@ -98,7 +98,7 @@ app.directive('biermanTopology', function() {
 										'node': egress.model()._data.nodeId
 									};
 								});
-								successCbk(input);
+								successCbk(input, true);
 							}
 							else{
 								errMsg = 'You must specify the egress nodes for SPF configuration of BIER tree..';
@@ -117,7 +117,7 @@ app.directive('biermanTopology', function() {
 									}
 								};
 								if(getConnectedLinks(ingress.id(), -1))
-									successCbk(input);
+									successCbk(input, false);
 							}
 							else{
 								errMsg = 'You must specify the links for manual configuration of BIER tree..';

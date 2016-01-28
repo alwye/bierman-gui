@@ -24,6 +24,32 @@
 						Path ID: {{currentTree.fmask}}
 					</div>
 
+					<div ng-show="computedPaths.length > 0">
+						<h3>Available paths</h3>
+						<md-list>
+							<md-list-item class="md-3-line path-item" ng-repeat="path in computedPaths">
+								<div class="md-list-item-text">
+									<div>{{path['path-id']}}</div>
+									<div><i class="fa fa-share"></i> {{path.hops}} / <i class="fa fa-clock-o"></i> {{path.delay}} / <i class="fa fa-times"></i> {{path.loss}}</div>
+								</div>
+								<md-divider ng-if="!$last"></md-divider>
+							</md-list-item>
+						</md-list>
+					</div>
+
+					<br>
+					<md-input-container>
+						<label>Assign channels</label>
+						<md-select ng-model="ctrl.userState">
+							<md-option ng-repeat="channel in channelData" value="{{channel.name}}">
+								{{channel.name}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+					<br>
+
+
+
 				</div>
 				<div ng-show="currentTree.validStatus == 'invalid'">
 					<div class="fmask-result text-error">
@@ -36,6 +62,10 @@
 						<span>Calculating Path ID...</span>
 					</div>
 				</div>
+
+				<md-button class="md-raised" id="deploy-button-spf" disabled="disabled"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
+				<md-button class="md-raised md-warn" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
+
 			</div>
 			<!-- / SPF (automatic) path configuration -->
 
@@ -51,6 +81,16 @@
 					<div class="fmask-result text-success">
 						Path ID: {{currentTree.fmask}}
 					</div>
+					<br>
+					<md-input-container>
+						<label>Assign channels</label>
+						<md-select ng-model="ctrl.userState">
+							<md-option ng-repeat="channel in channelData" value="{{channel.name}}">
+								{{channel.name}}
+							</md-option>
+						</md-select>
+					</md-input-container>
+					<br>
 				</div>
 				<div ng-show="currentTree.validStatus == 'invalid'">
 					<div class="fmask-result text-error">
@@ -63,19 +103,8 @@
 						<span>Calculating Path ID...</span>
 					</div>
 				</div>
-				<br>
-				<md-input-container>
-					<label>Assign channels</label>
-					<md-select ng-model="ctrl.userState">
-						<md-option ng-repeat="channel in channelData" value="{{channel.name}}">
-							{{channel.name}}
-						</md-option>
-					</md-select>
-				</md-input-container>
-				<br>
 
-
-				<md-button class="md-raised" id="deploy-button" disabled="disabled"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
+				<md-button class="md-raised" id="deploy-button-te" disabled="disabled"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
 				<md-button class="md-raised md-warn" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
 			</div>
 			<!-- / Manual path configuration -->
