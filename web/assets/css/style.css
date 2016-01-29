@@ -93,6 +93,7 @@ md-toolbar.white {
 
 .product-label {
     margin: auto 16px auto 10px;
+    font-weight: bold;
 }
 
 /* Fix for conflicts with Angular Material */

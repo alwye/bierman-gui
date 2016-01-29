@@ -435,10 +435,11 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 					$scope.addChannel = function(){
 						$scope.input.addChannelStatus = 'inprogress';
 						if(biermanTools.hasOwnProperties($scope.input.addChannel, ['name', 'srcIP', 'destGroup', 'subdomain'])){
+							var channelName = $scope.input.addChannel.name;
 							biermanRest.addChannel(
 								{
 									'topo-id': dScope.appConfig.currentTopologyId,
-									'channel-name': $scope.input.addChannel.name,
+									'channel-name': channelName,
 									'src-ip': $scope.input.addChannel.srcIP,
 									'dst-group': $scope.input.addChannel.destGroup,
 									'sub-domain': $scope.input.addChannel.subdomain
@@ -450,7 +451,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 									dScope.getChannels();
 									dScope.displayAlert({
 										title: "Channel Added",
-										text: "The channel " + $scope.input.addChannel.name + " has been added to the system",
+										text: "The channel " + channelName + " has been added to the system",
 										type: "success",
 										timer: 1500,
 										confirmButtonText: "Okay"
