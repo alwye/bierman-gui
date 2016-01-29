@@ -57,11 +57,11 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 			function(data){
 				$scope.channelData = data;
 			},
-			function(errMsg){
-				console.error(errMsg);
+			function(err){
+				console.error(err);
 				$scope.displayAlert({
 					title: "Channels not loaded",
-					text: errMsg,
+					text: err.errMsg,
 					type: "error",
 					confirmButtonText: "Close"
 				});
@@ -81,11 +81,11 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 				$scope.getPathList();
 			},
 			// topology load failed
-			function(errMsg){
-				console.error(errMsg);
+			function(err){
+				console.error(err);
 				$scope.displayAlert({
 				title: "App Initialization Failed",
-				text: errMsg,
+				text: err.errMsg,
 				type: "error",
 				confirmButtonText: "Close"
 			});

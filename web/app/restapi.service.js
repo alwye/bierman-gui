@@ -116,7 +116,12 @@ app.factory('BiermanRest', function($http){
 				{
 					// if controller returned errors
 					if(data.data.data.hasOwnProperty('errors')){
-						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+						if(data.data.data.errors.error[0]['error-message'] == "no channel added"){
+							successCbk([]);
+						}
+						else{
+							errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+						}
 					}
 					// if output is set
 					else if(data.data.data.hasOwnProperty('output')){
@@ -299,7 +304,12 @@ app.factory('BiermanRest', function($http){
 				{
 					// if controller returned errors
 					if(data.data.data.hasOwnProperty('errors')){
-						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+						if(data.data.data.errors.error[0]['error-message'] == "no path deployed"){
+							successCbk([]);
+						}
+						else{
+							errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+						}
 					}
 					// if output is set
 					else if(data.data.data.hasOwnProperty('output')){
