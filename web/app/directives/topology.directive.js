@@ -259,8 +259,7 @@ app.directive('biermanTopology', function() {
 						linksLayer.fadeOut(true);
 					}
 				};
-
-				// todo
+				
 				$scope.convertUniToBiLinks = function(uniLinks, clearLinks){
 					clearLinks = clearLinks || false;
 					var biLinks = [];
@@ -274,7 +273,8 @@ app.directive('biermanTopology', function() {
 								}
 							}
 						}
-						link.color($scope.colorTable.linkTypes.none);
+						if(clearLinks)
+							link.color($scope.colorTable.linkTypes.none);
 					});
 					return biLinks;
 				};

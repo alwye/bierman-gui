@@ -22,22 +22,28 @@ app.factory('BiermanRest', function($http){
 			function (res){
 				res = res.data;
 				if(res.status == 'ok'){
-					res = res.data['network-topology'].topology;
-					// fixme: we need clarification on that
-					var validRes = null;
-					for(var i = 0; i < res.length; i++){
-						if(res[i].hasOwnProperty('node') && res[i].hasOwnProperty('link'))
-						{
-							validRes = res[i];
-							break;
+					try{
+						res = res.data['network-topology'].topology;
+						// fixme: we need clarification on that
+						var validRes = null;
+						for(var i = 0; i < res.length; i++){
+							if(res[i].hasOwnProperty('node') && res[i].hasOwnProperty('link'))
+							{
+								validRes = res[i];
+								break;
+							}
+						}
+						if(validRes != null){
+							successCbk(validRes);
+						}
+						else{
+							console.log(res);
+							errorCbk("Node/link data is missing.");
 						}
 					}
-					if(validRes != null){
-						successCbk(validRes);
-					}
-					else{
-						console.log(res);
-						errorCbk("Node/link data is missing.");
+					catch(e){
+						var errMsg = "Invalid JSON response returned to loadTopology";
+						errorCbk({'errObj': e, 'errId': 3, 'errMsg': errMsg});
 					}
 				}
 				else{
