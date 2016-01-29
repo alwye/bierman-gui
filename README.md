@@ -60,8 +60,12 @@ The user can then assign a channel (defined in the Channel Manager) to the speci
 <img src="https://github.com/zverevalexei/bierman-gui/blob/master/images/07-path-deployed.png?raw=true" alt="Path deployed" style="display:block;">
 </div>
 
-# 3-step Setup
-## REST Proxy Server
+The advantags of BIERMAN are twofold: first it simplifies the mapping of content channels to a stateless multipoint path and second it is build entirely on open source software components. The latter is important as users and developer might want to customize certain aspects of managing their own BIER networks.
+
+###Configuration
+
+## 3-step Setup
+### REST Proxy Server
 We use [ODL REST Proxy](https://github.com/zverevalexei/odl-rest-proxy) to avoid CORS restrictions. Proxy enhances possibilities of REST API, since we can make even 'unsafe' requests.
 
 Open the file /web/app/bierman.controller.js and find the object '$scope.appConfig'.
@@ -71,7 +75,7 @@ Modify its properties 'proxyHost' and 'proxyPort' so that they are your actual d
 - **proxyPort** points to proxy's port
 
 
-## Controller Settings
+### Controller Settings
 Open the file rest_proxy.js and find the object 'appConfig'.
 
 Modify its properties 'ctrlHost', 'ctrlPort', 'ctrlUsername' and 'ctrlPassword' so that they are your actual data.
@@ -79,7 +83,7 @@ Modify its properties 'ctrlHost', 'ctrlPort', 'ctrlUsername' and 'ctrlPassword' 
 - **ctrlPort** points to controller's port
 - **ctrlUsername** and **ctrlPassword** are credentials to authorize on the server
 
-## Running GUI (easy as pie)
+### Running GUI (easy as pie)
 1. Have [NodeJS](https://nodejs.org) installed on your computer
 2.  Go to the application's root folder and run the command in terminal:
 
@@ -88,11 +92,7 @@ Modify its properties 'ctrlHost', 'ctrlPort', 'ctrlUsername' and 'ctrlPassword' 
   ```
 3. Point your browser to (PATH-TO-BIERMAN)/web/app/index.html and enjoy. We recommend using Chrome. 
 
-# Meet the Team
-* Chris Metz (chmetz@cisc.com)
-* Greg Shepherd (shep@cisco.com)
-* IJsbrand Wijnands (ice@cisco.com)
-* Gaofeng Tao (gatao@cisco.com)
-* Alexei Zverev (alzverev@cisco.com)
-
+### Additional Information
 This is a web application developed to manage multipoint content over BIER networks. It implemented on top of OpenDaylight with means of [Angular](http://github.com/angular/angular.js), [Angular Material](https://github.com/angular/material) and [NeXt UI](http://github.com/CiscoDevNet/next-ui). Pure open-source product.
+
+This package includes just the BIERMAN overview, source code and installation instructions. Parties who download this software will need to install their own version of ODL have it point to a physical or virtual network of BIER routers. Instructions on how to accomplish this will be provided in this document in the near future.
