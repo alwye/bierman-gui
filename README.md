@@ -30,7 +30,7 @@ Below is a screenshot depicting the initial network topology of bier routers lea
 <div>
 <img src="https://raw.githubusercontent.com/zverevalexei/bierman-gui/master/images/01-app-overview.png" alt="Network topology" style="display:block;">
 </div>
-<br><br>
+
 
 
 
@@ -45,15 +45,17 @@ The figure below is a screenshot of the Channel Manager.
 
 
 
-
 ### BIERMAN Path Manager
 
 Path Manager is used to create a content-bearing multi-point path. The path can be computed automatically based on the SPF path computation function or the user can explicitly point/click to each router and link between the source and one or more egress or receiver routers.
 
-The first screenshot shows the path manager slide-out panel. The user can select click/point to the source and egress routers if automatic computation (SPF) is selected or the source, egress routers and intermediate loop-free routers and links that would make up the multipoint path. 
+The first screenshot shows the path manager slide-out panel. The user can select click/point to the source and egress routers if automatic computation (SPF) is selected or the source, egress routers and intermediate loop-free routers and links that would make up the multipoint path. BIERMAN validates the multipoint path against the entire topology and if successful generates a unique Path ID.
 
 <img src="https://raw.githubusercontent.com/zverevalexei/bierman-gui/master/images/06-path-computed.png" alt="Computed path" style="display:block;">
 </div>
+
+The user can then assign a channel (defined in the Channel Manager) to the specific path. When that information is deployed into the network through ODL and all the way down to the routers, a success message is shown as depicted in the screenshot below.
+
 <div>
 <img src="https://github.com/zverevalexei/bierman-gui/blob/master/images/07-path-deployed.png?raw=true" alt="Path deployed" style="display:block;">
 </div>
