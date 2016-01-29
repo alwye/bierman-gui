@@ -24,12 +24,15 @@ The architectural components consist of:
 - ODL platform that consumes BIER YANG models and auto-generates a set of REST APIs that applications (like BIERMAN) can use. RESTCONF is the term used to describe REST APIs that are generated from YANG models by ODL
 - BIERMAN application
 
+### BIERMAN Topology
 Below is a screenshot depicting the initial network topology of bier routers learned from ODL and rendered on the screen. The topology was communicated up to ODL using BGP-LS. BIERMAN then retrieved the topology by calling the BGP-LS REST API. This topology view based on BGP-LS is used in other ODL applications that manage IP/MPLS Networks.
 
 <div>
 <img src="https://raw.githubusercontent.com/zverevalexei/bierman-gui/master/images/01-app-overview.png" alt="Network topology" style="display:block;">
 </div>
 <br><br>
+
+### BIERMAN Channel Manager
 The tabs shown across the top bar support a number of different BIERMAN functions. The first is Channel Manager which is used by BIERMAN add, modify, delete and list content channels that can be mapped to a BIER multipoint path.
 
 The figure below is a screenshot of the Channel Manager.
