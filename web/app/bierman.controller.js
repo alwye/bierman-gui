@@ -43,7 +43,9 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 			'egress': [],
 			'links': [],
 			'validStatus': 'none',
-			'fmask': ''
+			'deploymentStatus': 'none',
+			'fmask': '',
+			'processedTree': {}
 		};
 	};
 
@@ -92,9 +94,12 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		$scope.processBierTreeData(
 			// success callback
 			function(input, spfMode){
+				// save processed data
+				$scope.currentTree.processedTree = input;
 				biermanRest.computeMask(input,
 					// success callback
-					function(response){console.log(response);
+					function(response){
+						console.log(response);
 						if(response.hasOwnProperty('fmask'))
 						{
 							$scope.currentTree.fmask = response.fmask;
@@ -149,14 +154,52 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 	};
 
 	$scope.deployPath = function(){
+		var input;
 		if($scope.currentTree.validStatus == 'valid'){
-			// if automatic
-			if($scope.appConfig.spfMode){
-				// todo
-			}
-			else{
+			$scope.currentTree.deploymentStatus = 'inprogress';
+			console.log($scope.currentTree);
 
-			}
+			input = $scope.currentTree.processedTree;
+			input.input['channel-name'] = $scope.input.assignedChannel;
+			biermanRest.connectSource(
+				input,
+				// connectSource - success callback
+				function(response){console.log(response);
+					if(response.hasOwnProperty('source-path')){
+						$scope.currentTree.deploymentStatus = 'failed';
+						$scope.displayAlert({
+							title: "Path Deployed",
+							text: "You successfully deployed a path for " + input.input['channel-name'],
+							type: "success",
+							timer: 3000,
+							confirmButtonText: "Awesome!"
+						});
+					}
+					else{
+						var errMsg = 'Invalid response from controller';
+						$scope.currentTree.deploymentStatus = 'failed';
+						console.error(errMsg, response);
+						$scope.displayAlert({
+							title: "Path Deployment Failed",
+							text: errMsg,
+							type: "error",
+							confirmButtonText: "Close"
+						});
+					}
+				},
+				// connectSource - error callback
+				function(err){
+					$scope.currentTree.deploymentStatus = 'failed';
+					console.error(err);
+					$scope.displayAlert({
+						title: "Path Deployment Failed",
+						text: err.errMsg,
+						type: "error",
+						confirmButtonText: "Close"
+					});
+				}
+			);
+
 		}
 		else{
 			var errMsg = "Input data is invalid. Deployment of the path refused.";
@@ -168,10 +211,6 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 				confirmButtonText: "Close"
 			});
 		}
-	};
-
-	$scope.highlightPathById = function(pathId){
-
 	};
 
 	$scope.processTopologyData = function(data){
@@ -292,14 +331,11 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 				deployButtonTE.prop('disabled', false);
 				deployButtonSPF.prop('disabled', false);
 				break;
-			case 'none':
+			default:
 				$scope.computedPaths = [];
 				deployButtonTE.prop('disabled', true);
 				deployButtonSPF.prop('disabled', true);
-				break;
-			default:
-				deployButtonTE.prop('disabled', true);
-				deployButtonSPF.prop('disabled', true);
+				$scope.currentTree.deploymentStatus = 'none';
 				break;
 		}
 	});

@@ -241,7 +241,7 @@ app.factory('BiermanRest', function($http){
 			'url': self.getProxyURL() + '/restconf/operations/bier:connect-source',
 			'method': 'POST',
 			'timeout': this.appConfig.httpMaxTimeout,
-			'data': JSON.stringify(data)
+			'data': JSON.stringify(input)
 		}).then(
 			// loaded
 			function (data){
