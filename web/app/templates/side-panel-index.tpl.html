@@ -127,7 +127,9 @@
 							<md-list-item class="md-3-line path-item" ng-repeat="path in pathData">
 								<div class="md-list-item-text" ng-click="">
 									{{path['path-id']}}<br>
-									<i class="fa fa-tv"> {{path['channel'][0]['channel-name']}}</i>
+									<div ng-repeat="channel in path['channel']">
+										<i class="fa fa-tv"> {{channel['channel-name']}}</i>
+									</div>
 								</div>
 								<md-divider ng-if="!$last"></md-divider>
 							</md-list-item>
