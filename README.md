@@ -15,7 +15,7 @@ Bit Indexed Explicit Replication (BIER) is a revolutionary new multipoint forwar
 
 As mentioned BIERMAN runs on top of ODL and provides the operator with an easy to use WEB interface for managing bier networks and the video content running over them. The architecture for the BIERMAN application is shown in the figure below.
 
-![](media/image1.png)
+![](images/bier-devnet-labs.png)
 
 
 The architectural components consist of:
