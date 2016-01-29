@@ -49,7 +49,7 @@ Modify its properties 'ctrlHost', 'ctrlPort', 'ctrlUsername' and 'ctrlPassword' 
   ```
   node rest_proxy.js
   ```
-3. Point your browser to (PATH-TO-BIERMAN)/web/app/index.html and enjoy
+3. Point your browser to (PATH-TO-BIERMAN)/web/app/index.html and enjoy. We recommend using Chrome. 
 
 # Meet the Team
 * Chris Metz (chmetz@cisc.com)
