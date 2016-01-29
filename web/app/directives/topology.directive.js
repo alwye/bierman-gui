@@ -259,7 +259,7 @@ app.directive('biermanTopology', function() {
 						linksLayer.fadeOut(true);
 					}
 				};
-				
+
 				$scope.convertUniToBiLinks = function(uniLinks, clearLinks){
 					clearLinks = clearLinks || false;
 					var biLinks = [];
