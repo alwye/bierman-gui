@@ -13,14 +13,15 @@ OpenDaylight (ODL) is an open-source application development and delivery platfo
 
 Bit Indexed Explicit Replication (BIER) is a revolutionary new multipoint forwarding architecture. BIER allows for network replication without a tree building protocol or per-flow state by providing a mechanism to define endpoints within the packet header. BIER routers replicate and forward multicast packets along the unicast shortest paths to each of the defined endpoints for any given packet. This is a radical simplification over all previous multi-point solutions, reducing the cost of operation and providing deterministic network convergence performance for multicast services.
 
-As mentioned BIERMAN runs on top of ODL and provides the operator with an easy to use WEB interface for managing bier networks and the video content running over them.
-
-The architecture for the BIERMAN application is shown in the figure below.
+As mentioned BIERMAN runs on top of ODL and provides the operator with an easy to use WEB interface for managing bier networks and the video content running over them. The architecture for the BIERMAN application is shown in the figure below.
 
 
-Thecomponents consist of:
+The components consist of:
+
 - network of BIER-configured routers. 
 - ODL controller supporting a "southbound" BIER configuration plug-in essentionally enabling the BIER to receive path management and video channel mapping information passed down from the application.
+- ODL platform that consumes BIER YANG models and auto-generates a set of REST APIs that applications (like BIERMAN) can use. RESTCONF is the term used to describe REST APIs that are generated from YANG models by ODL
+- BIERMAN application
 
 
 
