@@ -32,6 +32,8 @@ Below is a screenshot depicting the initial network topology of bier routers lea
 </div>
 <br><br>
 
+
+
 ### BIERMAN Channel Manager
 The tabs shown across the top bar support a number of different BIERMAN functions. The first is Channel Manager which is used by BIERMAN add, modify, delete and list content channels that can be mapped to a BIER multipoint path.
 
@@ -39,6 +41,7 @@ The figure below is a screenshot of the Channel Manager.
 
 <div>
 <img src="https://raw.githubusercontent.com/zverevalexei/bierman-gui/master/images/02-channel-manager.png" alt="Channel manager" style="display:block;">
+</div>
 
 
 ### BIERMAN Path Manager
