@@ -6,9 +6,24 @@ This is a web application developed to manage multipoint content over BIER netwo
 Bit Indexed Explicit Replication (BIER) is a revolutionary new multipoint forwarding architecture. BIER allows for network replication without a tree building protocol or per-flow state by providing a mechanism to define endpoints within the packet header. BIER routers replicate and forward multicast packets along the unicast shortest paths to each of the defined endpoints for any given packet. This is a radical simplification over all previous multi-point solutions, reducing the cost of operation and providing deterministic network convergence performance for multicast services.
 
 ## Demo
+App vizualizes BIER topology:
+<div>
+<img src="https://raw.githubusercontent.com/zverevalexei/bierman-gui/master/images/01-app-overview.png" alt="Network topology" style="display:block;">
+</div>
+<br><br>
+Easy setup of channel in **Channel Manager**: 
+<div>
+<img src="https://raw.githubusercontent.com/zverevalexei/bierman-gui/master/images/02-channel-manager.png" alt="Channel manager" style="display:block;">
+</div>
+**Path Manager** features one-click computation and deployment of BIER tree:
+<div>
+<img src="https://raw.githubusercontent.com/zverevalexei/bierman-gui/master/images/06-path-computed.png" alt="Computed path" style="display:block;">
+</div>
+<div>
+<img src="https://github.com/zverevalexei/bierman-gui/blob/master/images/07-path-deployed.png?raw=true" alt="Path deployed" style="display:block;">
+</div>
 
-
-# Configuration
+# 3-step Setup
 ## REST Proxy Server
 We use [ODL REST Proxy](https://github.com/zverevalexei/odl-rest-proxy) to avoid CORS restrictions. Proxy enhances possibilities of REST API, since we can make even 'unsafe' requests.
 
@@ -36,5 +51,9 @@ Modify its properties 'ctrlHost', 'ctrlPort', 'ctrlUsername' and 'ctrlPassword' 
   ```
 3. Point your browser to (PATH-TO-BIERMAN)/web/app/index.html and enjoy
 
-# Credits
-* Alexei Zverev (alzverev@cisco.com) - frontend developer
+# Meet the Team
+* Chris Metz (chmetz@cisc.com)
+* Greg Shepherd (shep@cisco.com)
+* IJsbrand Wijnands (ice@cisco.com)
+* Gaofeng Tao (gatao@cisco.com)
+* Alexei Zverev (alzverev@cisco.com)
