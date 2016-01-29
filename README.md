@@ -25,10 +25,10 @@ The architectural components consist of:
 - ODL platform that consumes BIER YANG models and auto-generates a set of REST APIs that applications (like BIERMAN) can use. RESTCONF is the term used to describe REST APIs that are generated from YANG models by ODL
 - BIERMAN application
 
+Below is a screenshot depicting the initial network topology of bier routers learned from ODL and rendered on the screen.
 
 
 
-## Demo
 App vizualizes BIER topology:
 <div>
 <img src="https://raw.githubusercontent.com/zverevalexei/bierman-gui/master/images/01-app-overview.png" alt="Network topology" style="display:block;">
