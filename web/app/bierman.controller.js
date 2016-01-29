@@ -161,6 +161,12 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 
 			input = $scope.currentTree.processedTree;
 			input.input['channel-name'] = $scope.input.assignedChannel;
+
+			if(!$scope.appConfig.spfMode){
+				input.input['explicit-link'] = input.input['link'];
+				delete input.input.link;
+			}
+
 			biermanRest.connectSource(
 				input,
 				// connectSource - success callback
