@@ -1,121 +1,134 @@
 <md-sidenav class="md-sidenav-right md-whiteframe-z2" md-component-id="right">
 	<div ng-show="appConfig.currentPanel == 'path-manager'">
-
 		<md-toolbar class="md-theme-indigo" md-scroll-shrink>
 			<div class="md-toolbar-tools white">
 				Path Manager<span flex></span>
 			</div>
 		</md-toolbar>
-		<md-content layout-padding class="offWhite">
-			<md-switch class="md-accent md-block" aria-label="Automatic computation" ng-model="appConfig.spfMode" ng-change="currentTree.validStatus = 'none'">
-				Automatic computation
-			</md-switch>
+		<md-tabs md-dynamic-height md-border-bottom>
+			<md-tab label="Configuration">
+				<md-content layout-padding class="md-padding offWhite">
+					<md-switch class="md-accent md-block" aria-label="Automatic computation" ng-model="appConfig.spfMode" ng-change="currentTree.validStatus = 'none'">
+						Automatic computation
+					</md-switch>
 
-			<!-- SPF (automatic) path configuration -->
-			<div ng-show="appConfig.spfMode">
-				<!-- <p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress) and multiple destinations (egresses), then:</p> -->
-				<div class="center-button-outer">
-					<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner">
-						<i class="fa fa-check"></i> Compute paths
-					</md-button>
-				</div>
-				<div ng-show="currentTree.validStatus == 'valid'">
-					<div class="fmask-result text-success">
-						Path ID: {{currentTree.fmask}}
-					</div>
-					<!--
-					<div ng-show="computedPaths.length > 0" ng-init="input.selectedPath = ''">
-						<h3>Available paths</h3>
-						<md-radio-group ng-model="input.selectedPath">
-							<md-list>
-								<md-list-item class="md-3-line path-item" ng-repeat="path in computedPaths">
-									<div class="md-list-item-text" layout="row" ng-click="">
-										<div>
-											<md-radio-button value="{{path['path-id']}}" aria-label="Path ID {{path['path-id']}}">
-												<div layout="column">
-													<div>{{path['path-id']}}</div>
-													<div><i class="fa fa-share"></i> {{path.hops}} / <i class="fa fa-clock-o"></i> {{path.delay}} / <i class="fa fa-times"></i> {{path.loss}}</div>
+					<!-- SPF (automatic) path configuration -->
+					<div ng-show="appConfig.spfMode">
+						<!-- <p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress) and multiple destinations (egresses), then:</p> -->
+						<div class="center-button-outer">
+							<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner">
+								<i class="fa fa-check"></i> Compute paths
+							</md-button>
+						</div>
+						<div ng-show="currentTree.validStatus == 'valid'">
+							<div class="fmask-result text-success">
+								Path ID: {{currentTree.fmask}}
+							</div>
+							<!--
+							<div ng-show="computedPaths.length > 0" ng-init="input.selectedPath = ''">
+								<h3>Available paths</h3>
+								<md-radio-group ng-model="input.selectedPath">
+									<md-list>
+										<md-list-item class="md-3-line path-item" ng-repeat="path in computedPaths">
+											<div class="md-list-item-text" layout="row" ng-click="">
+												<div>
+													<md-radio-button value="{{path['path-id']}}" aria-label="Path ID {{path['path-id']}}">
+														<div layout="column">
+															<div>{{path['path-id']}}</div>
+															<div><i class="fa fa-share"></i> {{path.hops}} / <i class="fa fa-clock-o"></i> {{path.delay}} / <i class="fa fa-times"></i> {{path.loss}}</div>
+														</div>
+													</md-radio-button>
 												</div>
-											</md-radio-button>
-										</div>
 
-										</div>
-									<md-divider ng-if="!$last"></md-divider>
-								</md-list-item>
-							</md-list>
-						</md-radio-group>
+												</div>
+											<md-divider ng-if="!$last"></md-divider>
+										</md-list-item>
+									</md-list>
+								</md-radio-group>
+							</div>
+							-->
+							<br>
+							<md-input-container>
+								<label>Assign channels</label>
+								<md-select ng-model="input.assignedChannel">
+									<md-option ng-repeat="channel in channelData" value="{{channel.name}}">
+										{{channel.name}}
+									</md-option>
+								</md-select>
+							</md-input-container>
+							<br>
+						</div>
+						<div ng-show="currentTree.validStatus == 'invalid'">
+							<div class="fmask-result text-error">
+								Path ID has not been computed
+							</div>
+						</div>
+						<div ng-show="currentTree.validStatus == 'inprogress'">
+							<md-progress-linear md-mode="query"></md-progress-linear>
+							<div class="bottom-block">
+								<span>Calculating Path ID...</span>
+							</div>
+						</div>
+
+						<md-button class="md-raised" id="deploy-button-spf" disabled="disabled" ng-click="deployPath()"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
+						<md-button class="md-raised md-warn" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
+
 					</div>
-					-->
-					<br>
-					<md-input-container>
-						<label>Assign channels</label>
-						<md-select ng-model="input.assignedChannel">
-							<md-option ng-repeat="channel in channelData" value="{{channel.name}}">
-								{{channel.name}}
-							</md-option>
-						</md-select>
-					</md-input-container>
-					<br>
-				</div>
-				<div ng-show="currentTree.validStatus == 'invalid'">
-					<div class="fmask-result text-error">
-						Path ID has not been computed
+					<!-- / SPF (automatic) path configuration -->
+
+					<!-- Manual path configuration -->
+					<div ng-show="!appConfig.spfMode">
+						<!-- <p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress), multiple destinations (egresses). Design your own path, click link by link from the ingress to the destination points. Then:</p> -->
+						<div class="center-button-outer">
+							<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner">
+								<i class="fa fa-check"></i> Validate and compute Path ID
+							</md-button>
+						</div>
+						<div ng-show="currentTree.validStatus == 'valid'">
+							<div class="fmask-result text-success">
+								Path ID: {{currentTree.fmask}}
+							</div>
+							<br>
+							<md-input-container>
+								<label>Assign channels</label>
+								<md-select ng-model="input.assignedChannel">
+									<md-option ng-repeat="channel in channelData" value="{{channel.name}}">
+										{{channel.name}}
+									</md-option>
+								</md-select>
+							</md-input-container>
+							<br>
+						</div>
+						<div ng-show="currentTree.validStatus == 'invalid'">
+							<div class="fmask-result text-error">
+								Path ID has not been computed
+							</div>
+						</div>
+						<div ng-show="currentTree.validStatus == 'inprogress'">
+							<md-progress-linear md-mode="query"></md-progress-linear>
+							<div class="bottom-block">
+								<span>Calculating Path ID...</span>
+							</div>
+						</div>
+
+						<md-button class="md-raised" id="deploy-button-te" disabled="disabled" ng-click="deployPath()"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
+						<md-button class="md-raised md-warn" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
 					</div>
-				</div>
-				<div ng-show="currentTree.validStatus == 'inprogress'">
-					<md-progress-linear md-mode="query"></md-progress-linear>
-					<div class="bottom-block">
-						<span>Calculating Path ID...</span>
-					</div>
-				</div>
-
-				<md-button class="md-raised" id="deploy-button-spf" disabled="disabled" ng-click="deployPath()"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
-				<md-button class="md-raised md-warn" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
-
-			</div>
-			<!-- / SPF (automatic) path configuration -->
-
-			<!-- Manual path configuration -->
-			<div ng-show="!appConfig.spfMode">
-				<!-- <p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress), multiple destinations (egresses). Design your own path, click link by link from the ingress to the destination points. Then:</p> -->
-				<div class="center-button-outer">
-					<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner">
-						<i class="fa fa-check"></i> Validate and compute Path ID
-					</md-button>
-				</div>
-				<div ng-show="currentTree.validStatus == 'valid'">
-					<div class="fmask-result text-success">
-						Path ID: {{currentTree.fmask}}
-					</div>
-					<br>
-					<md-input-container>
-						<label>Assign channels</label>
-						<md-select ng-model="input.assignedChannel">
-							<md-option ng-repeat="channel in channelData" value="{{channel.name}}">
-								{{channel.name}}
-							</md-option>
-						</md-select>
-					</md-input-container>
-					<br>
-				</div>
-				<div ng-show="currentTree.validStatus == 'invalid'">
-					<div class="fmask-result text-error">
-						Path ID has not been computed
-					</div>
-				</div>
-				<div ng-show="currentTree.validStatus == 'inprogress'">
-					<md-progress-linear md-mode="query"></md-progress-linear>
-					<div class="bottom-block">
-						<span>Calculating Path ID...</span>
-					</div>
-				</div>
-
-				<md-button class="md-raised" id="deploy-button-te" disabled="disabled" ng-click="deployPath()"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
-				<md-button class="md-raised md-warn" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
-			</div>
-			<!-- / Manual path configuration -->
-
-
-		</md-content>
+					<!-- / Manual path configuration -->
+				</md-content>
+			</md-tab>
+			<md-tab label="Path List">
+				<md-content layout-padding class="md-padding offWhite">
+					<md-list>
+						<md-list-item class="md-3-line path-item" ng-repeat="path in pathData">
+							<div class="md-list-item-text" layout="row" ng-click="">
+								{{path['path-id']}}
+							</div>
+							<md-divider ng-if="!$last"></md-divider>
+						</md-list-item>
+					</md-list>
+				</md-content>
+			</md-tab>
+		</md-tabs>
 	</div>
 </md-sidenav>

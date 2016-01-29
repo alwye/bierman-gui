@@ -27,6 +27,8 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 	// Available info about channels
 	$scope.channelData = null;
 
+	$scope.pathData = [];
+
 	$scope.computedPaths = [];
 
 	$scope.input = {
@@ -76,6 +78,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 				$scope.topoInitialized = true;
 				$scope.appConfig.currentTopologyId = data['topology-id'];
 				$scope.getChannels();
+				$scope.getPathList();
 			},
 			// topology load failed
 			function(errMsg){
@@ -217,6 +220,27 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 				confirmButtonText: "Close"
 			});
 		}
+		$scope.getPathList();
+	};
+
+	$scope.getPathList = function(){
+		biermanRest.getPathList(
+			$scope.appConfig.currentTopologyId,
+			// getPathList - success callback
+			function(pathList){
+				$scope.pathData = pathList;
+			},
+			// getPathList - error callback
+			function(err){
+				console.error(err);
+				$scope.displayAlert({
+					title: "Path List Unavailable",
+					text: err.errMsg,
+					type: "error",
+					confirmButtonText: "Close"
+				});
+			}
+		)
 	};
 
 	$scope.processTopologyData = function(data){
