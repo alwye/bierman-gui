@@ -1,4 +1,4 @@
-# BIER Topology Manager
+# BIERMAN
 This is a web application developed to manage multipoint content over BIER networks. It implemented on top of OpenDaylight with means of [Angular](http://github.com/angular/angular.js), [Angular Material](https://github.com/angular/material) and [NeXt UI](http://github.com/CiscoDevNet/next-ui). Pure open-source product.
 
 # Application Overview
