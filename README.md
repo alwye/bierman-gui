@@ -1,4 +1,4 @@
-<img src="https://github.com/zverevalexei/bierman-gui/blob/master/images/beer_10.jpg" alt="alt text" width=200px height=200px>
+<img src="https://github.com/zverevalexei/bierman-gui/blob/master/images/beer_10.jpg" alt="alt text" width=300px height=200px>
 
 # BIERMAN 
 OpenDaylight (ODL) is an open-source application development and delivery platform. BIERMAN is an application designed and implemented to run on top of ODL to visualize BIER network topologies, create/manage BIER multi-point paths and enable mapping of video content to BIER paths. In addition stats are collected and displayed.
