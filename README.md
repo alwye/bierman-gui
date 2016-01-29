@@ -22,7 +22,7 @@ As mentioned BIERMAN runs on top of ODL and provides the operator with an easy t
 
 The architectural components consist of:
 
-- network of BIER-configured routers. 
+- network of BIER-configured routers
 - ODL controller supporting a "southbound" BIER configuration plug-in essentionally enabling the BIER to receive path management and video channel mapping information passed down from the application.
 - ODL platform that consumes BIER YANG models and auto-generates a set of REST APIs that applications (like BIERMAN) can use. RESTCONF is the term used to describe REST APIs that are generated from YANG models by ODL
 - BIERMAN application
