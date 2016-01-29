@@ -39,9 +39,12 @@ The figure below is a screenshot of the Channel Manager.
 
 <div>
 <img src="https://raw.githubusercontent.com/zverevalexei/bierman-gui/master/images/02-channel-manager.png" alt="Channel manager" style="display:block;">
-</div>
-**Path Manager** features one-click computation and deployment of BIER tree:
-<div>
+
+
+### BIERMAN Path Manager
+
+Path Manager is used to create a content-bearing multi-point path. The path can be computed automatically based on the SPF path computation function or the user can explicitly point/click to each router and link between the source and one or more egress or receiver routers.
+
 <img src="https://raw.githubusercontent.com/zverevalexei/bierman-gui/master/images/06-path-computed.png" alt="Computed path" style="display:block;">
 </div>
 <div>
