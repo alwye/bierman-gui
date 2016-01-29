@@ -62,9 +62,10 @@ The user can then assign a channel (defined in the Channel Manager) to the speci
 
 The advantags of BIERMAN are twofold: first it simplifies the mapping of content channels to a stateless multipoint path and second it is build entirely on open source software components. The latter is important as users and developer might want to customize certain aspects of managing their own BIER networks.
 
-###Configuration
+#Configuration
 
 ## 3-step Setup
+
 ### REST Proxy Server
 We use [ODL REST Proxy](https://github.com/zverevalexei/odl-rest-proxy) to avoid CORS restrictions. Proxy enhances possibilities of REST API, since we can make even 'unsafe' requests.
 
@@ -92,7 +93,7 @@ Modify its properties 'ctrlHost', 'ctrlPort', 'ctrlUsername' and 'ctrlPassword' 
   ```
 3. Point your browser to (PATH-TO-BIERMAN)/web/app/index.html and enjoy. We recommend using Chrome. 
 
-### Additional Information
+# Additional Information
 This is a web application developed to manage multipoint content over BIER networks. It implemented on top of OpenDaylight with means of [Angular](http://github.com/angular/angular.js), [Angular Material](https://github.com/angular/material) and [NeXt UI](http://github.com/CiscoDevNet/next-ui). Pure open-source product.
 
 This package includes just the BIERMAN overview, source code and installation instructions. Parties who download this software will need to install their own version of ODL have it point to a physical or virtual network of BIER routers. Instructions on how to accomplish this will be provided in this document in the near future.
