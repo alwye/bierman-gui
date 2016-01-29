@@ -1,9 +1,21 @@
 # BIERMAN
-This is a web application developed to manage multipoint content over BIER networks. It implemented on top of OpenDaylight with means of [Angular](http://github.com/angular/angular.js), [Angular Material](https://github.com/angular/material) and [NeXt UI](http://github.com/CiscoDevNet/next-ui). Pure open-source product.
+OpenDaylight (ODL) is an open-source application development and delivery platform. BIERMAN is an application developed to run on top of ODL to visualize BIER network topologies, create/manage BIER multi-point paths and enable mapping of video content to BIER paths. In addition stats are collected and displayed
 
-# Application Overview
-## What is BIER?
+# Development Team
+* Chris Metz (chmetz@cisc.com)
+* Greg Shepherd (shep@cisco.com)
+* IJsbrand Wijnands (ice@cisco.com)
+* Gaofeng Tao (gatao@cisco.com)
+* Alexei Zverev (alzverev@cisco.com)
+
+
+## Application Overview
+
 Bit Indexed Explicit Replication (BIER) is a revolutionary new multipoint forwarding architecture. BIER allows for network replication without a tree building protocol or per-flow state by providing a mechanism to define endpoints within the packet header. BIER routers replicate and forward multicast packets along the unicast shortest paths to each of the defined endpoints for any given packet. This is a radical simplification over all previous multi-point solutions, reducing the cost of operation and providing deterministic network convergence performance for multicast services.
+
+As mentioned BIERMAN runs on top of ODL and provides the operator with an easy to use WEB interface for managing bier networks and the video content running over them.
+
+
 
 ## Demo
 App vizualizes BIER topology:
@@ -57,3 +69,5 @@ Modify its properties 'ctrlHost', 'ctrlPort', 'ctrlUsername' and 'ctrlPassword' 
 * IJsbrand Wijnands (ice@cisco.com)
 * Gaofeng Tao (gatao@cisco.com)
 * Alexei Zverev (alzverev@cisco.com)
+
+This is a web application developed to manage multipoint content over BIER networks. It implemented on top of OpenDaylight with means of [Angular](http://github.com/angular/angular.js), [Angular Material](https://github.com/angular/material) and [NeXt UI](http://github.com/CiscoDevNet/next-ui). Pure open-source product.
