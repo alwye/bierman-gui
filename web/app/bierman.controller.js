@@ -483,7 +483,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 				},
 				templateUrl: './app/templates/channel-manager.tpl.html',
 				parent: angular.element(document.body),
-				clickOutsideToClose:true,
+				clickOutsideToClose: true,
 				fullscreen: useFullScreen,
 				locals: {
 					dScope: $scope

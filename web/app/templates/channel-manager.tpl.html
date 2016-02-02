@@ -60,45 +60,47 @@
 						<md-list-item class="md-3-line" ng-repeat="channel in dScope.channelData">
 							<div class="md-list-item-text" layout="row">
 								<!-- edit mode -->
-								<div ng-show="edit.editing && edit.name == channel.name" layout="row">
-									<div class="channel-info">
-										<md-input-container>
-											<label for="cm-edit-channel-name">Channel name</label>
-											<input ng-model="dScope.channel.name" id="cm-edit-channel-name" required>
-										</md-input-container>
-										<md-input-container>
-											<label for="cm-edit-src-ip">Source IP</label>
-											<input ng-model="dScope.channel.srcIP" id="cm-edit-src-ip" required>
-										</md-input-container>
-										<md-input-container>
-											<label for="cm-edit-dest-group">Destination Group</label>
-											<input ng-model="dScope.channel.destGroup" id="cm-edit-dest-group" required>
-										</md-input-container>
-										<md-input-container>
-											<label for="cm-edit-subdomain">Subdomain</label>
-											<input ng-model="dScope.channel.subdomain" id="cm-edit-subdomain" required>
-										</md-input-container>
-									</div>
-									<div class="channel-actions">
-										<md-button ng-click="saveChannel(channel.name)" class="md-primary">
-											Save
-										</md-button>
-										<md-button ng-click="closeEditor(channel.name)" class="md-primary">
-											Cancel
-										</md-button><br>
-										<md-button ng-click="removeChannelWarning(channel.name)" class="md-warn">
-											Remove
-										</md-button>
+								<div ng-show="edit.editing && edit.name == channel.name">
+									<div layout="row">
+										<div class="channel-info">
+											<md-input-container>
+												<label for="cm-edit-channel-name">Channel name</label>
+												<input ng-model="dScope.channel.name" id="cm-edit-channel-name" required>
+											</md-input-container>
+											<md-input-container>
+												<label for="cm-edit-src-ip">Source IP</label>
+												<input ng-model="dScope.channel.srcIP" id="cm-edit-src-ip" required>
+											</md-input-container>
+											<md-input-container>
+												<label for="cm-edit-dest-group">Destination Group</label>
+												<input ng-model="dScope.channel.destGroup" id="cm-edit-dest-group" required>
+											</md-input-container>
+											<md-input-container>
+												<label for="cm-edit-subdomain">Subdomain</label>
+												<input ng-model="dScope.channel.subdomain" id="cm-edit-subdomain" required>
+											</md-input-container>
+										</div>
+										<div class="channel-actions">
+											<md-button ng-click="saveChannel(channel.name)" class="md-primary">
+												Save
+											</md-button>
+											<md-button ng-click="closeEditor(channel.name)" class="md-primary">
+												Cancel
+											</md-button><br>
+											<md-button ng-click="removeChannelWarning(channel.name)" class="md-warn">
+												Remove
+											</md-button>
+										</div>
 									</div>
 								</div>
-								<div ng-show="!edit.editing || edit.name != channel.name" >
-									<div class="channel-info">
+								<div ng-show="!edit.editing || edit.name != channel.name" class="w100 clear">
+									<div class="channel-info align-left">
 										<h3>{{channel.name}}</h3>
 										<p><i class="fa fa-arrow-right"></i> {{channel['src-ip']}}</p>
 										<p><i class="fa fa-users"></i> {{channel['dst-group']}}</p>
 										<p><i class="fa fa-cloud" ></i> {{channel['sub-domain']}}</p>
 									</div>
-									<div class="channel-actions">
+									<div class="channel-actions align-right">
 										<md-button ng-click="editChannel(channel.name)" class="md-primary">
 											Edit
 										</md-button>
