@@ -74,7 +74,11 @@ app.factory('BiermanRest', function($http){
 				{
 					// if controller returned errors
 					if(data.data.data.hasOwnProperty('errors')){
-						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+						var errDetails = '';
+						for(var i = 0; i < data.data.data.errors.error.length; i++){
+							errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+						}
+						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors: ' + errDetails});
 					}
 					else{
 						try{
@@ -122,7 +126,11 @@ app.factory('BiermanRest', function($http){
 							successCbk([]);
 						}
 						else{
-							errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+							var errDetails = '';
+							for(var i = 0; i < data.data.data.errors.error.length; i++){
+								errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+							}
+							errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors: ' + errDetails});
 						}
 					}
 					// if output is set
@@ -175,8 +183,12 @@ app.factory('BiermanRest', function($http){
 					if(data.data.status == 'ok')
 					{
 						// if controller returned errors
-						if(data.data.data.hasOwnProperty('errors')){
-							errorCbk({'errObj': data.data.data.errors, 'errId': 3,'errMsg': 'Controller found out errors'});
+						if(data.data.data.hasOwnProperty('errors')){console.log(data.data.data.errors);
+							var errDetails = '';
+							for(var i = 0; i < data.data.data.errors.error.length; i++){
+								errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+							}
+							errorCbk({'errObj': data.data.data.errors, 'errId': 3,'errMsg': 'Controller found out errors: ' + errDetails});
 						}
 						else{
 							try{
@@ -224,7 +236,11 @@ app.factory('BiermanRest', function($http){
 				{
 					// if controller returned errors
 					if(data.data.data.hasOwnProperty('errors')){
-						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+						var errDetails = '';
+						for(var i = 0; i < data.data.data.errors.error.length; i++){
+							errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+						}
+						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors: ' + errDetails});
 					}
 					// if output is set
 					else if(data.data.data.hasOwnProperty('output')){
@@ -262,7 +278,11 @@ app.factory('BiermanRest', function($http){
 				{
 					// if controller returned errors
 					if(data.data.data.hasOwnProperty('errors')){
-						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+						var errDetails = '';
+						for(var i = 0; i < data.data.data.errors.error.length; i++){
+							errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+						}
+						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors: ' + errDetails});
 					}
 					else{
 						try{
@@ -310,7 +330,11 @@ app.factory('BiermanRest', function($http){
 							successCbk([]);
 						}
 						else{
-							errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+							var errDetails = '';
+							for(var i = 0; i < data.data.data.errors.error.length; i++){
+								errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+							}
+							errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors: ' + errDetails});
 						}
 					}
 					// if output is set
@@ -355,7 +379,11 @@ app.factory('BiermanRest', function($http){
 				{
 					// if controller returned errors
 					if(data.data.data.hasOwnProperty('errors')){
-						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors'});
+						var errDetails = '';
+						for(var i = 0; i < data.data.data.errors.error.length; i++){
+							errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+						}
+						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors: ' + errDetails});
 					}
 					// if output is set
 					else if(data.data.data.hasOwnProperty('output')){
