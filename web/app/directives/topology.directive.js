@@ -182,30 +182,19 @@ app.directive('biermanTopology', function() {
 						}
 
 					});
-
-					try{
-						$scope.$parent.topologySaveGeoLocation(
-							$scope.dumpData,
-							function(data){
-								console.log(data);
-							},
-							function(err){
-								console.log(err);
-							}
-						);
-					}catch(e) {
-						var errMsg = 'Could not save layout to local storage';
-						console.info(errMsg, e);
-						swal({
-							title: "Can't save geo-location data",
-							text: errMsg,
-							type: "warning",
-							confirmButtonText: "Close"
-						});
-					}
-
-
-
+					$scope.$parent.topologySaveGeoLocation(
+						$scope.dumpData,
+						function(data){},
+						function(err){
+							console.info(err);
+							swal({
+								title: "Can't save geo-location data",
+								text: err.errMsg,
+								type: "warning",
+								confirmButtonText: "Close"
+							});
+						}
+					);
 				};
 
 				// highlights a node
