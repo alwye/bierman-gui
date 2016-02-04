@@ -76,7 +76,7 @@ app.factory('BiermanRest', function($http){
 					if(data.data.data.hasOwnProperty('errors')){
 						var errDetails = '';
 						for(var i = 0; i < data.data.data.errors.error.length; i++){
-							errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+							errDetails = errDetails + '[' + i + '] ' + data.data.data.errors.error[i]['error-message']
 						}
 						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors: ' + errDetails});
 					}
@@ -128,7 +128,7 @@ app.factory('BiermanRest', function($http){
 						else{
 							var errDetails = '';
 							for(var i = 0; i < data.data.data.errors.error.length; i++){
-								errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+								errDetails = errDetails + '[' + i + '] ' + data.data.data.errors.error[i]['error-message']
 							}
 							errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors: ' + errDetails});
 						}
@@ -186,7 +186,7 @@ app.factory('BiermanRest', function($http){
 						if(data.data.data.hasOwnProperty('errors')){console.log(data.data.data.errors);
 							var errDetails = '';
 							for(var i = 0; i < data.data.data.errors.error.length; i++){
-								errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+								errDetails = errDetails + '[' + i + '] ' + data.data.data.errors.error[i]['error-message']
 							}
 							errorCbk({'errObj': data.data.data.errors, 'errId': 3,'errMsg': 'Controller found out errors: ' + errDetails});
 						}
@@ -238,7 +238,7 @@ app.factory('BiermanRest', function($http){
 					if(data.data.data.hasOwnProperty('errors')){
 						var errDetails = '';
 						for(var i = 0; i < data.data.data.errors.error.length; i++){
-							errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+							errDetails = errDetails + '[' + i + '] ' + data.data.data.errors.error[i]['error-message']
 						}
 						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors: ' + errDetails});
 					}
@@ -280,7 +280,7 @@ app.factory('BiermanRest', function($http){
 					if(data.data.data.hasOwnProperty('errors')){
 						var errDetails = '';
 						for(var i = 0; i < data.data.data.errors.error.length; i++){
-							errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+							errDetails = errDetails + '[' + i + '] ' + data.data.data.errors.error[i]['error-message']
 						}
 						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors: ' + errDetails});
 					}
@@ -332,7 +332,7 @@ app.factory('BiermanRest', function($http){
 						else{
 							var errDetails = '';
 							for(var i = 0; i < data.data.data.errors.error.length; i++){
-								errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+								errDetails = errDetails + '[' + i + '] ' + data.data.data.errors.error[i]['error-message']
 							}
 							errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors: ' + errDetails});
 						}
@@ -381,7 +381,7 @@ app.factory('BiermanRest', function($http){
 					if(data.data.data.hasOwnProperty('errors')){
 						var errDetails = '';
 						for(var i = 0; i < data.data.data.errors.error.length; i++){
-							errDetails = errDetails + ', [' + i + '] ' + data.data.data.errors.error[i]['error-message']
+							errDetails = errDetails + '[' + i + '] ' + data.data.data.errors.error[i]['error-message']
 						}
 						errorCbk({'errObj': data.data.data.errors, 'errId': 2,'errMsg': 'Controller found out errors: ' + errDetails});
 					}
