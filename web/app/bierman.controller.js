@@ -261,7 +261,6 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 			linksDict: new nx.data.Dictionary({})
 		};
 		data.node.forEach(function(currentNode,index,nodes){
-			// Reformat information
 			var node = {};
 			// Internal ID
 			node.id = index;
@@ -275,11 +274,17 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 			node.tp = currentNode['termination-point'];
 			// Attributes
 			node.attributes = currentNode['l3-unicast-igp-topology:igp-node-attributes'];
-			// fixme: ideally it should come from controller
-			node.longitude = -149.8286774;
-			node.latitude = 63.391326;
-			node.x =  -1021.91217850693;
-			node.y =  550.31264292335;
+			// Geo location
+			if(biermanTools.hasOwnProperties(currentNode, ['topology-bier:latitude', 'topology-bier:longitude'])){
+				node.latitude = currentNode['topology-bier:latitude'];
+				node.longitude = currentNode['topology-bier:longitude'];
+			}
+			else{
+				// some hardcoded thing
+				node.longitude = -149.8286774;
+				node.latitude = 63.391326;
+			}
+
 			// Assign node's external id to the internal one
 			topologyData.nodesDict.setItem(node.nodeId, node.id);
 			// Record node data
@@ -349,6 +354,23 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		$scope.clearCurrentTree();
 		$scope.resetTopology();
 		$scope.appConfig.mode = 'start';
+	};
+
+	$scope.topologySaveGeoLocation = function(rawInput, successCbk, errorCbk){
+		// dump data -> OLD input
+		var input = {
+			'input': {
+				'topo-id': $scope.appConfig.currentTopologyId,
+				'node': rawInput.nodes.map(function(nodeInfo){
+					return {
+						'node-id': nodeInfo.nodeName,
+						'longitude': nodeInfo.longitude,
+						'latitude': nodeInfo.latitude
+					};
+				})
+			}
+		};
+		biermanRest.setAttribute(input, successCbk, errorCbk);
 	};
 
 	$scope.initApp();

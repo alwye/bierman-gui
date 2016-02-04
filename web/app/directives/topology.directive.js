@@ -157,39 +157,6 @@ app.directive('biermanTopology', function() {
 					}
 				};
 
-				// reads data from local storage
-				$scope.readDumpDataFromLocalStorage = function(){
-					try{
-						$scope.dumpData = JSON.parse(localStorage.getItem("biermanTopologyData"));
-					}catch(e) {
-						var errMsg = 'Could not read saved layout from local storage';
-						console.info(errMsg, e);
-						swal({
-							title: "FMASK Computation Failed",
-							text: errMsg,
-							type: "warning",
-							confirmButtonText: "Close"
-						});
-					}
-					$scope.readDumpData();
-				};
-
-				// saves the data to local storage
-				$scope.writeDumpDataToLocalStorage = function(){
-					try{
-						localStorage.setItem("biermanTopologyData", JSON.stringify($scope.dumpData));
-					}catch(e) {
-						var errMsg = 'Could not save layout to local storage';
-						console.info(errMsg, e);
-						swal({
-							title: "FMASK Computation Failed",
-							text: errMsg,
-							type: "warning",
-							confirmButtonText: "Close"
-						});
-					}
-				};
-
 				// Dump the positions of nodes
 				$scope.writeDumpdata = function(){
 					$scope.dumpData = {'nodes': []};
@@ -198,8 +165,8 @@ app.directive('biermanTopology', function() {
 						// geo layput
 						if($scope.topo.layoutType() == 'USMap'){
 							$scope.dumpData.nodes.push({
-								'x': node.x(),
-								'y': node.y(),
+								//'x': node.x(),
+								//'y': node.y(),
 								'longitude': node.model()._data.longitude,
 								'latitude': node.model()._data.latitude,
 								'nodeName': node.model()._data['nodeId']
@@ -215,26 +182,30 @@ app.directive('biermanTopology', function() {
 						}
 
 					});
-					$scope.writeDumpDataToLocalStorage();
-				};
 
-				// read dump data from $scope.dumpData
-				$scope.readDumpData = function(){
-					if($scope.dumpData && $scope.dumpData.nodes ){
-						$scope.dumpData.nodes.forEach(function(node, index, nodes){
-							nodeInst = $scope.topo.getNode($scope.$parent.topologyData.nodesDict.getItem(node.nodeName));
-							if(nodeInst != undefined){
-								if($scope.topo.layoutType() == 'USMap'){
-									nodeInst.model()._data.longitude = node.longitude;
-									nodeInst.model()._data.latitude = node.latitude;
-								}
-								else{
-									nodeInst.position({'x': node.x, 'y': node.y});
-								}
+					try{
+						$scope.$parent.topologySaveGeoLocation(
+							$scope.dumpData,
+							function(data){
+								console.log(data);
+							},
+							function(err){
+								console.log(err);
 							}
-
+						);
+					}catch(e) {
+						var errMsg = 'Could not save layout to local storage';
+						console.info(errMsg, e);
+						swal({
+							title: "Can't save geo-location data",
+							text: errMsg,
+							type: "warning",
+							confirmButtonText: "Close"
 						});
 					}
+
+
+
 				};
 
 				// highlights a node
@@ -497,7 +468,6 @@ app.directive('biermanTopology', function() {
 				});
 
 				$scope.topo.on('ready', function(sender, event){
-					$scope.readDumpDataFromLocalStorage();
 					window.setInterval(function(){$scope.writeDumpdata();}, 5000);
 
 				});
