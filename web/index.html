@@ -24,23 +24,27 @@
 		<div ng-show="appConfig.mode == 'init'" ng-hide="appConfig.mode != 'init'">
 			<div class="loading">Loading&#8230;</div>
 		</div>
-		<md-toolbar class="toolbar">
-			<div class="md-toolbar-tools white float-left">
-				<span class="product-label"><img src="assets/images/directv.png" alt="DIRECTV logo"></span>
-				<md-button class="md-primary menu-button" ng-click="openChannelManager()"><i class="fa fa-tv"></i> Channel Manager</md-button>
-				<md-button class="md-primary menu-button" ng-click="openRightPanel('path-manager')"><i class="fa fa-arrows"></i> Path Manager</md-button>
-				<md-button class="md-primary menu-button" ng-click="openRightPanel('node-manager')"><i class="fa fa-bullseye"></i> Node Manager</md-button>
-				<md-button class="md-primary menu-button" ng-click="openRightPanel('link-manager')"><i class="fa fa-link"></i> Link Manager</md-button>
-			</div>
-		</md-toolbar>
-		<div class="h100">
-			<section layout="row" class="h100">
-				<bierman-topology id="bierman-topology" topo="topo" open-panel="openPanel" process-bier-tree-data="processBierTreeData" reset-topology="resetTopology" convert-uni-to-bi-links="convertUniToBiLinks" highlight-path="highlightPath"></bierman-topology>
-				<slideout-right layout="column"></slideout-right>
+		<div layout="row" class="h100" flex>
+			<section flex layout='column' class="h100">
+				<md-toolbar class="toolbar">
+					<div class="md-toolbar-tools white float-left">
+						<span class="product-label"><img src="assets/images/directv.png" alt="DIRECTV logo"></span>
+						<span flex></span>
+						<md-button class="md-primary menu-button" ng-click="openChannelManager()"><i class="fa fa-tv"></i> Channel Manager</md-button>
+						<md-button class="md-primary menu-button" ng-click="openRightPanel('path-manager')"><i class="fa fa-arrows"></i> Path Manager</md-button>
+						<md-button class="md-primary menu-button" ng-click="openRightPanel('node-manager')"><i class="fa fa-bullseye"></i> Node Manager</md-button>
+						<md-button class="md-primary menu-button" ng-click="openRightPanel('link-manager')"><i class="fa fa-link"></i> Link Manager</md-button>
+					</div>
+				</md-toolbar>
+				<div class="h100">
+					<section layout="row" class="h100">
+						<bierman-topology id="bierman-topology" topo="topo" open-panel="openPanel" process-bier-tree-data="processBierTreeData" reset-topology="resetTopology" convert-uni-to-bi-links="convertUniToBiLinks" highlight-path="highlightPath"></bierman-topology>
+					</section>
+				</div>
 			</section>
+			<slideout-right layout="column"></slideout-right>
 		</div>
 	</div>
-
 	<script type="application/javascript" src="app/bierman.module.js"></script>
 	<script type="application/javascript" src="app/restapi.service.js"></script>
 	<script type="application/javascript" src="app/bierman.controller.js"></script>

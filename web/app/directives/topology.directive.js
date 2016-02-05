@@ -134,8 +134,12 @@ app.directive('biermanTopology', function() {
 				};
 
 				$scope.openPanel = function(panelCode, auxParam){
-					var panel = $('#side-panel');
+					var topoDiv = $('#bierman-topology');
 					var previousPanelType = $scope.$parent.appConfig.currentPanel;
+					$scope.topo.adaptToContainer();
+					$scope.topo.fit();
+					$scope.topo.resize(topoDiv.innerWidth, topoDiv.innerHeight);
+					/*
 					$scope.$parent.appConfig.currentPanel = panelCode;
 					$scope.fadeInAllLayers();
 					if (panel.hasClass('visible') && previousPanelType == panelCode) { //user attempts to close slide-out
@@ -150,6 +154,7 @@ app.directive('biermanTopology', function() {
 						$scope.topo.resize((window.innerWidth - 200), 0.975 * (window.innerHeight)); //resize topology
 						$scope.topo.fit(); //fits to view
 					}
+					*/
 				};
 
 				// Dump the positions of nodes
@@ -451,9 +456,10 @@ app.directive('biermanTopology', function() {
 					$scope.topo.adaptToContainer();
 				});
 
-				$scope.topo.on('ready', function(sender, event){
+				$scope.topo.on('ready', function(){
+					// hide native NeXt's spinner
+					$scope.topo.hideLoading();
 					window.setInterval(function(){$scope.writeDumpdata();}, 5000);
-
 				});
 
 				$scope.topo.on('fitStage', function(sender, event){

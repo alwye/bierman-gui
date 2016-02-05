@@ -12,7 +12,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 		// DO NOT MODIFY CONFIGURATION BELOW
 		'mode': 'init', // Application mode (do not modify)
 		'topoInitialized': false,
-		'currentPanel': null,
+		'currentPanel': 'path-manager',
 		'currentTopologyId': null
 	};
 

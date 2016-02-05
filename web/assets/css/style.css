@@ -19,10 +19,6 @@ html,body {
     color: white;
 }
 
-.offWhite {
-    background-color: #F9FCFD;
-}
-
 span.center {
     display: block;
     margin-left: auto;
@@ -154,4 +150,11 @@ md-toolbar.white {
     font-size: 16px;
     padding: 10px;
 }
+
+
+
+
+
+
+
 /* Modal window */
