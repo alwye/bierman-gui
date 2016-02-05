@@ -394,7 +394,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 
 	$scope.openRightPanel = function(panelCode){
 		$scope.appConfig.currentPanel = panelCode;
-		$mdSidenav('right').open();
+		//$mdSidenav('right').open();
 	};
 
 	$scope.openChannelManager = function() {
