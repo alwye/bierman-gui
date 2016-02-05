@@ -151,10 +151,9 @@ md-toolbar.white {
     padding: 10px;
 }
 
-
-
-
-
-
+div:focus, span:focus {
+    outline: none;
+    border: 0;
+}
 
 /* Modal window */

@@ -476,9 +476,7 @@ app.directive('biermanTopology', function() {
 				app.on('resize', function () {
 					$scope.topo.adaptToContainer();
 				});
-
 				$scope.topo.attach(app);
-
 			};
 
 			$scope.$watch('$parent.topologyData', function(){
