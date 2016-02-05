@@ -14,7 +14,7 @@
 			<div ng-show="appConfig.spfMode">
 				<!-- <p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress) and multiple destinations (egresses), then:</p> -->
 				<div class="center-button-outer">
-					<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner">
+					<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner button-enlarged">
 						<i class="fa fa-check"></i> Compute paths
 					</md-button>
 				</div>
@@ -45,8 +45,8 @@
 					</div>
 				</div>
 
-				<md-button class="md-raised" id="deploy-button-spf" disabled="disabled" ng-click="deployPath()"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
-				<md-button class="md-raised md-warn" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
+				<md-button class="md-raised button-enlarged" id="deploy-button-spf" disabled="disabled" ng-click="deployPath()"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
+				<md-button class="md-raised md-warn button-enlarged" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
 
 			</div>
 			<!-- / SPF (automatic) path configuration -->
@@ -55,8 +55,8 @@
 			<div ng-show="!appConfig.spfMode">
 				<!-- <p><i class="fa fa-info-circle info-icon"></i> Select a source (ingress), multiple destinations (egresses). Design your own path, click link by link from the ingress to the destination points. Then:</p> -->
 				<div class="center-button-outer">
-					<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner">
-						<i class="fa fa-check"></i> Validate and compute Path ID
+					<md-button ng-click="computeMask()" class="md-raised md-primary center-button-inner button-enlarged">
+						<i class="fa fa-check"></i> Validate
 					</md-button>
 				</div>
 				<div ng-show="currentTree.validStatus == 'valid'">
@@ -86,8 +86,8 @@
 					</div>
 				</div>
 
-				<md-button class="md-raised" id="deploy-button-te" disabled="disabled" ng-click="deployPath()"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
-				<md-button class="md-raised md-warn" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
+				<md-button class="md-raised button-enlarged" id="deploy-button-te" disabled="disabled" ng-click="deployPath()"><i class="fa fa-rocket"></i> Deploy</md-button> &nbsp;
+				<md-button class="md-raised md-warn button-enlarged" ng-click="clearTopology()"><i class="fa fa-times"></i> Clear tree</md-button><br><br>
 			</div>
 			<!-- / Manual path configuration -->
 		</md-content>

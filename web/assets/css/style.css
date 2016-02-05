@@ -150,4 +150,8 @@ md-toolbar.white {
     border-left: solid #000 1px;
 }
 
+.button-enlarged {
+    font-size: 16px;
+    padding: 10px;
+}
 /* Modal window */

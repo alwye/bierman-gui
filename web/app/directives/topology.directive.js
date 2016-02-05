@@ -29,7 +29,6 @@ app.directive('biermanTopology', function() {
 					}
 				};
 
-				// todo: catch loops
 				$scope.processBierTreeData = function(successCbk, errorCbk){
 					var tree = $scope.$parent.currentTree;
 					var ingress = $scope.topo.getNode(tree.ingress);
@@ -132,10 +131,6 @@ app.directive('biermanTopology', function() {
 						errMsg = 'BIER tree was not set properly. Try again.';
 						errorCbk(errMsg);
 					}
-
-
-
-
 				};
 
 				$scope.openPanel = function(panelCode, auxParam){
@@ -187,7 +182,7 @@ app.directive('biermanTopology', function() {
 						function(data){},
 						function(err){
 							console.info(err);
-							swal({
+							$scope.$parent.displayAlert({
 								title: "Can't save geo-location data",
 								text: err.errMsg,
 								type: "warning",
