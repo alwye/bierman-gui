@@ -4,43 +4,48 @@
 	</div>
 </md-toolbar>
 <md-content flex>
-	<md-tabs md-dynamic-height md-border-bottom>
-		<md-tab label="Nodes">
-			<md-content>
-				<div ng-show="topologyData.nodes.length == 0">
-					Where are the nodes?
-				</div>
-				<div ng-show="topologyData.nodes.length > 0">
-					<md-list>
-						<md-list-item class="md-3-line path-item" ng-repeat="node in topologyData.nodes">
-							<div class="md-list-item-text" ng-click="">
-								{{node['attributes'].name}}<br>
-							</div>
-							<md-divider ng-if="!$last"></md-divider>
-						</md-list-item>
-					</md-list>
-				</div>
-			</md-content>
-		</md-tab>
-		<md-tab label="Links">
-			<md-content>
-				<div ng-show="topologyData.links.length == 0">
-					Hey, I don't see no links!
-				</div>
-				<div ng-show="topologyData.links.length > 0">
-					<md-list>
-						<md-list-item class="md-3-line path-item" ng-repeat="link in topologyData.links">
-							<div class="md-list-item-text" ng-click="">
-								{{topo.getNode(link.source).model()._data.attributes.name}} &harr; {{topo.getNode(link.target).model()._data.attributes.name}}<br>
-								<div ng-repeat="channel in path['channel']">
-									<i class="fa fa-tv"> {{channel['channel-name']}}</i>
+	<div ng-show="appConfig.topoInitialized">
+		<md-tabs md-dynamic-height md-border-bottom>
+			<md-tab label="Nodes">
+				<md-content>
+					<div ng-show="topologyData.nodes.length == 0">
+						Where are the nodes?
+					</div>
+					<div ng-show="topologyData.nodes.length > 0">
+						<md-list>
+							<md-list-item class="md-3-line path-item" ng-repeat="node in topologyData.nodes">
+								<div class="md-list-item-text" ng-click="">
+									{{node['attributes'].name}}<br>
 								</div>
-							</div>
-							<md-divider ng-if="!$last"></md-divider>
-						</md-list-item>
-					</md-list>
-				</div>
-			</md-content>
-		</md-tab>
-	</md-tabs>
+								<md-divider ng-if="!$last"></md-divider>
+							</md-list-item>
+						</md-list>
+					</div>
+				</md-content>
+			</md-tab>
+			<md-tab label="Links">
+				<md-content>
+					<div ng-show="topologyData.links.length == 0">
+						Hey, I don't see no links!
+					</div>
+					<div ng-show="topologyData.links.length > 0">
+						<md-list>
+							<md-list-item class="md-3-line path-item" ng-repeat="link in topologyData.links">
+								<div class="md-list-item-text" ng-click="">
+									{{topo.getNode(link.source).model()._data.attributes.name}} &harr; {{topo.getNode(link.target).model()._data.attributes.name}}<br>
+									<div ng-repeat="channel in path['channel']">
+										<i class="fa fa-tv"> {{channel['channel-name']}}</i>
+									</div>
+								</div>
+								<md-divider ng-if="!$last"></md-divider>
+							</md-list-item>
+						</md-list>
+					</div>
+				</md-content>
+			</md-tab>
+		</md-tabs>
+	</div>
+	<div ng-show="!appConfig.topoInitialized" class="md-padding">
+		Topology is not initialized.
+	</div>
 </md-content>
