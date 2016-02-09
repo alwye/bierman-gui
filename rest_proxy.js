@@ -17,8 +17,8 @@ const http = require('http');
 // app configuration
 var appConfig = {
 	// Controller settings
-	'ctrlHost': '10.124.19.145', // Gaofeng
-	//'ctrlHost': '10.195.70.194', // Sergey
+	//'ctrlHost': '10.124.19.145', // Gaofeng
+	'ctrlHost': '10.195.70.198', // Sergey
 	'ctrlPort': '8181', // 8181 by default
 	'ctrlUsername': 'admin',
 	'ctrlPassword': 'admin',
