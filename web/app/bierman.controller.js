@@ -29,7 +29,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 
 	$scope.pathData = [];
 
-	$scope.computedPaths = [];
+	//$scope.computedPaths = [];
 
 	$scope.input = {
 		'selectedPath': ''
@@ -107,11 +107,13 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 						{
 							$scope.currentTree.fmask = response.fmask;
 							$scope.currentTree.validStatus = 'valid';
+							/*
 							if(spfMode){
 								$scope.computedPaths = response['source-path'];
 								var biLinks = $scope.convertUniToBiLinks(response['source-link'], true);
 								$scope.highlightPath(biLinks);
 							}
+							*/
 						}
 						else{
 							$scope.currentTree.fmask = '';
@@ -169,13 +171,13 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 				input.input['explicit-link'] = input.input['link'];
 				delete input.input.link;
 			}
-
+			
 			biermanRest.connectSource(
 				input,
 				// connectSource - success callback
 				function(response){console.log(response);
 					if(response.hasOwnProperty('source-path')){
-						$scope.currentTree.deploymentStatus = 'failed';
+						$scope.currentTree.deploymentStatus = 'valid';
 						$scope.displayAlert({
 							title: "Path Deployed",
 							text: "You successfully deployed a path for " + input.input['channel-name'],
@@ -183,6 +185,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 							timer: 3000,
 							confirmButtonText: "Awesome!"
 						});
+						$scope.getPathList();
 					}
 					else{
 						var errMsg = 'Invalid response from controller';
@@ -384,7 +387,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 				deployButtonSPF.prop('disabled', false);
 				break;
 			default:
-				$scope.computedPaths = [];
+				//$scope.computedPaths = [];
 				deployButtonTE.prop('disabled', true);
 				deployButtonSPF.prop('disabled', true);
 				$scope.currentTree.deploymentStatus = 'none';
@@ -470,7 +473,6 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 								function(data){
 									$scope.input.addChannel = {};
 									$scope.input.addChannelStatus = 'success';
-									dScope.getChannels();
 									dScope.displayAlert({
 										title: "Channel Added",
 										text: "The channel " + channelName + " has been added to the system",
@@ -478,6 +480,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 										timer: 1500,
 										confirmButtonText: "Okay"
 									});
+									//$scope.getChannels();
 								},
 								// error
 								function(err){

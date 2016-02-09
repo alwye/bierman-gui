@@ -488,5 +488,3 @@ app.directive('biermanTopology', function() {
 		}
 	};
 });
-
-console.log(window.localStorage.getItem('test'));

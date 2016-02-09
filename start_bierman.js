@@ -8,8 +8,8 @@ var serveStatic = require('serve-static');
 // app configuration
 var appConfig = {
 	// Controller settings
-	//'ctrlHost': '10.124.19.145', // Gaofeng
-	'ctrlHost': '10.195.70.198', // Sergey
+	'ctrlHost': '10.124.19.145', // Gaofeng
+	//'ctrlHost': '10.195.70.198', // Sergey
 	'ctrlPort': '8181', // 8181 by default
 	'ctrlUsername': 'admin',
 	'ctrlPassword': 'admin',
@@ -23,9 +23,9 @@ var reqCounter = 0;
 // create a server
 var proxy = http.createServer();
 if(proxy)
-	console.log('ODL REST Proxy started: ' + appConfig.ctrlHost);
+	console.log('BIERMAN connected to controller: ' + appConfig.ctrlHost);
 else
-	console.error('ODL REST Proxy has not started: ' + appConfig.ctrlHost);
+	console.error('BIERMAN could not connect to controller: ' + appConfig.ctrlHost);
 
 // Server API
 proxy.on('request',function(userReq,userRes){
