@@ -80,21 +80,23 @@ Modify its properties 'proxyHost' and 'proxyPort' so that they are your actual d
 
 
 ### Controller Settings
-Open the file rest_proxy.js and find the object 'appConfig'.
+Open the file start_bierman.js and find the object 'appConfig'.
 
 Modify its properties 'ctrlHost', 'ctrlPort', 'ctrlUsername' and 'ctrlPassword' so that they are your actual data.
 - **ctrlHost** points to controller's IP address (or a host name)
 - **ctrlPort** points to controller's port
 - **ctrlUsername** and **ctrlPassword** are credentials to authorize on the server
 
+You may also want to adjust **proxyPort** and **webServerPort** if this is necessary.
+
 ### Running GUI (easy as pie)
 1. Have [NodeJS](https://nodejs.org) installed on your computer
-2.  Go to the application's root folder and run the command in terminal:
+2.  Using 'cd' command go to root folder of BIERMAN and run the command in terminal:
 
   ```
-  node rest_proxy.js
+  node start_bierman.js
   ```
-3. Point your browser to (PATH-TO-BIERMAN)/web/app/index.html and enjoy. We recommend using Chrome. 
+3. Point your browser to http://localhost:8080 and enjoy. We recommend using Chrome. 
 
 # Additional Information
 This is a web application developed to manage multipoint content over BIER networks. It implemented on top of OpenDaylight with means of [Angular](http://github.com/angular/angular.js), [Angular Material](https://github.com/angular/material) and [NeXt UI](http://github.com/CiscoDevNet/next-ui). Pure open-source product.
