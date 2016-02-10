@@ -171,7 +171,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 				input.input['explicit-link'] = input.input['link'];
 				delete input.input.link;
 			}
-			
+
 			biermanRest.connectSource(
 				input,
 				// connectSource - success callback
@@ -480,7 +480,7 @@ app.controller('biermanCtrl', function($scope, BiermanRest, $mdSidenav, $mdDialo
 										timer: 1500,
 										confirmButtonText: "Okay"
 									});
-									//$scope.getChannels();
+									dScope.getChannels();
 								},
 								// error
 								function(err){

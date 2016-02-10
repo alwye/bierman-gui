@@ -1,4 +1,4 @@
-// Using ODL Rest Proxy
+// This code uses ODL Rest Proxy: http://github.com/zverevalexei/odl-rest-proxy
 
 const fs = require('fs');
 const http = require('http');
@@ -8,8 +8,8 @@ var serveStatic = require('serve-static');
 // app configuration
 var appConfig = {
 	// Controller settings
-	'ctrlHost': '10.124.19.145', // Gaofeng
-	//'ctrlHost': '10.195.70.198', // Sergey
+	//'ctrlHost': '10.124.19.145', // Gaofeng
+	'ctrlHost': '10.195.70.198', // Sergey
 	'ctrlPort': '8181', // 8181 by default
 	'ctrlUsername': 'admin',
 	'ctrlPassword': 'admin',
