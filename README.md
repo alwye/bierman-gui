@@ -78,6 +78,7 @@ Modify its properties 'proxyHost' and 'proxyPort' so that they are your actual d
 - **proxyHost** points to proxy's IP address (or a host name)
 - **proxyPort** points to proxy's port
 
+You may use auto detection of IP address if you intend to use BIERMAN on remote machines. 
 
 ### Controller Settings
 Open the file start_bierman.js and find the object 'appConfig'.
@@ -96,7 +97,7 @@ You may also want to adjust **proxyPort** and **webServerPort** if this is neces
   ```
   node start_bierman.js
   ```
-3. Point your browser to http://localhost:8080 and enjoy. We recommend using Chrome. 
+3. Point your browser to http://{{IP address where GUI deployed}}:8080 and enjoy. We recommend using Chrome. 
 
 # Additional Information
 This is a web application developed to manage multipoint content over BIER networks. It implemented on top of OpenDaylight with means of [Angular](http://github.com/angular/angular.js), [Angular Material](https://github.com/angular/material) and [NeXt UI](http://github.com/CiscoDevNet/next-ui). Pure open-source product.
