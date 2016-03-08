@@ -65,6 +65,11 @@ The user can then assign a channel (defined in the Channel Manager) to the speci
 
 The advantags of BIERMAN are twofold: first it simplifies the mapping of content channels to a stateless multipoint path and second it is build entirely on open source software components. The latter is important as users and developer might want to customize certain aspects of managing their own BIER networks.
 
+#BIER Information
+
+[IETF BIER WG Charter](https://datatracker.ietf.org/wg/bier/charter/)
+[IETF BIER WG Documents](https://datatracker.ietf.org/wg/bier/documents/)
+
 #Configuration
 
 ## 3-step Setup
