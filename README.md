@@ -67,9 +67,9 @@ The advantags of BIERMAN are twofold: first it simplifies the mapping of content
 
 #BIER Information
 
-[IETF BIER WG Charter](https://datatracker.ietf.org/wg/bier/charter/)
+IETF [BIER WG Charter](https://datatracker.ietf.org/wg/bier/charter/)
 
-[IETF BIER WG Documents](https://datatracker.ietf.org/wg/bier/documents/)
+IETF [BIER WG Documents](https://datatracker.ietf.org/wg/bier/documents/)
 
 #Configuration
 
