@@ -8,7 +8,7 @@ OpenDaylight (ODL) is an open-source application development and delivery platfo
 * Chris Metz (chmetz@cisco.com)
 * Greg Shepherd (shep@cisco.com)
 * IJsbrand Wijnands (ice@cisco.com)
-* Gaofeng Tao (gatao@cisco.com)
+* Gaofeng Tao
 * Alexei Zverev (alzverev@cisco.com)
 
 
